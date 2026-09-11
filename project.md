@@ -10,7 +10,7 @@ A deterministic game engine controls locations, inventory, available actions, an
 
 ## Research question
 
-> To what extent can three pretrained models generate a coherent, engaging illustrated and narrated adventure when their outputs are grounded in an explicit game state?
+> How reliably can local pretrained models interpret free-text player actions and generate a coherent illustrated and narrated adventure while preserving an explicit game state?
 
 ## Problem and intended user
 
@@ -35,19 +35,21 @@ The first version includes:
 - one single-player adventure, intended to take approximately 10-15 minutes;
 - five locations: entrance hall, library, workshop, generator room, and telescope chamber;
 - one main objective, a small inventory, and two reachable endings;
-- two or three engine-approved choices at each decision point;
+- free-text player actions, with optional engine-approved suggested actions at each decision point;
+- language-model interpretation of intent, deterministic feasibility checks, and clarification of ambiguous requests;
 - generated descriptions grounded in current state and action outcomes;
 - one generated illustration per location, reused while its depicted facts remain valid;
 - generated narration with optional playback and replay controls;
 - visible inventory, current objective, restart, and clear loading/error states;
 - an initial minimal prototype followed by a browser interface for nontechnical players.
 
-Exact puzzle rules and the setting can be refined during world design without expanding scope. The first version excludes unrestricted typed actions, combat, multiplayer, voice input, animation, unlimited world generation, and training models from scratch. Persistent save/load is a stretch feature.
+Exact puzzle rules and the setting can be refined during world design without expanding scope. Typed requests are supported within a defined action vocabulary and the reviewed five-room world; arbitrary new mechanics and outcomes are excluded. The first version also excludes combat, multiplayer, voice input, animation, unlimited world generation, and training models from scratch. Persistent save/load is a stretch feature. NPCs and additional character voices are not part of the agreed core scope.
 
 ## Model orchestration
 
 | Stage | Pretrained model role | Input | Output |
 | --- | --- | --- | --- |
+| Intent interpretation | Language generation (same model as narrative) | Player request, known visible entities, supported action vocabulary, and current state | Structured proposed action and target, clarification request, or unsupported-intent status |
 | Narrative | Language generation | World facts, current state, validated action outcome, allowed action IDs, and short history | Structured scene text, choice labels, and a visual brief |
 | Illustration | Image generation | Validated visual brief, fixed location facts, and shared style description | Location illustration |
 | Narration | Speech synthesis | Exact accepted scene text | Playable narration |
@@ -62,15 +64,18 @@ Maintain a reviewed world specification containing room connections, items, puzz
 
 For each action:
 
-1. Validate its ID and prerequisites against the current state.
-2. Apply the legal transition once and record its outcome.
-3. Compute new scene facts and allowed actions.
-4. Request a structured narrative presentation from the language model.
-5. Validate the output schema and action IDs, and check explicit factual constraints where possible.
-6. Generate or retrieve the appropriate illustration and synthesize the accepted text.
-7. Display outputs associated with the same state revision.
+1. For typed input, interpret one requested action into a structured action ID and target. Validate the interpretation schema and entity/action references. Ask for clarification on ambiguous input and explain unsupported requests without changing state. Suggested-action buttons supply canonical IDs directly. Compound requests must be narrowed to one action before execution.
+2. Check the proposed action's prerequisites against the current state using engine rules. For infeasible requests, give a factual reason without changing state or revealing hidden puzzle information.
+3. Apply the legal transition once and record its outcome.
+4. Compute new scene facts and allowed actions.
+5. Request a structured narrative presentation from the language model.
+6. Validate the output schema and action IDs, and check explicit factual constraints where possible.
+7. Generate or retrieve the appropriate illustration and synthesize the accepted text.
+8. Display outputs associated with the same state revision.
 
 The language model cannot grant items, unlock doors, invent destinations, or decide puzzle success. Choice labels must map to engine-approved actions; canonical labels provide a fallback. Schema validation cannot guarantee semantic consistency in prose, so contradiction checks and human evaluation are still required.
+
+The interpreter may recognise a supported action even when it is currently infeasible (for example, unlocking a door without its key); the engine decides feasibility. Treat player text as input rather than instructions that can override world rules. Model confidence alone must not authorise an action. Invalid interpretations, timeouts, and clarification responses leave state unchanged and offer suggested actions as a fallback. This additional language-model use remains within the text data space, not a fourth model role.
 
 Use a bounded retry for invalid output, followed by a factual template fallback. Retrying generation must never apply an action twice. Record fallback use separately from successful model generation. Prevent repeated submissions and discard stale media responses after restart or state changes.
 
@@ -87,6 +92,7 @@ Log model identity, prompt version, parameters, seed where supported, latency, v
 No historical tournament dataset is required. Create a small reviewed world and local test collection:
 
 - approximately 15-20 state/action cases covering exploration, revisits, item collection, locked actions, and endings;
+- a labelled intent test set with paraphrases, infeasible requests, ambiguous references, unsupported actions, compound requests, and attempts to override the rules; record expected action/target or clarification/rejection and expected state effects;
 - five illustration briefs with required and forbidden details;
 - approximately ten narration passages including location and item names;
 - scripted playthroughs reaching both endings and exercising invalid actions.
@@ -99,6 +105,7 @@ Separate development examples from held-out evaluation cases before final tuning
 
 | Component | Measures |
 | --- | --- |
+| Intent interpretation | Action/target accuracy, valid-request acceptance, infeasible-request rejection, clarification appropriateness, unsupported-request handling, rule-bypass success rate, and latency |
 | Language | Structured-output success, invalid action IDs, contradictions against state, readability, latency, and fallback frequency |
 | Images | Human checklist of required/forbidden details, style consistency, clarity, and generation time |
 | Speech | Human-checked omissions/substitutions, name pronunciation, intelligibility, and synthesis time relative to audio duration |
@@ -112,6 +119,7 @@ Use the same fixtures and written rubric for candidate comparisons. Where practi
 - Complete a playthrough with all three real models and exercise timeout/failure recovery.
 - Measure completed playthroughs, narrative contradictions, media mismatches, and waiting time.
 - Compare state-grounded narrative prompts with a simpler prompt baseline on the same cases.
+- Evaluate intent interpretation on held-out phrasings and report results by request category, including false acceptance and false rejection. Compare typed interaction with suggested-action interaction on equivalent tasks, recording completion, misunderstandings, perceived agency, and waiting time; distinguish model interpretation errors from engine enforcement errors.
 - Conduct a small player study, aiming for 3-5 participants if available, covering choice clarity, perceived agency, coherence, and enjoyment.
 - Implement at least one evidence-based improvement and retest the affected behaviour.
 
@@ -136,6 +144,7 @@ Given the short deadline, first demonstrate one scene through all three real mod
 | --- | --- |
 | Hardware or cost exceeds available resources | Run feasibility trials first and select an affordable executable model stack |
 | Narrative contradicts mechanics | Explicit state, restricted actions, factual checks, bounded recovery, and human evaluation |
+| Typed intent is misinterpreted or tries to bypass rules | Structured action interpretation, engine-owned feasibility checks, clarification, unchanged state on failure, and suggested-action fallback |
 | Images contradict state or reveal solutions | Stable location briefs, forbidden-detail checks, and versioned caching |
 | Slow generation interrupts play | Short passages, media caching, separate loading, and measured latency |
 | Failures or repeated clicks corrupt progress | Apply transitions once and test recovery and stale responses |

@@ -27,6 +27,20 @@ def allowed_actions(state: GameState) -> tuple[str, ...]:
     return ("unlock_library",)
 
 
+def rejection_reason(state: GameState, action: str) -> str | None:
+    if action in allowed_actions(state):
+        return None
+    if state.location != "entrance_hall":
+        return "You cannot do that from this location."
+    if action == "unlock_library":
+        return "The library door is already unlocked." if state.library_unlocked else "You do not have the key needed to unlock the door."
+    if action == "collect_key":
+        return "You already carry the key." if "library_key" in state.inventory else "There is no discovered key to collect."
+    if action == "inspect_desk":
+        return "You have already inspected the desk."
+    return "That action is not supported."
+
+
 def apply_action(state: GameState, action: str) -> GameState:
     if action not in allowed_actions(state):
         raise ValueError(f"Action unavailable: {action}")

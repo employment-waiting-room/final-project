@@ -1,100 +1,133 @@
 ﻿# The Last Observatory task list
 
-Working title: an illustrated and narrated AI text adventure. Follow `project.md` and the orchestration brief in `spec.md`. Checkboxes record completed work rather than intended capabilities.
+## Goal and working agreement
 
-## 1. Scope and feasibility
+Build a free, local browser adventure that understands natural-language player actions and generates context-sensitive narrative, illustrations, and speech while preserving consistent world rules.
 
-- [x] Select an illustrated text adventure as the new direction.
-- [x] Document three pretrained roles: language, image generation, and speech synthesis.
-- [x] Define an initial five-location scope, small inventory, and two endings.
-- [x] Review hardware, model access, budget, and remaining submission time.
-- [ ] Research at least two candidate models per role; record exact identities, documentation, licensing, and runtime requirements.
-- [ ] Run one feasibility example per role and record latency, resources, and quality.
-- [ ] Connect one scene through all three real models and save the resulting text, image, and audio.
-- [x] Choose an initial stack based on evidence; document failed trials and practical exclusions.
-- [ ] Record provisional quality and latency targets before final evaluation.
+Follow Project Idea 1 in spec.md, the engineering expectations in example.md, and the submission requirements in report_spec.md. The AI challenge is interpreting varied requests and generating coherent media; the engine owns feasibility and state transitions. Three working standalone models are preparation, not the final integrated system.
 
-Milestone: one state produces a valid illustrated and narrated scene on available resources.
+Keep five rooms, a small inventory, and two endings. Free-text input and optional suggested actions are core. The broader object-based free-roam redesign is paused. NPCs, extra voices, unrestricted mechanics, and extra adventures are not approved core requirements.
 
-## 2. World design and evaluation fixtures
+Checkboxes mean completed work supported by evidence. Existing prototypes do not complete application-wide tasks. Follow the phases below; record findings in development_log.md and obtain confirmation before new implementation or installation work. Report preparation runs alongside development.
 
-- [ ] Finalise the observatory premise, objective, tone, and shared visual style.
-- [ ] Draft and review the room map, items, puzzle prerequisites, and action effects.
-- [ ] Define both endings and a valid action sequence reaching each.
-- [ ] Specify world, player-state, and generated-scene schemas, including stable action IDs and state revisions.
-- [ ] Write factual fallback descriptions and canonical action labels.
-- [ ] Create approximately 15-20 state/action fixtures with expected facts, permitted actions, and forbidden claims.
-- [ ] Create five illustration briefs and approximately ten narration passages.
-- [ ] Separate development fixtures from held-out evaluation cases.
-- [ ] Define evaluation rubrics and record provenance for external material.
+## 0. Completed groundwork and known limitations
 
-## 3. Deterministic game engine
+- [x] Review hardware, free/local constraints, assessment documents, and submission dates.
+- [x] Set up the Python 3.11 environment and initial FastAPI/testing dependencies.
+- [x] Generate a local SDXL Turbo illustration through the Vulkan runtime and save timing/output evidence.
+- [x] Run Qwen3:4b narrative trials with saved prompts, structural checks, timings, and failure observations.
+- [x] Generate Piper Lessac speech and record timing; obtain informal confirmation that the sample reads correctly.
+- [x] Implement and manually play the desk -> collect key -> unlock library terminal sequence.
+- [x] Add an initial Qwen intent interpreter, engine prerequisite checks, numbered fallback, and request logging.
+- [x] Run 27 software tests and an eight-case development intent trial after local guard adjustments.
+- [x] Record the free-text direction and keep a development log.
 
-- [ ] Create project structure, environment configuration, and example settings without secrets.
-- [ ] Implement initial state, movement, inventory, puzzle flags, and allowed-action calculation.
-- [ ] Implement action validation and both endings; keep state changes outside model control.
-- [ ] Implement restart and duplicate/stale-action protection.
-- [ ] Unit-test transitions, item prerequisites, invalid actions, and ending conditions.
-- [ ] Run scripted paths to both endings and check for unintended dead ends.
+Known limitations: the eight-case result was for a tuned model-and-rule pipeline, not general model accuracy. User testing subsequently mapped 'look around the room' to inspecting the desk and 'knock on the door' to unlocking it. These errors remain unresolved. Generated narrative still has factual errors. Text, images, and speech are not yet integrated into one playable scene.
 
-Milestone: the complete adventure works with factual placeholder text before model presentation is added.
+## 1. Finish candidate research and feasibility planning — next
 
-## 4. Model integration
+- [ ] Complete a two-candidate research table for each role: exact checkpoint/version, runtime, documentation, licensing, hardware needs, and selection rationale.
+- [x] Complete the missing second image-model candidate; a second runtime for the same weights is not a second model. SD-Turbo shortlisted in model_candidates.md; not yet downloaded or tested.
+- [x] Consolidate existing Qwen/Gemma and Piper/Kokoro research, distinguishing researched candidates from tested candidates. See model_candidates.md.
+- [ ] Fill gaps in baseline feasibility evidence, especially RAM/VRAM measurement and explicit quality observations; rerun only where necessary.
+- [ ] Define a small shared comparison protocol, provisional quality/latency targets, and a feasible alternative-model trial plan before further model-specific tuning.
+- [ ] Record hardware/access exclusions honestly; keep research findings separate from measured comparisons.
 
-- [ ] Implement interchangeable adapters for the selected language, image, and speech models.
-- [ ] Build narrative prompts from current state, recent events, allowed actions, and world facts.
-- [ ] Validate generated schemas and action IDs; add feasible factual checks and document their limitations.
-- [ ] Add bounded retries and logged fallback text without reapplying actions.
-- [ ] Generate illustrations from accepted briefs and consistent style instructions.
-- [ ] Cache images by visual facts and configuration; avoid changing inventory and puzzle spoilers in images.
-- [ ] Synthesize the exact accepted text; cache audio by text, voice, and configuration.
-- [ ] Associate media with state revisions and discard stale responses.
-- [ ] Log prompts, versions, parameters, output paths, validation results, latency, and cache hits.
-- [ ] Test timeout and failure recovery for each model while preserving playable state.
+Gate: candidate identities, practical constraints, and the next experiments are concrete. The current stack is provisional until comparative evidence supports selection.
 
-## 5. Player interface
+## 2. Define the world, action contract, and evaluation fixtures
 
-- [ ] Display location, illustration, narrative, inventory, objective, and valid choice buttons.
-- [ ] Add optional narration playback, stop, and replay controls.
-- [ ] Show text before media finishes; provide loading, retry, and fallback states.
-- [ ] Prevent repeated action submissions while processing.
-- [ ] Add restart and ending screens.
-- [ ] Check keyboard operation, readable text, and basic browser layout.
-- [ ] Complete a browser playthrough with all three models, including fresh media generation.
+- [ ] Finalise the premise, objective, room map, tone, and shared visual style.
+- [ ] Specify items, discoverability, puzzle prerequisites, action effects, both endings, and a valid route to each.
+- [ ] Define the bounded supported action vocabulary and targets; decide explicitly how looking, knocking, and other unsupported requests behave without assuming the paused free-roam redesign.
+- [ ] Specify interpretation outcomes: proposed action, clarification, unsupported request, and inference failure. Keep engine feasibility separate from interpretation accuracy.
+- [ ] Specify world/state/scene schemas, stable action IDs, state revisions, and duplicate-request handling.
+- [ ] Write canonical labels, factual fallback descriptions, and rejection reasons that do not reveal hidden solutions.
+- [ ] Build approximately 15-20 state/action fixtures with expected facts, legal transitions, and forbidden claims.
+- [ ] Build labelled intent cases covering paraphrases, missing prerequisites, wrong verbs, ambiguity, compound requests, unsupported actions, and attempts to override rules.
+- [ ] Add the user's 'look around' and 'knock' failures to development/regression cases, not held-out cases.
+- [ ] Prepare five illustration briefs and approximately ten narration passages with written quality rubrics.
+- [ ] Reserve unseen phrasings and states for final evaluation before tuning; record provenance and annotation rules.
 
-Milestone: a nontechnical player can finish the adventure through the interface.
+Gate: the intended behaviour is defined well enough to test. Do not let a model silently decide what the game supports.
 
-## 6. Model comparisons and evaluation
+## 3. Compare candidates and demonstrate one integrated scene
 
-- [ ] Run feasible candidate comparisons on identical development fixtures; retain outputs and failures.
-- [ ] Document selected and rejected models using quality, latency, resources, and integration evidence.
-- [ ] Freeze prompts and configurations before held-out evaluation.
-- [ ] Measure narrative schema success, contradictions, invalid choices, and fallback frequency.
-- [ ] Rate image detail accuracy, forbidden content, and consistency using the rubric.
+- [ ] Make model identity/configuration replaceable in the trial scripts and adapters; retain raw outputs, versions, prompts, failures, and resource/timing measurements.
+- [ ] Compare at least two feasible language candidates on the same development intent and narrative cases.
+- [ ] Compare at least two feasible image candidates on matching scene briefs and criteria.
+- [ ] Compare Piper and a feasible alternative speech model on the same passages and listening criteria.
+- [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
+- [ ] Select the initial application models using quality, correctness, latency, resource use, and integration evidence.
+- [ ] Connect one typed request through interpretation, engine validation, accepted narrative, matching illustration, and narration of that exact accepted text.
+- [ ] Save evidence of the shared state, verified outcome, and three real model outputs, including fresh generation.
+- [ ] Demonstrate that rejected requests leave state unchanged and model failures retain a usable fallback.
+
+Gate: one real integrated interaction works locally. Finish this before expanding the prototype across all rooms. Candidate trials here support selection; final held-out evaluation comes later.
+
+## 4. Complete the game engine and reliable orchestration
+
+- [ ] Implement movement, inventory, puzzle flags, allowed actions, and both endings across the agreed world.
+- [ ] Resolve unintended action substitutions, including the reported looking/knocking failures, against the agreed action contract.
+- [ ] Implement clarification and unsupported-request handling; measure over-clarification rather than assuming heuristic guards solve ambiguity.
+- [ ] Validate structured action/target references and engine prerequisites before any state change.
+- [ ] Build narrative prompts from verified state, recent events, and outcomes; add feasible factual checks and document what they cannot guarantee.
+- [ ] Add bounded retries and factual narrative fallback without applying an action twice.
+- [ ] Implement interchangeable text/image/speech adapters with timeouts and explicit failure handling.
+- [ ] Generate illustrations from accepted location briefs; avoid hidden solutions and changing inventory details.
+- [ ] Cache images by visual facts/configuration and speech by exact accepted text/voice/configuration.
+- [ ] Associate outputs with state revisions; prevent duplicate transitions and discard stale responses after restart or later actions.
+- [ ] Log interpretation source (model or local rule), validation, transition, prompts, model versions, latency, failures, and cache use.
+- [ ] Add full engine and orchestration tests: prerequisites, wrong actions, both endings, restart, repeated requests, stale responses, and model failures.
+- [ ] Run scripted routes to both endings and check for unintended dead ends.
+
+Gate: complete gameplay and failure recovery work before final user evaluation. A mechanically legal transition must not be counted as correct if it misrepresents the player's request.
+
+## 5. Build the browser experience
+
+- [ ] Display location, generated illustration, accepted narrative, inventory, and objective.
+- [ ] Add free-text input with optional engine-approved suggestions and understandable clarification/rejection messages.
+- [ ] Add narration playback, stop, and replay controls.
+- [ ] Display text before media finishes; show loading, retry, and fallback states.
+- [ ] Prevent repeated submissions while processing; add restart and ending screens.
+- [ ] Check keyboard access, readable text, and browser layout.
+- [ ] Complete a browser playthrough using all three models, including fresh generation and failures.
+
+Gate: a player can reach an ending without developer intervention.
+
+## 6. Final evaluation and evidence-based improvement
+
+- [ ] Freeze selected models, prompts, configurations, and acceptance criteria before held-out evaluation.
+- [ ] Measure action/target accuracy, false acceptance/rejection, ambiguity handling, and rule-bypass outcomes by request category.
+- [ ] Report raw-model interpretation separately from local guards, engine enforcement, and end-to-end outcomes.
+- [ ] Measure narrative schema compliance, contradictions, invalid choices, and fallback frequency.
+- [ ] Compare state-grounded narration with a simpler prompt baseline on equivalent cases.
+- [ ] Rate image detail accuracy, forbidden content, and visual consistency using the defined rubric.
 - [ ] Check speech omissions, substitutions, pronunciation, intelligibility, and synthesis speed.
-- [ ] Compare state-grounded narrative prompts with a simpler prompt baseline.
-- [ ] Report fresh-generation and cached timings separately.
-- [ ] Run integration checks for endings, revisits, repeated clicks, restart, and model failures.
-- [ ] Conduct a small player study, aiming for 3-5 participants if available, with minimal consented feedback.
-- [ ] Record completion, confusion, coherence, perceived agency, enjoyment, and waiting-time feedback.
-- [ ] Implement at least one improvement supported by findings and retest it.
-- [ ] Summarise sample sizes, uncertainty, remaining failures, and limitations.
+- [ ] Report end-to-end latency, component latency, RAM/VRAM, and fresh versus cached generation; distinguish loading from inference and repeat trials where needed.
+- [ ] Compare typed and suggested-action interaction on equivalent tasks, including misunderstandings, completion, agency, and waiting time.
+- [ ] Conduct a small consented player study, aiming for 3-5 participants if available; record confusion, coherence, enjoyment, and completion.
+- [ ] Implement an improvement supported by findings and retest; label any reused evaluation cases as development data after tuning.
+- [ ] Summarise sample sizes, uncertainty, remaining failures, and limitations without generalising from the eight tuned prototype cases.
 
-## 7. Submission
+## 7. Report, exam preparation, and submission — ongoing
 
-- [ ] Write reproducible setup/run instructions with exact model versions, hardware needs, and configuration steps.
-- [ ] Document architecture and how shared state connects the three model outputs.
-- [ ] Explain why generation is useful and why mechanics remain deterministic.
-- [ ] Present model trials, software tests, evaluation tables, failure examples, and user-driven changes.
-- [ ] Document model/asset licensing, generated-content provenance, costs where applicable, and limitations.
-- [ ] Prepare a demonstration showing a choice changing state, generated text/image/audio, and an ending.
-- [ ] Verify the documented setup and complete relevant final checks.
-- [ ] Check deliverables against `spec.md`, using `example.md` as a reference for engineering and evaluation depth.
+- [ ] Maintain a requirements-to-evidence table showing the challenging goal, why pretrained models are needed, integration, comparisons, and software testing.
+- [ ] Review relevant literature on grounded generation, language-based interaction, multimodal orchestration, and evaluation; connect it to design choices rather than only summarising sources.
+- [ ] Prepare the exam decision/failure/reflection notes for Tuesday 15 September, using actual evidence and distinguishing implemented work from plans.
+- [ ] Write Introduction, Literature Review, Design, Implementation, Evaluation, and Conclusion against report_spec.md; name Project Idea 1 and observe chapter limits and the total 10,500-word limit.
+- [ ] Include architecture diagrams, a visual work plan, model-comparison tables, screenshots, failure examples, and justified changes.
+- [ ] Write reproducible setup/run instructions with exact model versions, hardware needs, and settings; verify them.
+- [ ] Document licensing, asset provenance, costs, limitations, and future work.
+- [ ] Preserve selected experimental evidence for assessors. Generated folders and Markdown are currently ignored; verify deliverables are actually included before submission.
+- [ ] Verify the required public repository is accessible through the results period and contains appropriate source/setup/evidence without model binaries or secrets.
+- [ ] Prepare a 3-5 minute demonstration of the integrated application, a state-changing action, fresh generation, and an ending; follow the student's-own-voice and no-speed-up requirements.
+- [ ] Check application, report, demonstration, and repository against spec.md and report_spec.md before the 28 September submission.
 
-## Stretch work after the core and evaluation are complete
+## Deferred work — requires a new scope decision
 
-- [ ] Persistent save/load.
-- [ ] Additional illustrations for changed room states.
-- [ ] Extra adventures or configurable narrative tone.
+- [ ] Broader object-based free-roam redesign (explicitly paused).
+- [ ] NPCs and additional character voices.
+- [ ] Persistent save/load, additional adventures, and extra visual content.
 
-Prioritise a working three-model pipeline, complete gameplay, and evaluation evidence over stretch features.
+Prioritise a complete AI-dependent interaction, defensible comparisons, and evaluation over extra game content. The immediate next task is Phase 1 candidate research, not another gameplay feature.
