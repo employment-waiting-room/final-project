@@ -1,133 +1,143 @@
-# SpoilerSense
+﻿# The Last Observatory
 
-## Predicting the competitive viability of unreleased Magic: The Gathering cards
+## An illustrated and narrated AI text adventure
 
 ### Project summary
 
-SpoilerSense is a decision-support application that accepts an image of an unreleased Magic: The Gathering (MTG) card from a spoiler or reveal. It extracts the card's information, compares its mechanics with historically released cards and competitive deck archetypes, then produces an explainable prediction of the card's likely competitive viability in a selected format.
+The Last Observatory is the working title for a short browser-based adventure combining three distinct pretrained models: a language model for narrative, an image-generation model for illustrations, and a text-to-speech model for narration. Players explore a small world, collect items, solve puzzles, and choose how the story ends.
 
-Unlike a card-identification application, SpoilerSense is designed for cards that do not yet exist in public card databases. Its goal is not to recognise the card by name or artwork; its goal is to assess a newly revealed card using its visible characteristics and rules text.
+A deterministic game engine controls locations, inventory, available actions, and outcomes. The models turn this verified state into a coherent audiovisual experience. AI can help draft the world and generate artwork; the developer reviews the resulting specification rather than needing to draw or write an extensive story manually.
 
 ## Research question
 
-> To what extent can pretrained vision, OCR, language, and semantic-retrieval models predict the competitive viability of unreleased MTG cards from spoiler images and historical metagame data?
+> To what extent can three pretrained models generate a coherent, engaging illustrated and narrated adventure when their outputs are grounded in an explicit game state?
 
-## Problem statement
+## Problem and intended user
 
-Players see card spoilers before a set releases and want to know whether a card is likely to be competitively useful. Making that judgement requires accurately reading a sometimes low-quality image, interpreting rules text, comparing the card with historical precedents, and considering a format's current metagame. These tasks are difficult to automate with conventional rules alone.
+The application targets nontechnical players seeking a short interactive story. Generated fiction can contradict earlier events, invent items, or describe impossible actions. Matching its prose with illustrations and narration introduces additional consistency and performance challenges.
 
-## System objective
+The engineering objective is to coordinate generative models around reliable mechanics and evaluate whether the result is understandable, consistent, and playable. Models provide variable narrative presentation and creative media; ordinary code enforces the rules.
 
-Given a spoiler image, produce a Standard-format assessment containing:
+## Alignment with the university brief
 
-- structured card data, including name, mana cost, colours, type, rules text, and power/toughness or loyalty where applicable;
-- a confidence score for the extraction;
-- comparable previously released cards and relevant deck archetypes;
-- an explainable competitive-viability score, for example from 0 to 10;
-- a plain-language rationale and caveats.
+This project follows Project Idea 1 in `spec.md`: at least three pretrained models working together across different domains/data spaces. The integrated outputs are text, images, and audio.
+
+`example.md` provides additional guidance on engineering depth, accessible interaction, component testing, and evaluation. Its finance-specific algorithms and training requirements do not apply here.
+
+The application must invoke the model pipeline and connect its outputs through shared scene information. Three isolated demonstrations or manually assembled assets are insufficient. Caching is appropriate for responsiveness, but generation must be implemented, demonstrated, and recorded.
+
+## Initial adventure and scope
+
+Proposed premise: the player is trapped in an abandoned observatory during a storm and must restore its signalling equipment to call for help.
+
+The first version includes:
+
+- one single-player adventure, intended to take approximately 10-15 minutes;
+- five locations: entrance hall, library, workshop, generator room, and telescope chamber;
+- one main objective, a small inventory, and two reachable endings;
+- two or three engine-approved choices at each decision point;
+- generated descriptions grounded in current state and action outcomes;
+- one generated illustration per location, reused while its depicted facts remain valid;
+- generated narration with optional playback and replay controls;
+- visible inventory, current objective, restart, and clear loading/error states;
+- an initial minimal prototype followed by a browser interface for nontechnical players.
+
+Exact puzzle rules and the setting can be refined during world design without expanding scope. The first version excludes unrestricted typed actions, combat, multiplayer, voice input, animation, unlimited world generation, and training models from scratch. Persistent save/load is a stretch feature.
 
 ## Model orchestration
 
-| Stage | Pretrained model type | Candidate model | Input | Output |
-| --- | --- | --- | --- | --- |
-| 1. Card isolation | Object detection / segmentation | YOLO or SAM | Spoiler image | Cropped, aligned card image |
-| 2. Data extraction | Optical character recognition | PaddleOCR or EasyOCR | Card crop | Raw visible card text |
-| 3. Rules interpretation | Language model | Local model through Ollama | OCR text | Corrected, structured card fields and mechanic summary |
-| 4. Historical comparison | Text embedding / semantic retrieval | SentenceTransformers model | Structured card text | Similar released cards, archetypes, and deck contexts |
-| 5. Decision support | Explainable scoring logic plus language generation | Scoring rules and local LLM | Retrieval evidence and card data | Viability score and explanation |
+| Stage | Pretrained model role | Input | Output |
+| --- | --- | --- | --- |
+| Narrative | Language generation | World facts, current state, validated action outcome, allowed action IDs, and short history | Structured scene text, choice labels, and a visual brief |
+| Illustration | Image generation | Validated visual brief, fixed location facts, and shared style description | Location illustration |
+| Narration | Speech synthesis | Exact accepted scene text | Playable narration |
 
-Stages 1--4 use distinct pretrained models. Stage 5 integrates their outputs rather than treating the models as isolated demonstrations.
+Exact model identities, versions, runtimes, and local versus hosted execution remain to be selected through feasibility trials. Each role must use an identifiable pretrained model. A runtime name or placeholder asset alone does not meet that requirement.
 
-## Viability score
+Research at least two candidates per role. Run comparable trials where feasible and record exclusions honestly, including hardware incompatibility or unavailable access. Compare output quality, latency, memory requirements, cost where applicable, licensing, and integration effort. Keep evidence for selected and rejected models.
 
-The viability score should be evidence-based rather than a claim of certainty. Initial factors may include:
+## Game state and generation boundaries
 
-- mana efficiency and rate relative to comparable cards;
-- similarity to cards that appeared in competitive decks;
-- fit with known deck archetypes and colour identities;
-- availability of enabling cards in the chosen historical metagame;
-- card type and interaction with common strategies;
-- extraction and retrieval confidence.
+Maintain a reviewed world specification containing room connections, items, puzzle prerequisites, action effects, and ending conditions. Player state includes location, inventory, visited rooms, puzzle flags, ending status, and state revision.
 
-The report should distinguish between **high-confidence evidence** and **speculative judgement**.
+For each action:
 
-## Scope
+1. Validate its ID and prerequisites against the current state.
+2. Apply the legal transition once and record its outcome.
+3. Compute new scene facts and allowed actions.
+4. Request a structured narrative presentation from the language model.
+5. Validate the output schema and action IDs, and check explicit factual constraints where possible.
+6. Generate or retrieve the appropriate illustration and synthesize the accepted text.
+7. Display outputs associated with the same state revision.
 
-The first working version will:
+The language model cannot grant items, unlock doors, invent destinations, or decide puzzle success. Choice labels must map to engine-approved actions; canonical labels provide a fallback. Schema validation cannot guarantee semantic consistency in prose, so contradiction checks and human evaluation are still required.
 
-- support Standard, the selected constructed format;
-- analyse clear digital spoiler/reveal images;
-- use a curated historical card database and decklist dataset;
-- return a viability prediction, comparable cards, and an explanation;
-- be evaluated using historical spoiler-time backtesting.
+Use a bounded retry for invalid output, followed by a factual template fallback. Retrying generation must never apply an action twice. Record fallback use separately from successful model generation. Prevent repeated submissions and discard stale media responses after restart or state changes.
 
-It will not attempt to predict limited-play viability, card prices, all formats, or every possible card layout in the first iteration.
+## Media consistency and responsiveness
 
-## Historical backtesting and data leakage control
+Use shared style instructions and stable visual facts for each location. Prefer environment-focused illustrations that do not depict changing inventory or reveal puzzle solutions. Reuse images only while their depicted facts remain valid.
 
-Evaluation must simulate the information available when a card was spoiled.
+Cache images by location, visual brief, style, and model configuration. Cache narration by accepted text, voice, and model configuration. Show text when ready and load media separately. Audio failure must not prevent reading or choosing actions; image failure should show a clear placeholder with a retry option.
 
-For each historical set used in testing:
+Log model identity, prompt version, parameters, seed where supported, latency, validation result, and cache status. Report fresh-generation and cached performance separately.
 
-1. Select cards from the set as unseen test examples.
-2. Set a cutoff date before that set's release.
-3. Exclude the test set, later sets, and all later decklists/results from the retrieval database.
-4. Feed the system the historical spoiler image and only the information available before the cutoff.
-5. Record its predicted score, comparable cards, and explanation.
-6. Compare the prediction with observed post-release competitive evidence.
+## Data and evaluation fixtures
 
-Possible ground-truth measures include tournament deck inclusion rate, number of successful decklists containing the card, top-cut appearances, and sustained use over a defined post-release period.
+No historical tournament dataset is required. Create a small reviewed world and local test collection:
+
+- approximately 15-20 state/action cases covering exploration, revisits, item collection, locked actions, and endings;
+- five illustration briefs with required and forbidden details;
+- approximately ten narration passages including location and item names;
+- scripted playthroughs reaching both endings and exercising invalid actions.
+
+Separate development examples from held-out evaluation cases before final tuning. Preserve prompts, configurations, generated outputs, annotations, and asset provenance. Record sources and reuse conditions for external material and distinguish generated from manually authored content.
 
 ## Evaluation
 
-### Per-model evaluation
+### Individual models
 
-- **Card isolation:** successful card-crop rate and crop quality on varied spoiler layouts.
-- **OCR:** field-level accuracy for name, mana cost, type line, rules text, and stats.
-- **Rules interpretation:** accuracy of structured fields against a verified card record.
-- **Semantic retrieval:** relevance of retrieved comparable cards, assessed using manual labels or expert/player ratings.
+| Component | Measures |
+| --- | --- |
+| Language | Structured-output success, invalid action IDs, contradictions against state, readability, latency, and fallback frequency |
+| Images | Human checklist of required/forbidden details, style consistency, clarity, and generation time |
+| Speech | Human-checked omissions/substitutions, name pronunciation, intelligibility, and synthesis time relative to audio duration |
 
-### End-to-end evaluation
+Use the same fixtures and written rubric for candidate comparisons. Where practical, hide model identities and vary presentation order in human ratings. Retain failures and explain selection decisions.
 
-- exact structured-card-data accuracy;
-- rate of useful completed reports from a spoiler image;
-- correlation between predicted viability and observed post-release play;
-- classification accuracy for categories such as low, medium, and high viability;
-- user feedback on clarity, trust, and usefulness of the explanation.
+### Integrated application
 
-## Example output
+- Unit-test transitions, inventory, puzzle prerequisites, endings, schema validation, and duplicate-action protection.
+- Verify both endings are reachable and exploration does not create unintended dead ends.
+- Complete a playthrough with all three real models and exercise timeout/failure recovery.
+- Measure completed playthroughs, narrative contradictions, media mismatches, and waiting time.
+- Compare state-grounded narrative prompts with a simpler prompt baseline on the same cases.
+- Conduct a small player study, aiming for 3-5 participants if available, covering choice clarity, perceived agency, coherence, and enjoyment.
+- Implement at least one evidence-based improvement and retest the affected behaviour.
 
-```text
-Target format: Standard
-Extraction confidence: 0.91
-Predicted viability: 7.8 / 10 (medium-high confidence)
-
-Comparable historical cards:
-- [card A] -- similar repeatable value effect
-- [card B] -- comparable mana cost and archetype role
-
-Potential archetype fit: Rakdos Midrange
-
-Rationale: The card provides an efficient source of repeatable value and resembles
-historical cards used by midrange decks. Its score is reduced because the current
-historical card pool contains limited supporting synergies.
-```
+Record numerical quality and latency targets after initial feasibility trials and before final evaluation. Report small-sample limitations; subjective enjoyment alone does not establish model accuracy.
 
 ## Expected deliverables
 
-- a working application or prototype;
-- a reproducible historical card and decklist data pipeline;
-- tested orchestration of at least three pretrained models;
-- automated tests for core data-processing and scoring components;
-- model-comparison and evaluation evidence;
-- a report documenting rejected model choices, design decisions, limitations, and user testing.
+- A working browser adventure integrating pretrained text, image, and audio generation.
+- A reviewed world specification and deterministic game engine.
+- Reproducible environment and model setup instructions.
+- Model-selection experiments, saved outputs, and decision records.
+- Meaningful automated tests and complete-playthrough evidence.
+- Evaluation fixtures, results, user feedback, and documented iteration.
+- A report explaining architecture, orchestration, limitations, model/asset licensing, and future work.
+- A short demonstration including fresh generation and cached playback.
 
-## Risks and mitigations
+## Delivery priorities and risks
+
+Given the short deadline, first demonstrate one scene through all three real models. Next complete a playable route, then all locations and both endings. Reserve time for evaluation and reporting before adding mechanics.
 
 | Risk | Mitigation |
 | --- | --- |
-| Poor OCR on stylised or low-resolution spoilers | Test multiple OCR models; use image pre-processing; expose confidence and allow correction. |
-| Future-data leakage in backtesting | Enforce dated datasets and test-set exclusion; log each cutoff and dataset version. |
-| LLM hallucination | Use structured prompts, retrieval evidence, validation rules, and clearly label uncertain conclusions. |
-| Incomplete historical deck data | State coverage limits and restrict claims to the chosen dataset and format. |
-| Score appears overly authoritative | Provide evidence, confidence, and uncertainty rather than only a single number. |
+| Hardware or cost exceeds available resources | Run feasibility trials first and select an affordable executable model stack |
+| Narrative contradicts mechanics | Explicit state, restricted actions, factual checks, bounded recovery, and human evaluation |
+| Images contradict state or reveal solutions | Stable location briefs, forbidden-detail checks, and versioned caching |
+| Slow generation interrupts play | Short passages, media caching, separate loading, and measured latency |
+| Failures or repeated clicks corrupt progress | Apply transitions once and test recovery and stale responses |
+| Scope leaves no time for evaluation | Limit rooms and mechanics; defer save/load and extra content |
+| Creative evaluation is only subjective | Combine ratings with constraint checks, consistency measures, and software tests |
