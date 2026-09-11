@@ -7,11 +7,11 @@ Working title: an illustrated and narrated AI text adventure. Follow `project.md
 - [x] Select an illustrated text adventure as the new direction.
 - [x] Document three pretrained roles: language, image generation, and speech synthesis.
 - [x] Define an initial five-location scope, small inventory, and two endings.
-- [ ] Review hardware, model access, budget, and remaining submission time.
+- [x] Review hardware, model access, budget, and remaining submission time.
 - [ ] Research at least two candidate models per role; record exact identities, documentation, licensing, and runtime requirements.
 - [ ] Run one feasibility example per role and record latency, resources, and quality.
 - [ ] Connect one scene through all three real models and save the resulting text, image, and audio.
-- [ ] Choose an initial stack based on evidence; document failed trials and practical exclusions.
+- [x] Choose an initial stack based on evidence; document failed trials and practical exclusions.
 - [ ] Record provisional quality and latency targets before final evaluation.
 
 Milestone: one state produces a valid illustrated and narrated scene on available resources.
