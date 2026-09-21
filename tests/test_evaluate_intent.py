@@ -30,6 +30,20 @@ def test_prompt_uses_only_projected_context():
     assert not any(k in user for k in ("setup", "expected_action", "forbidden_claims"))
 
 
+def test_prompt_variant_changes_only_system_message():
+    baseline = make_request(case("I04"), "candidate")
+    revised = make_request(case("I04"), "candidate", prompt_version="v2")
+    assert baseline["messages"][0] != revised["messages"][0]
+    revised["messages"][0] = baseline["messages"][0]
+    assert revised == baseline
+
+
+def test_original_prompt_remains_default():
+    from observatory.evaluate_intent import PROMPTS, PROMPT_VERSION
+    assert PROMPTS["v1"][0] == PROMPT_VERSION == "world-v2-intent-eval-v1"
+    assert make_request(case("I01"), "candidate") == make_request(case("I01"), "candidate", prompt_version="v1")
+
+
 def test_correct_action_and_input_immutability():
     original = case("I01")
     before = original.model_dump_json()
@@ -78,7 +92,7 @@ def test_run_persists_errors_and_continues(tmp_path):
         return httpx.Response(200, json={"done": True, "message": {"content": json.dumps(
             {"status": "action", "action": "inspect_desk", "target": "desk"})}})
     with httpx.Client(base_url="http://127.0.0.1:11434", transport=httpx.MockTransport(respond)) as client:
-        folder = run(client, DATA, tmp_path, "mock", limit=2)
+        folder = run(client, DATA, tmp_path, "mock", limit=2, prompt_version="v2")
     rows = [json.loads(line) for line in (folder / "results.jsonl").read_text().splitlines()]
     summary = json.loads((folder / "summary.json").read_text())
     manifest = json.loads((folder / "manifest.json").read_text())
@@ -87,3 +101,4 @@ def test_run_persists_errors_and_continues(tmp_path):
     assert summary["overall"]["errors"] == 1
     assert manifest["partial_run"] and len(manifest["dataset_sha256"]) == 64
     assert manifest["split"] == "development"
+    assert manifest["prompt_version"] == "world-v2-intent-eval-v2"
