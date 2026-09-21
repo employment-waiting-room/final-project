@@ -72,7 +72,17 @@ Opening the library door in the hall means unlock_library while locked; when unl
 ask for clarification unless the request explicitly asks to enter the library.
 For clarify and unsupported, both action and target must be null.
 """
-PROMPTS = {"v1": (PROMPT_VERSION, PROMPT), "v2": ("world-v2-intent-eval-v2", PROMPT_V2)}
+JSON_INSTRUCTION = (
+    "\nOutput exactly one JSON object with keys status, action, target. "
+    "Status must be action, clarify or unsupported. "
+    "Action and target are canonical strings for action, otherwise null. "
+    "No markdown or explanations."
+)
+PROMPTS = {
+    "v1": (PROMPT_VERSION, PROMPT),
+    "v2": ("world-v2-intent-eval-v2", PROMPT_V2),
+    "v1-json": ("world-v2-intent-eval-v1-explicit-json", PROMPT + JSON_INSTRUCTION),
+}
 
 
 class Prediction(Strict):
