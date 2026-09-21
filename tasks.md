@@ -37,15 +37,19 @@ Gate: candidate identities, practical constraints, and the next experiments are 
 
 ## 2. Define the world, action contract, and evaluation fixtures
 
+Working world/action contract accepted on 21 September 2026, including shelter with restored power but without manual reading or beacon alignment. evaluation/development.json now contains 53 validated development cases: 24 state/action cases, 20 intent cases and nine matched controls. development_fixtures.md retains the source cases and draft illustration/narration material. Model execution and held-out evaluation remain outstanding, as does detailed visual review.
+
 - [ ] Finalise the premise, objective, room map, tone, and shared visual style.
-- [ ] Specify items, discoverability, puzzle prerequisites, action effects, both endings, and a valid route to each.
-- [ ] Define the bounded supported action vocabulary and targets; decide explicitly how looking, knocking, and other unsupported requests behave without assuming the paused free-roam redesign.
-- [ ] Specify interpretation outcomes: proposed action, clarification, unsupported request, and inference failure. Keep engine feasibility separate from interpretation accuracy.
+- [x] Specify items, discoverability, puzzle prerequisites, action effects, both endings, and a valid route to each.
+- [x] Define the bounded supported action vocabulary and targets; decide explicitly how looking, knocking, and other unsupported requests behave without assuming the paused free-roam redesign.
+- [x] Specify interpretation outcomes: proposed action, clarification, unsupported request, and inference failure. Keep engine feasibility separate from interpretation accuracy.
 - [ ] Specify world/state/scene schemas, stable action IDs, state revisions, and duplicate-request handling.
 - [ ] Write canonical labels, factual fallback descriptions, and rejection reasons that do not reveal hidden solutions.
-- [ ] Build approximately 15-20 state/action fixtures with expected facts, legal transitions, and forbidden claims.
-- [ ] Build labelled intent cases covering paraphrases, missing prerequisites, wrong verbs, ambiguity, compound requests, unsupported actions, and attempts to override rules.
-- [ ] Add the user's 'look around' and 'knock' failures to development/regression cases, not held-out cases.
+- [x] Build approximately 15-20 state/action fixtures with expected facts, legal transitions, and forbidden claims. Expanded to 24 cases covering ending boundaries.
+- [x] Label state complexity and language difficulty independently, with nine matched development controls.
+- [ ] Compare model results by state complexity and language difficulty without adding extra adventures.
+- [x] Build labelled intent cases covering paraphrases, missing prerequisites, wrong verbs, ambiguity, compound requests, unsupported actions, and attempts to override rules.
+- [x] Add the user's 'look around' and 'knock' failures to development/regression cases, not held-out cases.
 - [ ] Prepare five illustration briefs and approximately ten narration passages with written quality rubrics.
 - [ ] Reserve unseen phrasings and states for final evaluation before tuning; record provenance and annotation rules.
 
