@@ -57,6 +57,8 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 
 ## 3. Compare candidates and demonstrate one integrated scene
 
+- [x] Implement a configurable model-only development intent runner with raw responses, error handling, exact intent scoring, reference outcome scoring and summaries by complexity/difficulty. Validated with simulated responses; baseline inference remains outstanding.
+- [ ] Run and review the Qwen3:4b development baseline before comparing an alternative language model.
 - [ ] Make model identity/configuration replaceable in the trial scripts and adapters; retain raw outputs, versions, prompts, failures, and resource/timing measurements.
 - [ ] Compare at least two feasible language candidates on the same development intent and narrative cases.
 - [ ] Compare at least two feasible image candidates on matching scene briefs and criteria.
