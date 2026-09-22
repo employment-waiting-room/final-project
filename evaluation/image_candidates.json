@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sdxl-turbo",
+    "model": "stabilityai/sdxl-turbo",
+    "checkpoint": "models/sd_xl_turbo_1.0_fp16.safetensors",
+    "revision": "71153311d3dbb46851df1931d3ca6e939de83304",
+    "steps": 4,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "sgm_uniform"
+  }
+]

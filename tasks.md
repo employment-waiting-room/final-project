@@ -26,7 +26,7 @@ Known limitations: the eight-case result was for a tuned model-and-rule pipeline
 
 ## 1. Finish candidate research and feasibility planning — next
 
-- [ ] Complete a two-candidate research table for each role: exact checkpoint/version, runtime, documentation, licensing, hardware needs, and selection rationale.
+- [ ] Complete a five-candidate research table for each data space: exact checkpoint/version, runtime, documentation, licensing, hardware needs, and selection rationale.
 - [x] Complete the missing second image-model candidate; a second runtime for the same weights is not a second model. SD-Turbo shortlisted in model_candidates.md; not yet downloaded or tested.
 - [x] Consolidate existing Qwen/Gemma and Piper/Kokoro research, distinguishing researched candidates from tested candidates. See model_candidates.md.
 - [ ] Fill gaps in baseline feasibility evidence, especially RAM/VRAM measurement and explicit quality observations; rerun only where necessary.
@@ -59,6 +59,8 @@ Working world/action contract accepted on 21 September 2026, including shelter w
 - [x] Review the user-run narrative v2 comparison: Qwen structural passes rose 7/32 -> 14/32; Gemma fell 4/32 -> 1/32. Factual failures persisted, including structurally passing outputs. Kept v1 default unchanged; see log entry 43.
 - [x] Implement the subsequently authorised entrance-hall narrative safeguard with engine-owned suggestions/brief ID, bounded checks and factual fallback. Opt-in --narrate mode; 182 software tests passed. Live evaluation and full-world integration remain outstanding; see gameplay_narration.md.
 - [ ] Implement image/speech comparison adapters for the shared media fixtures, review settings and obtain approval before inference. Existing feasibility scripts still use historical inputs.
+- [x] Implement the image adapter with offline preview, shared briefs/seeds, artifact hashes, retained failures and pending visual reviews. See evaluation/image_trials.md; 200 offline tests passed. User-run smoke test, alternative compatibility and speech adapter remain outstanding.
+- [x] Review the user-run SDXL Turbo image smoke test: runtime/file checks passed in 11.88 seconds; assistant inspection found the required desk missing. Full baseline and human visual ratings remain pending (log entry 51).
 - [x] Reserve new intent phrasings and state combinations before further tuning; record provenance and annotation rules. Added 30 assistant-authored cases, a reservation hash and offline separation checks. These are unrun model inputs in known task families, not blind-author or independently annotated data.
 - [ ] Independently review reserved intent labels against the frozen contract before final evaluation; do not use reserved cases to tune prompts or rules. Reserve media evaluation material separately.
 
@@ -75,8 +77,8 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [ ] Complete systematic human narrative review and resource/feasibility assessment before final language-model selection; Qwen and Phi are provisional finalists, not proven winners. All model execution is user-run.
 - [x] Complete a separately labelled assistant review of all 64 Qwen/Phi v2 narratives with per-case evidence and uncertain judgements. Qwen: 14 pass/10 fail/8 uncertain; Phi: 4 pass/23 fail/5 uncertain. See evaluation/assistant_reviews/narrative_v2_finalists.md; this does not complete independent human evaluation.
 - [ ] Obtain developer judgement on the flagged narrative ambiguities and record style preference separately. Qwen remains the provisional recommendation; final selection and bounded gameplay safeguards are not complete.
-- [ ] Compare at least two feasible image candidates on matching scene briefs and criteria.
-- [ ] Compare Piper and a feasible alternative speech model on the same passages and listening criteria.
+- [ ] Compare at least five feasible image checkpoints on matching scene briefs and criteria; record exclusions/replacements explicitly.
+- [ ] Compare at least five feasible speech models on matching passages and listening criteria; record exclusions/replacements explicitly.
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
 - [ ] Select the initial application models using quality, correctness, latency, resource use, and integration evidence.
 - [ ] Connect one typed request through interpretation, engine validation, accepted narrative, matching illustration, and narration of that exact accepted text.
@@ -89,6 +91,7 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 
 - [x] Add an entrance-hall typed-action confirmation safeguard: display the interpreted action/target, require explicit y/yes, and preserve state on cancellation, missing confirmation or interruption. Verified with simulated model responses; this does not fix model interpretation errors or complete browser/full-world integration.
 - [x] Test gameplay confirmation separately from model-only evaluation; keep ambiguous/compound prediction errors in model accuracy scores. Full software suite: 100 passed (21 September 2026).
+- [x] Record developer cancellation trace: d at confirmation left the desk uninspected, inventory empty and inspect available, without requesting narration. One manual trace, not independent user evaluation.
 - [ ] Carry confirmation into browser/full-world orchestration and measure user correction/cancellation separately from raw-model accuracy.
 - [x] Narrate accepted entrance-hall state changes only, with one generation attempt and factual fallback on failure; cancellation/rejection triggers no narration and narration cannot apply actions. Saved source/reasons separately from raw-model evaluation.
 - [ ] Review user-run guarded gameplay logs for factual errors, false rejections and fallback rate; bounded keyword/anchor checks do not guarantee prose truth.

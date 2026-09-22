@@ -7,6 +7,8 @@ __pycache__/
 !tasks.md
 !evaluation/README.md
 !evaluation/media_protocol.md
+!evaluation/image_trials.md
+!model_candidates.md
 !evaluation/assistant_reviews/*.md
 !gameplay_narration.md
 !development_fixtures.md

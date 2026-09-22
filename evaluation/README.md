@@ -1,5 +1,7 @@
 # Development evaluation fixtures
 
+Image development preparation is now available: see [image trial instructions](image_trials.md) for the offline preview, user-run SDXL Turbo smoke command, configuration and evidence limitations. No new image comparison results are claimed.
+
 `development.json` contains 53 development cases for world contract v2:
 
 - 24 state/action cases (S20 is split into rescue and shelter).

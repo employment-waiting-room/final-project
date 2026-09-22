@@ -586,7 +586,26 @@ Found an implementation false rejection: collection/unlocking responses copied s
 
 Validation: 187 tests passed in 1.18 seconds, including exact supplied-fact acceptance and protection against contradictory additions. No models were run, and no downloads occurred. Live narrative quality and cancellation-at-confirmation testing remain outstanding. The results also show that this prompt often copies factual templates rather than producing varied prose; fallback correctness must not be presented as successful generative narration.
 
+## 50. Cancellation evidence and image comparison preparation (22 September 2026)
+
+Recorded the developer's supplied cancellation trace: typing inspect the desk and replying d at confirmation returned to the unchanged initial description, empty inventory and available inspect action. No narration request appeared. This is one manual developer test, not independent user evaluation; it complements the earlier confirmed-action/fallback trace.
+
+Implemented observatory.evaluate_image, a model-only local stable-diffusion.cpp adapter separate from gameplay. Default preview performs no inference. Explicit --execute uses installed files only, the five unchanged media briefs, 512px canvas, seeds 42/43 and reversed candidate order on repetition two. The initial configuration retains the historical SDXL Turbo checkpoint/settings; other checkpoints require compatibility/settings review before activation. Every attempt starts a fresh CLI process. Saved evidence includes full schedule/requests, dataset/protocol snapshots and hashes, actual checkpoint/runtime/DLL hashes, verbose runtime logs, outputs, flushed failures and pending visual-review forms. No retries or fallback substitutions. PNG integrity checks and process completion remain distinct from visual correctness. Timeout/interruption preserve attempted failures; automatic resource peaks and separate load/inference timing are unavailable.
+
+Updated the plan to five candidates per data space and preserved the image/speech shortlist with explicit untested-alternative status. Added image trial commands and Git visibility for the guide and candidate research; generated results remain ignored and require deliberate submission preservation. Read primary image model cards; current documentation does not establish installed pinned-runtime compatibility. No models were downloaded or run, no dependency was installed, and no commit/push occurred.
+
+Validation: 200 offline tests passed in 1.77 seconds using fake subprocesses and synthetic PNG data. Coverage includes preview/no execution, shared prompts, schedule/seed order, duplicate configurations, missing files, successful file integrity, corrupt/truncated/wrong-sized output, nonzero exit, timeout, interruption and no retries. The Windows Python launcher required sandbox escalation for tests. Next: developer-run single-image SDXL Turbo smoke test, review actual output/logs, then full baseline and alternative preparation. This implementation is not a completed five-model image comparison or gameplay image integration.
+
+## 51. Image adapter smoke test reviewed (22 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260922T205515942124Z-df846843. One SDXL Turbo entrance-hall attempt completed with exit code zero, PNG integrity passed at 512x512, and wall time was 11.880 seconds including process/model loading. The verbose log confirms Vulkan execution, sampling 6.84 seconds, VAE decode 0.97 seconds and generate_image 11.05 seconds. These overlapping/internal timings must not be summed or interpreted as warm inference latency. Reported backend buffers are not measured whole-system RAM/VRAM peaks.
+
+Non-blind assistant visual inspection found a closed panelled door and the requested blue/wood palette, but no clearly visible dusty desk. High frosted glazing was unclear: bright window/skylight areas do not establish frosting. Additional bookshelves, framed decorations and a wall lamp appeared. No obvious person, visible key or readable door label was identified; this is not a guarantee that every small mark satisfies the lettering constraint. The missing desk prevents a content pass regardless of the successful file check. Original review forms remain pending for human annotation; no human ratings or cross-room coherence score were invented.
+
+Compatibility succeeded; scene fidelity did not fully satisfy the brief. Recommended the unchanged ten-image SDXL Turbo baseline (five rooms, seeds 42/43) before prompt tuning or comparative conclusions. The one-case smoke test remains separate evidence. No model was run by the assistant, no downloads occurred, and no software tests were rerun for this documentation-only review.
+
 ## Future entry template
+
 
 - Date/time and objective.
 - Decision and alternatives considered.

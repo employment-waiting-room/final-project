@@ -1,6 +1,6 @@
 # Shared media development comparison protocol
 
-Version: world-v2-media-protocol-v1, 22 September 2026. Preparation only: no model runs or human ratings have been collected under this protocol. Inputs are assistant-authored development material, not held-out evaluation or externally annotated ground truth.
+Version: world-v2-media-protocol-v1, 22 September 2026. Narrative development runs now exist; new image/speech comparison results and independent human ratings remain pending. Inputs are assistant-authored development material, not held-out evaluation or externally annotated ground truth. The image adapter is documented in image_trials.md; the speech adapter remains future work.
 
 ## Inputs and boundaries
 
@@ -12,7 +12,7 @@ Image candidates receive the same saved `prompt` for each room, including requir
 
 Speech candidates receive each saved `text` exactly, including punctuation. Fix one English-US voice per candidate before running; report model and voice separately. Do not alter words or pronunciation markup for one candidate within the baseline. Focus terms guide listening, but the whole passage must be checked. The draft was adapted to preserve toolbox closure and cover both rescue and shelter. These short passages test correctness; they do not establish latency for longer gameplay scenes.
 
-The old standalone feasibility scripts remain historical experiments with different scene facts. They do not consume this dataset. The new `observatory.evaluate_narrative` runner consumes the narrative cases; image/speech comparison adapters and any new model experiments remain subsequent work. Do not run the old scripts and label those outputs as results for these fixtures.
+The old standalone feasibility scripts remain historical experiments with different scene facts. They do not consume this dataset. `observatory.evaluate_narrative` consumes narrative cases; `observatory.evaluate_image` consumes the five image briefs. Speech adaptation remains future work. Do not label old-script outputs as results for these fixtures.
 
 ## Narrative contract and scoring
 
