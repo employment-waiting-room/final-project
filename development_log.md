@@ -498,6 +498,18 @@ Assistant inspection found Qwen's short prose consistent with the supplied facts
 
 The compatibility check established that both runtimes accepted and completed this request configuration, not that their outputs met the narrative contract. Recommended next: preserve the prompt/settings and run the full 64-request development baseline before tuning from one case. The user will run all model experiments; provide commands and request the saved folder path/errors. No inference, downloads, code changes or test reruns were performed during this review.
 
+## 41. Full narrative development baseline reviewed (22 September 2026)
+
+Reviewed the user-run generated/narrative-evaluations/20260922T121539136759Z-55b7d9bd: 64 completed requests, 16 cases per model over two repetitions/seeds 42 and 43, reversed candidate order, narrative-eval-v1 and Ollama 0.34.2. Dataset hash matched the compatibility check. Neither model hit the output limit or returned a runtime failure. The ten recorded errors were action/target contract validation failures, five per candidate, rather than connection failures.
+
+Qwen: schema 27/32, exact suggestions 27/32, correct visual brief 26/32, length check 7/32, complete structural pass 7/32 (21.9%). Gemma: schema 27/32, exact suggestions 5/32, correct visual brief 27/32, length check 13/32, complete structural pass 4/32 (12.5%). Component checks default to false when schema validation fails, so these are pipeline pass counts, not independent measurements of every description's length or brief. All seven Qwen structural successes were short rejected/unchanged cases; all four Gemma successes were the two endings repeated. These counts do not establish semantic accuracy.
+
+Assistant inspection identified material factual failures: Qwen A0010 and Gemma A0026/A0042 described a running generator immediately after fuse installation, contrary to the supplied stopped-generator facts. Both described the library door opening after unlocking despite the closed-door contract (Qwen A0006/A0054; Gemma A0022/A0038). Qwen A0063 claimed daylight restored power and that the carried library key was absent. Gemma added unsupported fuse amperage, control messages and lighting; its structurally passing A0046 described rescue vehicles visible through an opening in the explicitly enclosed dome. Qwen also omitted important outcome explanations in some short structural passes. These are assistant review observations; per-attempt human review forms and semantic scores remain pending, not completed independent annotation.
+
+Mean/median wall seconds were Qwen 1.244/1.129 and Gemma 1.138/0.912. Loading, different output lengths and two samples per case prevent a strong speed comparison. Maximum reported output token counts were 172 and 140 respectively against a 600-token allowance: no evidence supported increasing that allowance as a fix for short prose.
+
+Preserved the baseline and recommended a separately versioned, controlled narrative prompt improvement targeting outcome fidelity, explicit non-effects and length, rather than accepting these outputs for gameplay or weakening scores after seeing failures. Deterministic copying of suggestions/brief IDs is a possible later orchestration design choice, but must remain separate from raw-model baseline scoring. No prompt/code changes, model runs, downloads or test reruns occurred during this review. The user continues to execute all model experiments from supplied commands. Final model selection and systematic human narrative scoring remain outstanding.
+
 ## Future entry template
 
 - Date/time and objective.

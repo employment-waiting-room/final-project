@@ -53,7 +53,8 @@ Working world/action contract accepted on 21 September 2026, including shelter w
 - [x] Prepare five illustration briefs and ten exact narration passages with written quality rubrics. Saved in evaluation/media_development.json and evaluation/media_protocol.md; no generation or human ratings yet.
 - [x] Prepare 16 state-grounded narrative development cases with required/forbidden facts, validated post-action inputs, output schema and structural checks. Full software suite: 128 passed (22 September 2026).
 - [x] Implement a configurable model-only narrative runner for the 16 shared cases, with common prompts/settings, reversed candidate order across repetitions, saved raw outputs, structural scoring and pending human-review records. Validated using simulated responses; 150 software tests passed (22 September 2026).
-- [ ] Review narrative trial settings and obtain approval before the Qwen/Gemma narrative experiment; manually assess factuality/readability separately from automated structure checks.
+- [x] Review the user-run 64-request Qwen/Gemma narrative baseline. Structural passes: Qwen 7/32, Gemma 4/32; both produced factual errors. See development_log.md entry 41. These are development results, not semantic accuracy or final model selection.
+- [ ] Complete per-attempt human factuality/readability annotation separately from structure checks; consider a versioned narrative improvement with the baseline preserved. Supply commands for all user-run model experiments.
 - [ ] Implement image/speech comparison adapters for the shared media fixtures, review settings and obtain approval before inference. Existing feasibility scripts still use historical inputs.
 - [x] Reserve new intent phrasings and state combinations before further tuning; record provenance and annotation rules. Added 30 assistant-authored cases, a reservation hash and offline separation checks. These are unrun model inputs in known task families, not blind-author or independently annotated data.
 - [ ] Independently review reserved intent labels against the frozen contract before final evaluation; do not use reserved cases to tune prompts or rules. Reserve media evaluation material separately.
@@ -63,7 +64,7 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 ## 3. Compare candidates and demonstrate one integrated scene
 
 - [x] Implement a configurable model-only development intent runner with raw responses, error handling, exact intent scoring, reference outcome scoring and summaries by complexity/difficulty. Kept separate from gameplay confirmation.
-- [x] Run and review the Qwen3:4b development baseline before comparing an alternative language model. Recorded V1-JSON development results: Qwen 49/53, Gemma 42/53; narrative comparison and held-out evaluation remain outstanding.
+- [x] Run and review the Qwen3:4b development baseline before comparing an alternative language model. Recorded V1-JSON development results: Qwen 49/53, Gemma 42/53. An initial narrative comparison was also reviewed; systematic human narrative scoring and held-out evaluation remain outstanding.
 - [ ] Make model identity/configuration replaceable in the trial scripts and adapters; retain raw outputs, versions, prompts, failures, and resource/timing measurements.
 - [ ] Compare at least two feasible language candidates on the same development intent and narrative cases.
 - [ ] Compare at least two feasible image candidates on matching scene briefs and criteria.
