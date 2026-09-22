@@ -510,6 +510,14 @@ Mean/median wall seconds were Qwen 1.244/1.129 and Gemma 1.138/0.912. Loading, d
 
 Preserved the baseline and recommended a separately versioned, controlled narrative prompt improvement targeting outcome fidelity, explicit non-effects and length, rather than accepting these outputs for gameplay or weakening scores after seeing failures. Deterministic copying of suggestions/brief IDs is a possible later orchestration design choice, but must remain separate from raw-model baseline scoring. No prompt/code changes, model runs, downloads or test reruns occurred during this review. The user continues to execute all model experiments from supplied commands. Final model selection and systematic human narrative scoring remain outstanding.
 
+## 42. Controlled narrative prompt revision (22 September 2026)
+
+Implemented the authorised single revision as --prompt-version v2 (world-v2-narrative-eval-v2) in observatory/evaluate_narrative.py. Kept v1 as the default. The revised system prompt prioritised the actual verified outcome, preservation of negative/unchanged facts and inventory, separation of discoveries from possession, and avoidance of inferred next puzzle steps. It requested approximately 80 words within the existing 60-100 range for successful scenes, while retaining concise rejected/unchanged messages. No case-ID lookup or review checklist was inserted into model inputs.
+
+The prompt registry and CLI recorded the selected prompt identity and exact text in each run. Fixtures, schema, model settings, seeds, schedules, output limits and scoring stayed unchanged; suggestions and visual brief IDs were still evaluated as model outputs. This was development-informed prompt tuning, not a factuality guarantee or a gameplay fallback implementation. The original saved baseline remained comparison evidence.
+
+Validation: 153 software tests passed in 1.48 seconds with simulated responses. Added checks that v2 changes only the system message across all 16 cases, two candidate names and both seeds, that v1 remains default, that the selected prompt is saved and sent, and that unknown versions fail before output creation. Updated tasks.md and evaluation/README.md with the user-run comparison command and limitations. No model inference, downloads, commit or push occurred. Next: the user runs v2 and supplies the results path; assess factual failures as well as structural counts before any adoption. Do not continue prompt tuning indefinitely if this controlled revision fails.
+
 ## Future entry template
 
 - Date/time and objective.

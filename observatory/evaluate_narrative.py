@@ -30,13 +30,47 @@ Copy visual_brief_id exactly. Return only one JSON object with description,
 suggestions and visual_brief_id; no markdown or explanation outside that object.
 """
 CHECKS = ("schema_valid", "suggestions_valid", "visual_brief_valid", "length_valid")
+PROMPT_V2 = """Present one already-verified adventure outcome as grounded second-person prose.
+Return only JSON with description, suggestions and visual_brief_id.
+
+Treat input.public_facts and input.inventory as authoritative POST-ACTION facts.
+The action identifies what was attempted; outcome says whether it changed state,
+only observed it, was rejected, or was already completed (unchanged).
+Explain that specific outcome first. For rejection, explain the missing prerequisite
+only when supplied facts establish it. Do not invent a malfunction or player refusal.
+For unchanged, explain that the action added nothing and preserve the current facts.
+
+An action does not imply its usual next step. Never infer additional effects from
+the verb or story expectations. If a supplied fact says something remains closed,
+stopped, unaligned or not carried, preserve that fact even when the action suggests
+a familiar continuation. Report discoveries separately from possession. Retain every
+carried item; an empty inventory means nothing is carried, not inability to collect.
+Lighting sufficient for visibility does not imply electrical generation or restoration.
+Only supplied ending facts authorise an ending; do not add rescue events or movement.
+Do not invent directions, measurements, materials, displays, messages or scenery.
+
+For changed/observed scenes and endings, aim for 80 words in description alone,
+within 60-100 words. Use five or six complete sentences to explain the outcome,
+relevant location facts, inventory, what remains unchanged and unresolved progress.
+Use only supplied facts; do not pad with invented detail. For rejected/unchanged
+outcomes, use a concise 1-100-word explanation. Factual correctness comes first.
+Before returning, check the description against each supplied fact and the inventory,
+and check its length. Do not output this checking process.
+
+Copy every allowed_suggestions action/target pair exactly once into suggestions.
+These are possible next choices, not actions already performed. Do not abbreviate,
+repair or reinterpret their strings, add choices, or omit them. Keep an empty list
+empty. Copy visual_brief_id exactly. No markdown or extra fields.
+"""
+PROMPTS = {"v1": (PROMPT_VERSION, PROMPT),
+           "v2": ("world-v2-narrative-eval-v2", PROMPT_V2)}
 
 
-def make_request(fixture, model, seed=42, think=False):
+def make_request(fixture, model, seed=42, think=False, prompt_version="v1"):
     return {"model": model, "stream": False, "think": think,
             "format": NarrativeOutput.model_json_schema(),
             "options": {"temperature": 0.3, "seed": seed, "num_ctx": 4096, "num_predict": 600},
-            "messages": [{"role": "system", "content": PROMPT},
+            "messages": [{"role": "system", "content": PROMPTS[prompt_version][1]},
                          {"role": "user", "content": json.dumps(fixture.input.model_dump())}]}
 
 
@@ -106,7 +140,10 @@ def save(path, value):
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def run(client, dataset_path, output_root, models, repetitions=2, limit=None, seed=42, think=False):
+def run(client, dataset_path, output_root, models, repetitions=2, limit=None, seed=42, think=False,
+        prompt_version="v1"):
+    if prompt_version not in PROMPTS:
+        raise ValueError("Unknown narrative prompt version")
     if not models or any(not model.strip() for model in models) or len(set(models)) != len(models):
         raise ValueError("Provide distinct nonempty model names")
     if repetitions < 1 or (limit is not None and limit < 1):
@@ -130,9 +167,9 @@ def run(client, dataset_path, output_root, models, repetitions=2, limit=None, se
                 "dataset_version": dataset.version, "split": dataset.split,
                 "dataset_sha256": hashlib.sha256(dataset_path.read_bytes()).hexdigest(),
                 "protocol_sha256": hashlib.sha256(PROTOCOL.read_bytes()).hexdigest(),
-                "prompt_version": PROMPT_VERSION, "prompt": PROMPT,
+                "prompt_version": PROMPTS[prompt_version][0], "prompt": PROMPTS[prompt_version][1],
                 "schema": NarrativeOutput.model_json_schema(), "schedule": schedule,
-                "generation_options": make_request(fixtures[0], models[0], seed, think)["options"],
+                "generation_options": make_request(fixtures[0], models[0], seed, think, prompt_version)["options"],
                 "think": think, "repetitions": repetitions,
                 "partial_dataset": len(fixtures) != len(dataset.narratives),
                 "planned_attempts": len(schedule), "completed_attempts": 0,
@@ -157,7 +194,7 @@ def run(client, dataset_path, output_root, models, repetitions=2, limit=None, se
         with (folder / "results.jsonl").open("x", encoding="utf-8") as output:
             for attempt in schedule:
                 fixture = lookup[attempt["fixture_id"]]
-                request = make_request(fixture, attempt["model"], attempt["seed"], think)
+                request = make_request(fixture, attempt["model"], attempt["seed"], think, prompt_version)
                 save(folder / "requests" / f"{attempt['attempt_id']}.json", request)
                 record = {**evaluate_case(client, fixture, request), **attempt}
                 output.write(json.dumps(record, ensure_ascii=False) + "\n")
@@ -191,13 +228,15 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--timeout", type=float, default=180)
     parser.add_argument("--think", action="store_true")
+    parser.add_argument("--prompt-version", choices=sorted(PROMPTS), default="v1")
     args = parser.parse_args()
     if args.repetitions < 1 or (args.limit is not None and args.limit < 1) or not 0 < args.timeout < float("inf"):
         parser.error("Repetitions, limit and finite timeout must be positive")
     if len(set(args.models)) != len(args.models) or any(not m.strip() for m in args.models):
         parser.error("Provide distinct nonempty model names")
     with httpx.Client(base_url="http://127.0.0.1:11434", timeout=args.timeout, trust_env=False) as client:
-        folder = run(client, args.dataset, args.output, args.models, args.repetitions, args.limit, args.seed, args.think)
+        folder = run(client, args.dataset, args.output, args.models, args.repetitions, args.limit,
+                     args.seed, args.think, args.prompt_version)
     print(f"Saved narrative development results: {folder}")
 
 

@@ -35,6 +35,16 @@ Read [media_protocol.md](media_protocol.md) for per-role scoring, rating anchors
 
 ## Narrative development comparison runner
 
+Narrative `--prompt-version v2` is a development-informed candidate added after the 64-request v1 baseline. It emphasises the actual outcome, preservation of explicit non-effects/inventory, no inferred puzzle steps, and the existing description length. Only system-prompt text changes; source cases, schema, generation settings, schedule and scoring remain identical. Original `v1` remains the default. No improvement is established until the user runs and reviews the comparison.
+
+User-run revised comparison (64 requests, no downloads):
+
+```powershell
+.\.venv\Scripts\python.exe -m observatory.evaluate_narrative --models qwen3:4b gemma3:4b --prompt-version v2
+```
+
+Compare against preserved v1 run `20260922T121539136759Z-55b7d9bd`. Send the saved folder path and any errors for review. A fresh v1 control can be run with the same command and `--prompt-version v1` if runtime variation needs investigation; it adds another 64 requests. Do not claim a pure timing comparison when loading/cache conditions differ. This is one controlled prompt revision using known development failures, not held-out validation. Keep structural checks and human factuality review separate; do not promote v2 just for better length compliance. Further prompt tuning is not automatically authorised.
+
 `observatory/evaluate_narrative.py` compares explicitly named installed Ollama candidates using identical narrative inputs, the versioned `world-v2-narrative-eval-v1` prompt and `NarrativeOutput` schema. It never interprets player actions or applies a gameplay transition. The selected outcome has already been determined by the fixture. Human review labels are excluded from model requests.
 
 Commands below are for a **subsequently authorised model experiment**, not part of the completed implementation/test work. With Ollama running and candidates already installed:

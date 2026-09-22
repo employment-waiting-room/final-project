@@ -8,6 +8,43 @@ from observatory.evaluate_narrative import evaluate_case, make_request, run, sum
 from observatory.media_fixtures import MEDIA_DATA, load_media
 
 
+def test_prompt_revision_changes_only_system_text_for_all_cases():
+    from observatory.evaluate_narrative import PROMPT, PROMPT_VERSION, PROMPTS
+    assert PROMPTS["v1"] == (PROMPT_VERSION, PROMPT)
+    for fixture in load_media().narratives:
+        for model in ("qwen3:4b", "gemma3:4b"):
+            for seed in (42, 43):
+                baseline = make_request(fixture, model, seed)
+                assert baseline == make_request(fixture, model, seed, prompt_version="v1")
+                revised = make_request(fixture, model, seed, prompt_version="v2")
+                assert revised["messages"][0] != baseline["messages"][0]
+                revised["messages"][0] = baseline["messages"][0]
+                assert revised == baseline
+
+
+def test_revised_prompt_is_saved_and_sent(tmp_path):
+    from observatory.evaluate_narrative import PROMPTS
+    sent = []
+    def respond(request):
+        if request.method == "GET": return httpx.Response(200, json={})
+        payload = json.loads(request.content)
+        sent.append(payload)
+        return httpx.Response(200, json=body_for(payload))
+    with httpx.Client(base_url="http://test", transport=httpx.MockTransport(respond)) as client:
+        folder = run(client, MEDIA_DATA, tmp_path, ["mock"], repetitions=1, limit=1, prompt_version="v2")
+    manifest = json.loads((folder / "manifest.json").read_text())
+    assert manifest["prompt_version"] == PROMPTS["v2"][0]
+    assert manifest["prompt"] == sent[0]["messages"][0]["content"] == PROMPTS["v2"][1]
+    assert json.loads((folder / "requests/A0001.json").read_text()) == sent[0]
+
+
+def test_unknown_prompt_rejected_before_output(tmp_path):
+    with httpx.Client() as client:
+        with pytest.raises(ValueError, match="prompt version"):
+            run(client, MEDIA_DATA, tmp_path, ["mock"], prompt_version="unknown")
+    assert not list(tmp_path.iterdir())
+
+
 def body_for(request):
     facts = json.loads(request["messages"][1]["content"])
     return {"done": True, "done_reason": "stop", "load_duration": 123,
