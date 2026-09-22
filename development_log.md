@@ -626,6 +626,14 @@ Non-blind assistant image inspection found a closed wooden door, bookshelves and
 
 Recommended the unchanged ten-image SD-Turbo baseline on the same five briefs/seeds before drawing comparative conclusions. No model execution or downloads were performed by the assistant, and no software tests were rerun for this documentation-only review.
 
+## 55. Full SD-Turbo image baseline reviewed (22 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260922T211752221105Z-757a7092 and viewed all ten images. Runtime and 512x512 PNG integrity both passed 10/10. Mean load-inclusive wall time was 3.004 seconds (2.909–3.308; total 30.036), compared with SDXL's 13.388-second mean in a separate session. Verified equal dataset/protocol hashes, scheduled prompts and seeds. These are descriptive timings, not a controlled warm-inference benchmark.
+
+Saved per-image non-blind assistant observations in evaluation/assistant_reviews/image_sd_turbo_baseline.md. Missing/unclear desks, stairs, toolboxes and beacon housings persisted. Seed-43 hall visibly opened the door and added lettering; seed-43 telescope image was outdoors with open sky, violating its enclosed-dome brief. Other ambiguous panel markings and object identities were left for human judgement. No semantic pass rate or independent ratings were invented; original human review forms remain pending. The hall seed-42 hash matched the prior smoke result.
+
+Two image candidates now have full shared development baselines. Neither is selected as a final winner. Proposed next: prepare SD 1.5 checkpoint/configuration and user-run smoke commands while keeping existing prompts/results unchanged. No models were executed or downloaded by the assistant, and no software test rerun was needed for this documentation-only review.
+
 ## Future entry template
 
 
