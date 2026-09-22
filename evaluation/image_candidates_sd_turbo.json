@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sd-turbo",
+    "model": "stabilityai/sd-turbo",
+    "checkpoint": "models/sd_turbo.safetensors",
+    "revision": "b261bac6fd2cf515557d5d0707481eafa0485ec2",
+    "steps": 4,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "sgm_uniform"
+  }
+]

@@ -612,6 +612,12 @@ Saved a separately labelled non-blind assistant inspection in evaluation/assista
 
 Next: prepare the second image candidate, SD-Turbo, checking exact artifact/licence and pinned-runtime settings before user-managed download/inference. Keep the current baseline unchanged for comparison. No model was run or downloaded by the assistant; this documentation-only review required no software test rerun.
 
+## 53. Second image candidate prepared (22 September 2026)
+
+Prepared evaluation/image_candidates_sd_turbo.json without changing SDXL defaults or baseline evidence. Verified the official SD-Turbo repository revision b261bac6fd2cf515557d5d0707481eafa0485ec2, approximately 5.21 GB single-file checkpoint and published SHA-256 3f067a1b943cf162f2b8f8588f6cf5824bd5b4c7d1d88d87164b9ca123616549. Recorded revision-specific Community License provenance and pinned-runtime documented SD-Turbo support. Documentation is not a successful local compatibility test.
+
+Retained shared four-step, CFG 1, Euler/sgm_uniform, 512px settings and unchanged prompts/seeds for the initial smoke test. These are trial settings, not claimed optimal values. Added resumable user-managed download commands with hash verification, licence retention and a one-image run. Full baseline follows smoke review; separate sessions limit timing comparisons. No weights downloaded, models run, dependencies installed, commits or pushes performed by the assistant. Configuration validation uses offline preview; gameplay and evaluator source are unchanged.
+
 ## Future entry template
 
 

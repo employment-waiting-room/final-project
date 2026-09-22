@@ -36,6 +36,32 @@ Generated evidence remains Git-ignored. Preserve the entire selected folder for 
 
 ## Five-candidate target
 
+### SD-Turbo preparation (22 September)
+
+Separate configuration: `evaluation/image_candidates_sd_turbo.json`. The default SDXL configuration and saved baseline remain unchanged. Pinned revision: `b261bac6fd2cf515557d5d0707481eafa0485ec2`; single-file `sd_turbo.safetensors`, approximately 5.21 GB. Published SHA-256: `3f067a1b943cf162f2b8f8588f6cf5824bd5b4c7d1d88d87164b9ca123616549`. [Pinned artifact metadata](https://huggingface.co/stabilityai/sd-turbo/blob/b261bac6fd2cf515557d5d0707481eafa0485ec2/sd_turbo.safetensors).
+
+The pinned runtime's [README](https://github.com/leejet/stable-diffusion.cpp/blob/d04e895/README.md) lists SD-Turbo support. Actual compatibility remains to be tested locally. Four steps, CFG 1, Euler and sgm_uniform are retained as the shared trial configuration, not claimed as an optimised SD-Turbo setup. The model is designed for 1–4 steps; the runtime CFG convention differs from Diffusers' guidance setting. No negative prompt is added, and the exact fixture prompt remains unchanged. Any compatibility adjustment must be documented before the full baseline.
+
+Licence provenance: the pinned repository contains the Stability AI Community License (July 5, 2024), not Apache/MIT weights. Retain and review the [revision-specific licence](https://huggingface.co/stabilityai/sd-turbo/blob/b261bac6fd2cf515557d5d0707481eafa0485ec2/LICENSE.md), including distribution/attribution terms, separately from the MIT runtime licence. Model file size does not establish RAM/VRAM requirements.
+
+User-managed download from project root (no package installation required). The `.part` file supports resuming; the final filename is only created after hash verification. An existing final file is verified rather than overwritten:
+
+```powershell
+$sdTurboBase = 'https://huggingface.co/stabilityai/sd-turbo/resolve/b261bac6fd2cf515557d5d0707481eafa0485ec2'
+if (-not (Test-Path 'models/sd_turbo.safetensors')) {
+    curl.exe -L --fail --retry 3 -C - -o models/sd_turbo.safetensors.part "$sdTurboBase/sd_turbo.safetensors"
+    if ($LASTEXITCODE -ne 0) { throw 'Download failed; retain the partial file and report the error.' }
+    if ((Get-FileHash models/sd_turbo.safetensors.part -Algorithm SHA256).Hash -ne '3f067a1b943cf162f2b8f8588f6cf5824bd5b4c7d1d88d87164b9ca123616549') { throw 'Checkpoint hash mismatch; do not run.' }
+    Move-Item -LiteralPath models/sd_turbo.safetensors.part -Destination models/sd_turbo.safetensors
+}
+if ((Get-FileHash models/sd_turbo.safetensors -Algorithm SHA256).Hash -ne '3f067a1b943cf162f2b8f8588f6cf5824bd5b4c7d1d88d87164b9ca123616549') { throw 'Checkpoint hash mismatch; do not run.' }
+curl.exe -L --fail -o models/sd_turbo-LICENSE.md "$sdTurboBase/LICENSE.md"
+if ($LASTEXITCODE -ne 0) { throw 'Licence download failed.' }
+.\.venv\Scripts\python.exe -m observatory.evaluate_image --config evaluation/image_candidates_sd_turbo.json --execute --limit 1 --repetitions 1
+```
+
+Send the saved folder path and any error. Only after smoke review, run the full ten-image trial with the same command minus `--limit 1 --repetitions 1`. This is a separate session from SDXL, so compare visual content first; timings are not a controlled interleaved benchmark. No downloads or inference were performed while preparing this configuration.
+
 The target is five distinct checkpoints per data space, not five unrelated architectures. Image candidates: SDXL Turbo, SD-Turbo, SD 1.5, SDXL Base 1.0 and DreamShaper 8 (a fine-tune). The shared 512px canvas tests the application constraint, not native-resolution superiority. Alternative compatibility, exact artifacts/licences, settings and resource fit remain unverified; no alternative downloads were performed.
 
 Primary model cards checked for this shortlist: [SD-Turbo](https://huggingface.co/stabilityai/sd-turbo), [SD 1.5](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5), [SDXL Base](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0), [DreamShaper 8](https://huggingface.co/Lykon/dreamshaper-8). Model-card examples do not prove pinned-runtime compatibility; do not blindly transfer Diffusers guidance values to another runtime.
