@@ -558,6 +558,16 @@ All five failed the single compound fixture, with differing wrong responses. Phi
 
 Qwen and Phi are reasonable provisional language finalists when considering intent alongside narrative evidence, but narrative structural scores do not establish factual correctness. Systematic human narrative review, hardware/resource evidence and final selection remain outstanding. Updated tasks.md to distinguish completed five-candidate model runs from unfinished semantic evaluation. No model runs, downloads, code changes or test reruns occurred during this review.
 
+## 47. Systematic assistant review of language finalists (22 September 2026)
+
+Reviewed all 64 saved v2 descriptions for Qwen (run 20260922T134438589698Z-50579097) and Phi (run 20260922T200831838642Z-53330a53), using the per-case required/forbidden facts, supplied post-action input and world contract. Recorded full annotations in evaluation/assistant_reviews/narrative_v2_finalists.json and a readable report in narrative_v2_finalists.md. Original model outputs, structural scores and pending human-review forms were not modified.
+
+Assistant factual judgements: Qwen 14 pass, 10 fail, eight uncertain; Phi four pass, 23 fail, five uncertain. Outputs with definite violations: Qwen ten, Phi 21; Phi also had two required-fact failures without a definite invented claim. Only five Qwen and three Phi outputs passed both original structure and this review. Each entry records required-fact judgements, exact issue quotations, rationale and a readability rating; uncertain cases were not counted as passes. These are non-blind assistant annotations informed by development experience, not independent human ratings, model-evaluator scores or held-out accuracy.
+
+Qwen was the stronger provisional finalist in this review, but still opened doors after unlocking, invented route closures and sometimes contradicted generator state. Phi additionally invented access prerequisites, a person occupying the shelter bench and key use on the signalling console. The report flagged borderline wording about opening a locked door with a carried key, daylight without power, exploration history and before/after socket state for developer judgement. Kept style preference separate from correctness.
+
+The offline scripts/record_finalist_review.py materialised explicitly authored annotations, checked exact coverage of 32 samples per candidate, required-checklist lengths and the presence of every quoted excerpt in its source description, and recorded source hashes. It did not run models or classify prose automatically. Its assertions passed; no software test suite rerun was needed because gameplay/evaluator code was unchanged. Updated tasks.md and a targeted Git ignore exception for the review report. No downloads, model runs, commits or pushes occurred. Developer review, final selection and gameplay narrative safeguards remain outstanding.
+
 ## Future entry template
 
 - Date/time and objective.

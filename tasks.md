@@ -73,6 +73,8 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [x] Review full narrative v2 development trials for five language candidates: Qwen, Gemma, Llama, Phi and Granite. All showed factual failures; structural counts are not semantic accuracy. See log entry 45.
 - [x] Review shared v1-json intent trials for all five language candidates: Qwen 49/53, Phi 48/53, Gemma 42/53, Llama 36/53, Granite 27/53. Verified saved requests matched except model identity; see log entry 46.
 - [ ] Complete systematic human narrative review and resource/feasibility assessment before final language-model selection; Qwen and Phi are provisional finalists, not proven winners. All model execution is user-run.
+- [x] Complete a separately labelled assistant review of all 64 Qwen/Phi v2 narratives with per-case evidence and uncertain judgements. Qwen: 14 pass/10 fail/8 uncertain; Phi: 4 pass/23 fail/5 uncertain. See evaluation/assistant_reviews/narrative_v2_finalists.md; this does not complete independent human evaluation.
+- [ ] Obtain developer judgement on the flagged narrative ambiguities and record style preference separately. Qwen remains the provisional recommendation; final selection and bounded gameplay safeguards are not complete.
 - [ ] Compare at least two feasible image candidates on matching scene briefs and criteria.
 - [ ] Compare Piper and a feasible alternative speech model on the same passages and listening criteria.
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
