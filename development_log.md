@@ -618,6 +618,14 @@ Prepared evaluation/image_candidates_sd_turbo.json without changing SDXL default
 
 Retained shared four-step, CFG 1, Euler/sgm_uniform, 512px settings and unchanged prompts/seeds for the initial smoke test. These are trial settings, not claimed optimal values. Added resumable user-managed download commands with hash verification, licence retention and a one-image run. Full baseline follows smoke review; separate sessions limit timing comparisons. No weights downloaded, models run, dependencies installed, commits or pushes performed by the assistant. Configuration validation uses offline preview; gameplay and evaluator source are unchanged.
 
+## 54. SD-Turbo smoke test reviewed (22 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260922T211618420896Z-fb3ca221. The single entrance-hall attempt completed with exit code zero and passed 512x512 PNG integrity checks. Saved checkpoint SHA-256 matched the pinned published hash. Four-step Euler/sgm_uniform, CFG 1 execution succeeded through Vulkan. Load-inclusive wall time was 4.147 seconds; runtime sampling was 0.46 seconds and VAE decoding 0.61 seconds. This one separate-session sample is not a controlled speed comparison with SDXL or a whole-system resource measurement.
+
+Non-blind assistant image inspection found a closed wooden door, bookshelves and muted grey/brown scenery. No clear high frosted glazing was visible. A partially cropped side table does not establish the required dusty desk. A plaque on the door contains text-like marks; readable words are unclear, so a readable-label violation was not asserted, but the no-lettering constraint needs human judgement. The smoke test establishes compatibility, not visual-content success. Original human review fields remain pending.
+
+Recommended the unchanged ten-image SD-Turbo baseline on the same five briefs/seeds before drawing comparative conclusions. No model execution or downloads were performed by the assistant, and no software tests were rerun for this documentation-only review.
+
 ## Future entry template
 
 
