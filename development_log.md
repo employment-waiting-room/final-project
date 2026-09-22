@@ -548,6 +548,16 @@ Targeted assistant review of discovery, collection, unlocking, fuse installation
 
 Mean/median wall seconds: Llama 0.944/0.927, Phi 1.148/1.150, Granite 0.998/1.002. Loading/cache and output-length differences limit comparisons to previous sessions. Five language candidates now have full narrative development trials, while only Qwen/Gemma have full intent results. Recommended next: user-run v1-json intent evaluations for Llama, Phi and Granite on the unchanged 53-case development set (159 requests total), then combine separate intent results and narrative review before selection. No models were run or downloaded by the assistant; no code changes or test reruns occurred during review.
 
+## 46. Five-candidate intent comparison completed (22 September 2026)
+
+Reviewed the three user-run intent folders, in command order: 20260922T201322393986Z-d70c9f9d (Llama3.2:3b), 20260922T201343273929Z-432f3af8 (Phi4-mini:3.8b), and 20260922T201407368129Z-0de4ecab (Granite3.3:2b). Each contained 53 development attempts with v1-explicit-json. Compared every saved request with the successful Qwen baseline, excluding only the model field: all matched for all three candidates and the earlier Gemma comparison. Thus prompts, cases, schema and requested generation settings were shared; this does not establish equivalent internal runtime behaviour or equal per-model tuning.
+
+Exact intent results across five candidates: Qwen 49/53 (92.5%), Phi 48/53 (90.6%), Gemma 42/53 (79.2%), Llama 36/53 (67.9%), Granite 27/53 (50.9%). Contract-valid outputs: Qwen/Phi/Llama 53/53, Gemma 43/53, Granite 42/53. Llama's 17 mistakes were false unsupported classifications, including supported movement/endings and cases requiring clarification. Phi passed all 31 direct cases and five of six ambiguous cases, but misclassified the compound request, unspecified use-key, entering the library, shelter paraphrase and simple surroundings paraphrase. Granite combined false unsupported predictions with eleven output-contract validation failures and incorrect substitutions. No output-contract errors were relabelled as successful rejection.
+
+All five failed the single compound fixture, with differing wrong responses. Phi handled more ambiguous cases than Qwen (5/6 versus 3/6), while Qwen handled all eleven paraphrases versus Phi's eight. The one-case overall difference is insufficient to declare a universal winner. These are small development samples with known duplicates, and the shared prompt was originally tuned using Qwen evidence. Preserved results are not held-out accuracy.
+
+Qwen and Phi are reasonable provisional language finalists when considering intent alongside narrative evidence, but narrative structural scores do not establish factual correctness. Systematic human narrative review, hardware/resource evidence and final selection remain outstanding. Updated tasks.md to distinguish completed five-candidate model runs from unfinished semantic evaluation. No model runs, downloads, code changes or test reruns occurred during this review.
+
 ## Future entry template
 
 - Date/time and objective.

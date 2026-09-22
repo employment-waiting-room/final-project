@@ -71,7 +71,8 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [ ] Make model identity/configuration replaceable in the trial scripts and adapters; retain raw outputs, versions, prompts, failures, and resource/timing measurements.
 - [ ] Compare at least two feasible language candidates on the same development intent and narrative cases.
 - [x] Review full narrative v2 development trials for five language candidates: Qwen, Gemma, Llama, Phi and Granite. All showed factual failures; structural counts are not semantic accuracy. See log entry 45.
-- [ ] Complete shared v1-json intent trials for Llama, Phi and Granite, then assess intent and independently reviewed narration separately before selection. All model execution is user-run.
+- [x] Review shared v1-json intent trials for all five language candidates: Qwen 49/53, Phi 48/53, Gemma 42/53, Llama 36/53, Granite 27/53. Verified saved requests matched except model identity; see log entry 46.
+- [ ] Complete systematic human narrative review and resource/feasibility assessment before final language-model selection; Qwen and Phi are provisional finalists, not proven winners. All model execution is user-run.
 - [ ] Compare at least two feasible image candidates on matching scene briefs and criteria.
 - [ ] Compare Piper and a feasible alternative speech model on the same passages and listening criteria.
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
