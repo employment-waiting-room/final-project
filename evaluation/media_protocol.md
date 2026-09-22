@@ -12,11 +12,11 @@ Image candidates receive the same saved `prompt` for each room, including requir
 
 Speech candidates receive each saved `text` exactly, including punctuation. Fix one English-US voice per candidate before running; report model and voice separately. Do not alter words or pronunciation markup for one candidate within the baseline. Focus terms guide listening, but the whole passage must be checked. The draft was adapted to preserve toolbox closure and cover both rescue and shelter. These short passages test correctness; they do not establish latency for longer gameplay scenes.
 
-The old standalone feasibility scripts remain historical experiments with different scene facts. They do not yet consume this dataset. A comparison runner/adapters and any new model experiments require subsequent work. Do not run the old scripts and label those outputs as results for these fixtures.
+The old standalone feasibility scripts remain historical experiments with different scene facts. They do not consume this dataset. The new `observatory.evaluate_narrative` runner consumes the narrative cases; image/speech comparison adapters and any new model experiments remain subsequent work. Do not run the old scripts and label those outputs as results for these fixtures.
 
 ## Narrative contract and scoring
 
-For a later comparison, freeze a common prompt instructing candidates to narrate only supplied facts and outcomes, preserve inventory and world state, return every supplied suggestion exactly once, copy the supplied visual brief ID, and emit only JSON matching `NarrativeOutput.model_json_schema()`:
+The runner's initial common prompt, `world-v2-narrative-eval-v1`, instructs candidates to narrate only supplied facts and outcomes, preserve inventory and world state, return every supplied suggestion exactly once, copy the supplied visual brief ID, and emit only JSON matching `NarrativeOutput.model_json_schema()`. It is versioned and saved verbatim per run, but its quality has not yet been measured:
 
 ```json
 {
@@ -32,7 +32,7 @@ Record these measures separately for every attempt:
 
 | Measure | Rule |
 | --- | --- |
-| Completion | HTTP/runtime completed without timeout, truncation or other generation error; future runner records this independently of content checks |
+| Completion | HTTP/runtime completed without timeout, truncation or other generation error; the narrative runner records this independently of content checks |
 | Schema | Strict JSON contract, no unknown fields; valid action/target pairs |
 | Suggestions | Exact set supplied in input, no extras, omissions or duplicates |
 | Illustration reference | Exact supplied visual brief ID |

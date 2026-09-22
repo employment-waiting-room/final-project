@@ -31,7 +31,35 @@ All cases in `development.json` are development material. Do not report them as 
 
 `scripts/build_media_fixtures.py` reproduces the dataset and refuses to overwrite the saved file. `observatory/media_fixtures.py` defines strict fixture/output schemas and structural narrative checks. Its `check_narrative` function checks JSON, exact suggestion pairs, visual brief identity and description length; semantic review remains pending until a person reviews the prose. For later model input, use only each narrative fixture's `input` field. Required-fact and forbidden-claim checklists are reviewer material. Image prompts intentionally include their design constraints; speech uses the exact saved passage.
 
-Read [media_protocol.md](media_protocol.md) for per-role scoring, rating anchors, evidence requirements, proposed repeats, timing rules and limitations. This is development preparation only. Existing standalone feasibility scripts remain unchanged and do not consume this dataset. Comparison runners/adapters, authorised inference, human ratings and separate media holdouts remain outstanding. These files do not integrate models into gameplay or establish candidate quality.
+Read [media_protocol.md](media_protocol.md) for per-role scoring, rating anchors, evidence requirements, proposed repeats, timing rules and limitations. Existing standalone feasibility scripts remain unchanged and do not consume this dataset. The narrative runner below now consumes it; image/speech comparison adapters, authorised inference, human ratings and separate media holdouts remain outstanding. These files do not integrate models into gameplay or establish candidate quality.
+
+## Narrative development comparison runner
+
+`observatory/evaluate_narrative.py` compares explicitly named installed Ollama candidates using identical narrative inputs, the versioned `world-v2-narrative-eval-v1` prompt and `NarrativeOutput` schema. It never interprets player actions or applies a gameplay transition. The selected outcome has already been determined by the fixture. Human review labels are excluded from model requests.
+
+Commands below are for a **subsequently authorised model experiment**, not part of the completed implementation/test work. With Ollama running and candidates already installed:
+
+```powershell
+# Full proposed comparison: 16 cases x 2 models x 2 repetitions = 64 requests.
+.\.venv\Scripts\python.exe -m observatory.evaluate_narrative --models qwen3:4b gemma3:4b
+# Optional separate compatibility check: two requests, explicitly partial.
+.\.venv\Scripts\python.exe -m observatory.evaluate_narrative --models qwen3:4b gemma3:4b --limit 1 --repetitions 1
+```
+
+Defaults: two repetitions, seeds 42/43, temperature 0.3, 4096-token context, 600-token output budget, thinking disabled and 180-second per-request HTTP timeout. Candidate order reverses on alternate repetitions; each candidate processes its selected cases in one block. `--models` is required; `--repetitions`, `--limit`, `--seed`, `--timeout`, `--think`, `--dataset` and `--output` are configurable. Prompt/schema and other generation settings remain common to all candidates. This configuration has been tested only with simulated responses; runtime compatibility, token-budget adequacy and narrative quality still need measurement. Nothing downloads models.
+
+Each unique folder under `generated/narrative-evaluations/` preserves:
+
+- `manifest.json`: exact prompt/schema, dataset/protocol hashes, model names, available runtime/model-inventory metadata (including whatever digests Ollama reports), environment, timeout, generation settings, full schedule and run status.
+- `dataset.json` and `protocol.md`: exact snapshots used for the run, including review-only material that is not sent to the model.
+- `requests/Axxxx.json`: exact request saved before inference, so a pending interrupted request remains identifiable.
+- `results.jsonl`: one flushed row per returned/failed attempt, including request, raw HTTP response when available, content, errors, structural checks, wall time and available Ollama timing/token fields. Failures continue to the next scheduled attempt; there are no retries, silent corrections or fallback outputs.
+- `reviews/Axxxx.json`: editable required-fact and forbidden-claim checklists, contradiction/addition findings, readability, reviewer/date and notes, all initially pending/null. Match the attempt ID to `results.jsonl` to inspect prose. Do not mark unreviewed fields as passing or fill in ratings for missing output.
+- `summary.json`: structural pass counts/rates and wall-time summaries overall and by model, with first-in-block versus later-in-block timings separated. Semantic pass rates remain null. This summary does not ingest completed human-review files; review aggregation is separate future work.
+
+Every recorded attempt, including HTTP, timeout, truncation and schema failures, stays in structural-score denominators. Completed HTTP requests can fail structural checks. Valid JSON can still contain false prose. Metadata failures are explicit; missing timing values remain null rather than zero. Ollama duration fields are retained in their raw nanosecond units; wall seconds include the whole attempt. First calls are not proven cold and later calls are not proven warm. No RAM/VRAM sampling or automatic human scoring is implemented.
+
+Interrupted runs retain completed rows, request files and partial summaries, with `status=interrupted`. An in-flight request interrupted before a result is recorded is identifiable from the schedule/request files and is excluded from the recorded-attempt denominator; do not report the partial summary as a completed comparison. Run completion means the schedule finished, not that predictions passed. Do not use narrative results to claim intent accuracy, held-out generalisation or gameplay correctness. Generated run folders remain Git-ignored and must be preserved deliberately for submission.
 
 ## Reserved intent evaluation (22 September 2026)
 

@@ -478,6 +478,18 @@ Validation: 128 software tests passed in 1.45 seconds, including fixture reprodu
 
 Next proposed implementation: a configurable narrative comparison runner consuming these inputs, preserving raw outputs and human-review fields; then review settings and obtain approval for a Qwen/Gemma narrative trial. Image/speech adapters and trials follow the same protocol. These fixtures and software tests are preparation, not measured model-selection evidence.
 
+## 39. Configurable narrative comparison runner (22 September 2026)
+
+Implemented the authorised runner in observatory/evaluate_narrative.py against the 16 shared media narrative cases. Each candidate received the same post-action input, schema and initial world-v2-narrative-eval-v1 prompt. Defaults were documented as temperature 0.3, context 4096, output budget 600, thinking disabled, timeout 180 seconds and two repetitions with seeds 42/43. Candidate order reversed on alternate repetitions; model names were explicit CLI arguments. These settings were implementation defaults, not measured optimal settings or authorisation to run an experiment.
+
+Saved exact requests before inference, raw responses/content/errors, completion and structural checks, available Ollama metrics, model/runtime inventory metadata, environment, dataset/protocol snapshots and hashes, and the complete planned schedule. Flushed each result immediately. Added pending human-review records for required facts, forbidden claims, contradiction/addition evidence and readability. Summary scores covered recorded attempts including failures, with semantic scores left null; no automated truth claim or human-review aggregation was added. Interrupted runs retained completed rows, pending request evidence and an explicitly partial summary.
+
+Kept evaluation independent of gameplay and intent scoring, with no retries, fallback substitution or best-output selection. Runtime timing fields retained raw units and absent values remained null; first-in-block and later-in-block wall times were separated without assuming cold/warm status. RAM/VRAM sampling and candidate compatibility remained unverified. Image/speech comparison adapters and review aggregation remained outstanding.
+
+Validation: 150 software tests passed in 1.03 seconds using simulated HTTP responses. Tests covered equivalent candidate requests, exclusion of review labels, model-only boundaries, output-contract failures, timeouts, HTTP/malformed responses, truncation, error denominators, reversed scheduling, seed changes, pending reviews, metadata failures, interruption recovery and rejection of invalid configurations/dataset splits before network access. The approved Windows launcher ran the offline tests outside the sandbox. No model inference, downloads, gameplay changes, commit or push occurred. Updated tasks.md, evaluation/README.md and media_protocol.md with settings, commands and evidence limitations.
+
+Next: review the proposed 64-request Qwen/Gemma comparison (or a separately labelled two-request compatibility check), then obtain authorisation before running models. Structural results must be followed by human factuality/readability review before model-selection claims.
+
 ## Future entry template
 
 - Date/time and objective.
