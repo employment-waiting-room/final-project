@@ -530,6 +530,14 @@ Mean/median wall seconds were Qwen 1.358/1.189 and Gemma 1.786/1.609, versus v1 
 
 Kept both prompt versions and the v1 default unchanged. Recommended stopping further prompt expansion after this authorised revision and planning bounded gameplay narrative validation/factual fallback, with engine-owned suggestions and illustration IDs. Such structural ownership would remove copying failures from gameplay, not retroactively improve model-only scores. Factual checks must disclose their limits; arbitrary prose truth cannot be guaranteed by schema or simple keyword rules. No code/prompt changes, model runs, downloads or test reruns occurred during review. Updated tasks.md; next implementation requires user authorisation, and model experiments remain user-run.
 
+## 44. Three additional language candidates checked (22 September 2026)
+
+Reviewed the user-run narrative compatibility check in generated/narrative-evaluations/20260922T200559373288Z-421f7bc8. Llama3.2:3b, Phi4-mini:3.8b and Granite3.3:2b each completed N01 with narrative v2, seed 42, Ollama 0.34.2 and the existing shared settings. All three returned valid contracts, exact suggestions and correct brief IDs without runtime errors. Llama wrote 55 words and Phi 57, failing only the minimum length; Granite wrote 62 and passed structure.
+
+Assistant prose inspection found no obvious state contradiction in the Llama or Phi samples. Granite claimed the area was dark despite the supplied diffuse daylight and used the inconsistent phrase 'generator hums lifelessly' for a stopped generator. Structural success therefore did not establish semantic superiority. Human-review records remain pending. Wall times were approximately 6.157, 5.040 and 3.995 seconds, including reported model loading of 5.066, 3.796 and 2.777 seconds respectively; these are not warm-inference speed comparisons.
+
+These three candidates now have one-case compatibility evidence, not full narrative or intent comparisons. Recommended the user run the unchanged full narrative v2 suite for all three (96 requests) before drawing model-selection conclusions. No model runs, downloads, code changes or test reruns occurred during this review. The expanded five-candidates-per-data-space goal is evaluation scope; image/speech candidate testing remains outstanding.
+
 ## Future entry template
 
 - Date/time and objective.
