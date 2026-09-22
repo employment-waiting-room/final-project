@@ -37,7 +37,7 @@ Gate: candidate identities, practical constraints, and the next experiments are 
 
 ## 2. Define the world, action contract, and evaluation fixtures
 
-Working world/action contract accepted on 21 September 2026, including shelter with restored power but without manual reading or beacon alignment. evaluation/development.json now contains 53 validated development cases: 24 state/action cases, 20 intent cases and nine matched controls. development_fixtures.md retains the source cases and draft illustration/narration material. Model execution and held-out evaluation remain outstanding, as does detailed visual review.
+Working world/action contract accepted on 21 September 2026, including shelter with restored power but without manual reading or beacon alignment. evaluation/development.json contains 53 validated development cases: 24 state/action cases, 20 intent cases and nine matched controls. Development intent runs have been reviewed. A separate 30-case intent set was reserved on 22 September without model execution. development_fixtures.md retains the source cases and draft illustration/narration material. Held-out evaluation, media comparisons and detailed visual review remain outstanding.
 
 - [ ] Finalise the premise, objective, room map, tone, and shared visual style.
 - [x] Specify items, discoverability, puzzle prerequisites, action effects, both endings, and a valid route to each.
@@ -51,14 +51,15 @@ Working world/action contract accepted on 21 September 2026, including shelter w
 - [x] Build labelled intent cases covering paraphrases, missing prerequisites, wrong verbs, ambiguity, compound requests, unsupported actions, and attempts to override rules.
 - [x] Add the user's 'look around' and 'knock' failures to development/regression cases, not held-out cases.
 - [ ] Prepare five illustration briefs and approximately ten narration passages with written quality rubrics.
-- [ ] Reserve unseen phrasings and states for final evaluation before tuning; record provenance and annotation rules.
+- [x] Reserve new intent phrasings and state combinations before further tuning; record provenance and annotation rules. Added 30 assistant-authored cases, a reservation hash and offline separation checks. These are unrun model inputs in known task families, not blind-author or independently annotated data.
+- [ ] Independently review reserved intent labels against the frozen contract before final evaluation; do not use reserved cases to tune prompts or rules. Reserve media evaluation material separately.
 
 Gate: the intended behaviour is defined well enough to test. Do not let a model silently decide what the game supports.
 
 ## 3. Compare candidates and demonstrate one integrated scene
 
-- [x] Implement a configurable model-only development intent runner with raw responses, error handling, exact intent scoring, reference outcome scoring and summaries by complexity/difficulty. Validated with simulated responses; baseline inference remains outstanding.
-- [ ] Run and review the Qwen3:4b development baseline before comparing an alternative language model.
+- [x] Implement a configurable model-only development intent runner with raw responses, error handling, exact intent scoring, reference outcome scoring and summaries by complexity/difficulty. Kept separate from gameplay confirmation.
+- [x] Run and review the Qwen3:4b development baseline before comparing an alternative language model. Recorded V1-JSON development results: Qwen 49/53, Gemma 42/53; narrative comparison and held-out evaluation remain outstanding.
 - [ ] Make model identity/configuration replaceable in the trial scripts and adapters; retain raw outputs, versions, prompts, failures, and resource/timing measurements.
 - [ ] Compare at least two feasible language candidates on the same development intent and narrative cases.
 - [ ] Compare at least two feasible image candidates on matching scene briefs and criteria.
@@ -73,6 +74,9 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 
 ## 4. Complete the game engine and reliable orchestration
 
+- [x] Add an entrance-hall typed-action confirmation safeguard: display the interpreted action/target, require explicit y/yes, and preserve state on cancellation, missing confirmation or interruption. Verified with simulated model responses; this does not fix model interpretation errors or complete browser/full-world integration.
+- [x] Test gameplay confirmation separately from model-only evaluation; keep ambiguous/compound prediction errors in model accuracy scores. Full software suite: 100 passed (21 September 2026).
+- [ ] Carry confirmation into browser/full-world orchestration and measure user correction/cancellation separately from raw-model accuracy.
 - [ ] Implement movement, inventory, puzzle flags, allowed actions, and both endings across the agreed world.
 - [ ] Resolve unintended action substitutions, including the reported looking/knocking failures, against the agreed action contract.
 - [ ] Implement clarification and unsupported-request handling; measure over-clarification rather than assuming heuristic guards solve ambiguity.
@@ -136,4 +140,4 @@ Gate: a player can reach an ending without developer intervention.
 - [ ] NPCs and additional character voices.
 - [ ] Persistent save/load, additional adventures, and extra visual content.
 
-Prioritise a complete AI-dependent interaction, defensible comparisons, and evaluation over extra game content. The immediate next task is Phase 1 candidate research, not another gameplay feature.
+Prioritise a complete AI-dependent interaction, defensible comparisons, and evaluation over extra game content. Continue candidate evidence and the planned integrated scene; the entrance-hall confirmation safeguard does not complete full-world or browser integration.

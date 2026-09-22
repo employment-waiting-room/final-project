@@ -30,9 +30,10 @@ def test_prompt_uses_only_projected_context():
     assert not any(k in user for k in ("setup", "expected_action", "forbidden_claims"))
 
 
-def test_prompt_variant_changes_only_system_message():
+@pytest.mark.parametrize("variant", ["v2", "v1-json", "v1-clarify"])
+def test_prompt_variant_changes_only_system_message(variant):
     baseline = make_request(case("I04"), "candidate")
-    revised = make_request(case("I04"), "candidate", prompt_version="v2")
+    revised = make_request(case("I04"), "candidate", prompt_version=variant)
     assert baseline["messages"][0] != revised["messages"][0]
     revised["messages"][0] = baseline["messages"][0]
     assert revised == baseline
@@ -60,6 +61,17 @@ def test_wrong_but_rejected_action_is_not_correct_intent():
         row = evaluate_case(client, case("I04"), "test")
     assert row["structural_pass"] and row["reference_transition_pass"]
     assert not row["intent_pass"]
+
+
+def test_model_only_evaluation_does_not_use_gameplay_confirmation(monkeypatch):
+    def forbidden(*args, **kwargs):
+        pytest.fail("Model-only evaluation must not invoke gameplay or confirmation")
+    monkeypatch.setattr("observatory.intent.handle_text", forbidden)
+    monkeypatch.setattr("builtins.input", forbidden)
+    with client_for({"status": "action", "action": "inspect_desk", "target": "desk"}) as client:
+        row = evaluate_case(client, case("I10"), "test", prompt_version="v1-json")
+    assert row["source"] == "model" and row["structural_pass"]
+    assert not row["intent_pass"]  # Compound request remains a model error.
 
 
 @pytest.mark.parametrize("kwargs", [

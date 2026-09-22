@@ -1,0 +1,2 @@
+# Preserve the exact bytes recorded in the held-out reservation SHA-256.
+/evaluation/held_out_intent.json -text

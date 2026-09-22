@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 *.md
+!development_log.md
+!tasks.md
+!evaluation/README.md
 .env
 .env.*
 !.env.example

@@ -2,6 +2,7 @@
 import json
 import re
 import time
+from collections.abc import Callable
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
@@ -10,7 +11,7 @@ from uuid import uuid4
 import httpx
 from pydantic import BaseModel, ConfigDict, model_validator
 
-from .engine import GameState, apply_action, describe, rejection_reason
+from .engine import ACTION_LABELS, GameState, apply_action, describe, rejection_reason
 
 TARGETS = {"inspect_desk": "desk", "collect_key": "library_key", "unlock_library": "library_door"}
 PROMPT = """Interpret one player action in a small adventure. Return only the required JSON.
@@ -106,7 +107,14 @@ class Interpreter:
             self.save_record(record)
 
 
-def handle_text(state: GameState, text: str, interpreter: Interpreter):
+def handle_text(state: GameState, text: str, interpreter: Interpreter,
+                confirm: Callable[[str], str] | None = None):
+    """Apply a typed action only after explicit approval of its interpretation.
+
+    The synchronous confirmation callback receives the exact proposed action and
+    target. Missing confirmation fails closed. Evaluation calls the model directly
+    and does not use this gameplay policy.
+    """
     try:
         intent = interpreter.interpret(text, state)
     except InterpretationError as exc:
@@ -118,4 +126,10 @@ def handle_text(state: GameState, text: str, interpreter: Interpreter):
     reason = rejection_reason(state, intent.action)
     if reason:
         return state, reason
-    return apply_action(state, intent.action), f"Understood: {intent.action.replace('_', ' ')}."
+    proposal = f"Interpreted action: {ACTION_LABELS[intent.action]} (target: {intent.target})."
+    if confirm is None:
+        return state, proposal + " Confirmation required; state unchanged."
+    answer = confirm(proposal)
+    if not isinstance(answer, str) or answer.strip().lower() not in {"y", "yes"}:
+        return state, "Action cancelled; state unchanged."
+    return apply_action(state, intent.action), f"Applied: {ACTION_LABELS[intent.action]}."

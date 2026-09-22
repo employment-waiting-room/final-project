@@ -1,0 +1,22 @@
+{
+  "status": "reserved_not_run",
+  "created_utc": "2026-09-22T10:27:53.108259+00:00",
+  "dataset_version": "world-v2-held-out-intent-v1",
+  "dataset_sha256": "bff183e769d26d7042d08d86c081c76be387e404b47e58919e1edcd7f2366b12",
+  "case_count": 30,
+  "language_counts": {
+    "direct": 7,
+    "paraphrase": 7,
+    "ambiguous": 4,
+    "compound": 4,
+    "unsupported": 4,
+    "adversarial": 4
+  },
+  "complexity_counts": {
+    "moderate": 8,
+    "simple": 13,
+    "complex": 9
+  },
+  "annotation": "Rule-based assistant labels; independent human review pending",
+  "release_condition": "Freeze prompts, models, settings and scoring before a separately authorised final run. Retire to development if used for tuning."
+}

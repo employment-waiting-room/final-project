@@ -3,6 +3,11 @@ from .engine import ACTION_LABELS, GameState, allowed_actions, apply_action, des
 from .intent import Interpreter, handle_text
 
 
+def confirm_action(proposal):
+    print(proposal)
+    return input("Apply this action? Type y/yes to confirm; anything else cancels: ")
+
+
 def main():
     state = GameState()
     interpreter = Interpreter()
@@ -28,7 +33,11 @@ def main():
                 print("Enter an action or one of the displayed numbers.")
                 continue
             print("Interpreting action...")
-            state, feedback = handle_text(state, answer, interpreter)
+            try:
+                state, feedback = handle_text(state, answer, interpreter, confirm_action)
+            except (EOFError, KeyboardInterrupt):
+                print("\nAction cancelled; state unchanged. Game closed.")
+                return
             print(feedback)
             continue
         state = apply_action(state, actions[int(answer) - 1])
