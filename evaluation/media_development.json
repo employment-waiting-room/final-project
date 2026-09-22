@@ -1,0 +1,932 @@
+{
+  "version": "world-v2-media-development-v1",
+  "split": "development",
+  "provenance": "Assistant-authored from world_spec v2 and development_fixtures.md on 22 September 2026. Narrative outcomes reference development.json. No external story assets, human ratings or model outputs. Speech adapted for toolbox closure and both endings.",
+  "image_size": [
+    512,
+    512
+  ],
+  "shared_style": "Restrained storybook digital painting, muted blue-grey and warm wood palette, diffuse daylight, square 512x512 establishing view, no people, no lettering, no visible portable quest items.",
+  "narratives": [
+    {
+      "id": "N01",
+      "source_case_id": "S01",
+      "input": {
+        "location": "entrance_hall",
+        "public_facts": [
+          "A dusty desk stands beside a closed library door.",
+          "A passage leads to the workshop.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The library door is locked.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [],
+        "action": {
+          "action": "look_around",
+          "target": "current_room"
+        },
+        "outcome": "observed",
+        "allowed_suggestions": [
+          {
+            "action": "inspect_desk",
+            "target": "desk"
+          },
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "workshop"
+          }
+        ],
+        "visual_brief_id": "entrance_hall"
+      },
+      "required_facts": [
+        "Hall described without discoveries",
+        "Library door remains locked"
+      ],
+      "forbidden_claims": [
+        "Key revealed or possessed",
+        "Desk searched",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N02",
+      "source_case_id": "S02",
+      "input": {
+        "location": "entrance_hall",
+        "public_facts": [
+          "A dusty desk stands beside a closed library door.",
+          "A passage leads to the workshop.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The library door is locked.",
+          "A discovered library key remains on the desk, not yet collected.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [],
+        "action": {
+          "action": "inspect_desk",
+          "target": "desk"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "collect_key",
+            "target": "library_key"
+          },
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "workshop"
+          }
+        ],
+        "visual_brief_id": "entrance_hall"
+      },
+      "required_facts": [
+        "Key discovered but not collected",
+        "Library door remains locked"
+      ],
+      "forbidden_claims": [
+        "Key automatically carried",
+        "Door unlocked",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N03",
+      "source_case_id": "S04",
+      "input": {
+        "location": "entrance_hall",
+        "public_facts": [
+          "A dusty desk stands beside a closed library door.",
+          "A passage leads to the workshop.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The library door is locked.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "collect_key",
+          "target": "library_key"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "workshop"
+          },
+          {
+            "action": "unlock_library",
+            "target": "library_door"
+          }
+        ],
+        "visual_brief_id": "entrance_hall"
+      },
+      "required_facts": [
+        "Library key carried",
+        "Library door remains locked"
+      ],
+      "forbidden_claims": [
+        "Key remains available to collect",
+        "Door unlocked",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N04",
+      "source_case_id": "S05",
+      "input": {
+        "location": "entrance_hall",
+        "public_facts": [
+          "A dusty desk stands beside a closed library door.",
+          "A passage leads to the workshop.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The library door is locked.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "collect_key",
+          "target": "library_key"
+        },
+        "outcome": "unchanged",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "workshop"
+          },
+          {
+            "action": "unlock_library",
+            "target": "library_door"
+          }
+        ],
+        "visual_brief_id": "entrance_hall"
+      },
+      "required_facts": [
+        "Key already carried; no new collection"
+      ],
+      "forbidden_claims": [
+        "Duplicate key",
+        "New state change",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N05",
+      "source_case_id": "S06",
+      "input": {
+        "location": "entrance_hall",
+        "public_facts": [
+          "A dusty desk stands beside a closed library door.",
+          "A passage leads to the workshop.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The library door is locked.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [],
+        "action": {
+          "action": "unlock_library",
+          "target": "library_door"
+        },
+        "outcome": "rejected",
+        "allowed_suggestions": [
+          {
+            "action": "inspect_desk",
+            "target": "desk"
+          },
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "workshop"
+          }
+        ],
+        "visual_brief_id": "entrance_hall"
+      },
+      "required_facts": [
+        "Unlocking failed; door remains locked",
+        "Player lacks the key"
+      ],
+      "forbidden_claims": [
+        "Hidden key location",
+        "Door unlocked",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N06",
+      "source_case_id": "S07",
+      "input": {
+        "location": "entrance_hall",
+        "public_facts": [
+          "A dusty desk stands beside a closed library door.",
+          "A passage leads to the workshop.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The library door is unlocked.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "unlock_library",
+          "target": "library_door"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "library"
+          },
+          {
+            "action": "move",
+            "target": "workshop"
+          }
+        ],
+        "visual_brief_id": "entrance_hall"
+      },
+      "required_facts": [
+        "Library door unlocked",
+        "Key retained",
+        "Player remains in hall"
+      ],
+      "forbidden_claims": [
+        "Automatic movement into library",
+        "Key consumed",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N07",
+      "source_case_id": "S10",
+      "input": {
+        "location": "library",
+        "public_facts": [
+          "Bookshelves line the library.",
+          "An open instruction manual rests on a reading stand.",
+          "Stairs lead to the telescope chamber.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The generator is stopped; power is off.",
+          "You learned the procedure: install the fuse, start the generator, align the beacon, then choose an ending.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "read_manual",
+          "target": "manual"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "entrance_hall"
+          },
+          {
+            "action": "move",
+            "target": "telescope_chamber"
+          }
+        ],
+        "visual_brief_id": "library"
+      },
+      "required_facts": [
+        "Manual procedure learned",
+        "Power remains off"
+      ],
+      "forbidden_claims": [
+        "Fuse installed by reading",
+        "Generator started",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N08",
+      "source_case_id": "S11",
+      "input": {
+        "location": "workshop",
+        "public_facts": [
+          "A closed toolbox rests on a dusty workbench.",
+          "A doorway leads to the generator room.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The toolbox has been inspected and its lid closed again.",
+          "A discovered spare fuse remains inside the toolbox, not yet collected.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [],
+        "action": {
+          "action": "inspect_toolbox",
+          "target": "toolbox"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "collect_fuse",
+            "target": "spare_fuse"
+          },
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "entrance_hall"
+          },
+          {
+            "action": "move",
+            "target": "generator_room"
+          }
+        ],
+        "visual_brief_id": "workshop"
+      },
+      "required_facts": [
+        "Spare fuse discovered but not collected",
+        "Toolbox lid closed after inspection"
+      ],
+      "forbidden_claims": [
+        "Fuse automatically carried",
+        "Toolbox left open",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N09",
+      "source_case_id": "S12",
+      "input": {
+        "location": "workshop",
+        "public_facts": [
+          "A closed toolbox rests on a dusty workbench.",
+          "A doorway leads to the generator room.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The toolbox has been inspected and its lid closed again.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [
+          "spare_fuse"
+        ],
+        "action": {
+          "action": "collect_fuse",
+          "target": "spare_fuse"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "entrance_hall"
+          },
+          {
+            "action": "move",
+            "target": "generator_room"
+          }
+        ],
+        "visual_brief_id": "workshop"
+      },
+      "required_facts": [
+        "Spare fuse carried",
+        "Toolbox lid closed"
+      ],
+      "forbidden_claims": [
+        "Fuse already installed",
+        "Second fuse available",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N10",
+      "source_case_id": "S14",
+      "input": {
+        "location": "generator_room",
+        "public_facts": [
+          "The generator has a fuse socket and a start switch.",
+          "Wall conduit runs beside its casing.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The fuse is installed, not carried.",
+          "The generator is stopped; power is off.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [],
+        "action": {
+          "action": "install_fuse",
+          "target": "fuse_socket"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "workshop"
+          },
+          {
+            "action": "start_generator",
+            "target": "generator"
+          }
+        ],
+        "visual_brief_id": "generator_room"
+      },
+      "required_facts": [
+        "Fuse installed and no longer carried",
+        "Generator still stopped"
+      ],
+      "forbidden_claims": [
+        "Fuse still in inventory",
+        "Power automatically restored",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N11",
+      "source_case_id": "S16",
+      "input": {
+        "location": "generator_room",
+        "public_facts": [
+          "The generator has a fuse socket and a start switch.",
+          "Wall conduit runs beside its casing.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The fuse is installed, not carried.",
+          "The generator is running; power is restored.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [],
+        "action": {
+          "action": "start_generator",
+          "target": "generator"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "workshop"
+          }
+        ],
+        "visual_brief_id": "generator_room"
+      },
+      "required_facts": [
+        "Generator running and power restored",
+        "No ending chosen"
+      ],
+      "forbidden_claims": [
+        "Beacon automatically aligned",
+        "Rescue already sent",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N12",
+      "source_case_id": "S18",
+      "input": {
+        "location": "telescope_chamber",
+        "public_facts": [
+          "A telescope carries a beacon attachment inside an enclosed dome.",
+          "There is an alignment control, a signalling console and a shelter bench.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The fuse is installed, not carried.",
+          "The generator is running; power is restored.",
+          "The beacon is not aligned.",
+          "You have not learned the beacon procedure from the manual.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "align_beacon",
+          "target": "beacon"
+        },
+        "outcome": "rejected",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "library"
+          },
+          {
+            "action": "shelter",
+            "target": "shelter_bench"
+          }
+        ],
+        "visual_brief_id": "telescope_chamber"
+      },
+      "required_facts": [
+        "Alignment rejected without manual knowledge",
+        "Power remains on; beacon unaligned"
+      ],
+      "forbidden_claims": [
+        "Procedure knowledge invented",
+        "Alignment succeeded",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N13",
+      "source_case_id": "S19",
+      "input": {
+        "location": "telescope_chamber",
+        "public_facts": [
+          "A telescope carries a beacon attachment inside an enclosed dome.",
+          "There is an alignment control, a signalling console and a shelter bench.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The fuse is installed, not carried.",
+          "The generator is running; power is restored.",
+          "You learned the procedure: install the fuse, start the generator, align the beacon, then choose an ending.",
+          "The beacon is aligned.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "align_beacon",
+          "target": "beacon"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "library"
+          },
+          {
+            "action": "shelter",
+            "target": "shelter_bench"
+          },
+          {
+            "action": "signal_rescue",
+            "target": "signalling_console"
+          }
+        ],
+        "visual_brief_id": "telescope_chamber"
+      },
+      "required_facts": [
+        "Beacon aligned",
+        "Ending not yet chosen"
+      ],
+      "forbidden_claims": [
+        "Rescue signal automatically sent",
+        "Shelter automatically selected",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N14",
+      "source_case_id": "S20-rescue",
+      "input": {
+        "location": "telescope_chamber",
+        "public_facts": [
+          "A telescope carries a beacon attachment inside an enclosed dome.",
+          "There is an alignment control, a signalling console and a shelter bench.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The fuse is installed, not carried.",
+          "The generator is running; power is restored.",
+          "You learned the procedure: install the fuse, start the generator, align the beacon, then choose an ending.",
+          "The beacon is aligned.",
+          "The valley station receives your rescue signal; rescuers arrive after the storm. The adventure has ended."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "signal_rescue",
+          "target": "signalling_console"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [],
+        "visual_brief_id": "telescope_chamber"
+      },
+      "required_facts": [
+        "Rescue signal received by valley station",
+        "Rescuers arrive after the storm",
+        "Adventure ended"
+      ],
+      "forbidden_claims": [
+        "Sheltered ending selected",
+        "Further puzzle actions offered",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N15",
+      "source_case_id": "S21",
+      "input": {
+        "location": "telescope_chamber",
+        "public_facts": [
+          "A telescope carries a beacon attachment inside an enclosed dome.",
+          "There is an alignment control, a signalling console and a shelter bench.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The fuse is installed, not carried.",
+          "The generator is running; power is restored.",
+          "The beacon is not aligned.",
+          "You have not learned the beacon procedure from the manual.",
+          "You shelter safely until morning and leave when the storm clears. No rescue signal was sent. The adventure has ended."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "shelter",
+          "target": "shelter_bench"
+        },
+        "outcome": "changed",
+        "allowed_suggestions": [],
+        "visual_brief_id": "telescope_chamber"
+      },
+      "required_facts": [
+        "Shelter chosen until morning",
+        "No rescue signal sent",
+        "Adventure ended"
+      ],
+      "forbidden_claims": [
+        "Rescue ending",
+        "Manual or alignment claimed necessary",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    },
+    {
+      "id": "N16",
+      "source_case_id": "S22",
+      "input": {
+        "location": "telescope_chamber",
+        "public_facts": [
+          "A telescope carries a beacon attachment inside an enclosed dome.",
+          "There is an alignment control, a signalling console and a shelter bench.",
+          "Diffuse daylight allows visibility without electrical power.",
+          "The mountain path is unsafe during the storm.",
+          "The generator is stopped; power is off.",
+          "The beacon is not aligned.",
+          "You have not learned the beacon procedure from the manual.",
+          "No ending has been chosen and no rescue signal has been sent."
+        ],
+        "inventory": [
+          "library_key"
+        ],
+        "action": {
+          "action": "shelter",
+          "target": "shelter_bench"
+        },
+        "outcome": "rejected",
+        "allowed_suggestions": [
+          {
+            "action": "look_around",
+            "target": "current_room"
+          },
+          {
+            "action": "move",
+            "target": "library"
+          }
+        ],
+        "visual_brief_id": "telescope_chamber"
+      },
+      "required_facts": [
+        "Shelter rejected while power is off",
+        "No ending chosen"
+      ],
+      "forbidden_claims": [
+        "Sheltered ending",
+        "Power restored",
+        "Invented interactive objects, characters or unrequested actions"
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "entrance_hall",
+      "prompt": "Observatory entrance hall. Restrained storybook digital painting, muted blue-grey and warm wood palette, diffuse daylight, square 512x512 establishing view, no people, no lettering, no visible portable quest items. Show: Dusty desk; Closed wooden library door; High frosted glazing. Omit: Visible key; Readable door label; Open library door; People; Lettering; Visible portable quest items.",
+      "required_details": [
+        "Dusty desk",
+        "Closed wooden library door",
+        "High frosted glazing"
+      ],
+      "forbidden_details": [
+        "Visible key",
+        "Readable door label",
+        "Open library door",
+        "People",
+        "Lettering",
+        "Visible portable quest items"
+      ]
+    },
+    {
+      "id": "library",
+      "prompt": "Observatory library. Restrained storybook digital painting, muted blue-grey and warm wood palette, diffuse daylight, square 512x512 establishing view, no people, no lettering, no visible portable quest items. Show: Bookshelves; Reading stand with open manual; Stairway. Omit: Legible puzzle instructions; Loose key or fuse; People; Lettering; Visible portable quest items.",
+      "required_details": [
+        "Bookshelves",
+        "Reading stand with open manual",
+        "Stairway"
+      ],
+      "forbidden_details": [
+        "Legible puzzle instructions",
+        "Loose key or fuse",
+        "People",
+        "Lettering",
+        "Visible portable quest items"
+      ]
+    },
+    {
+      "id": "workshop",
+      "prompt": "Observatory workshop. Restrained storybook digital painting, muted blue-grey and warm wood palette, diffuse daylight, square 512x512 establishing view, no people, no lettering, no visible portable quest items. Show: Workbench; Closed toolbox; Doorway. Omit: Visible spare fuse; Open toolbox or exposed contents; People; Lettering; Visible portable quest items.",
+      "required_details": [
+        "Workbench",
+        "Closed toolbox",
+        "Doorway"
+      ],
+      "forbidden_details": [
+        "Visible spare fuse",
+        "Open toolbox or exposed contents",
+        "People",
+        "Lettering",
+        "Visible portable quest items"
+      ]
+    },
+    {
+      "id": "generator_room",
+      "prompt": "Observatory generator room. Restrained storybook digital painting, muted blue-grey and warm wood palette, diffuse daylight, square 512x512 establishing view, no people, no lettering, no visible portable quest items. Show: Generator casing; Wall conduit; Diffuse daylight. Omit: Readable indicators; Sparks, smoke or motion implying running state; Visible socket contents; People; Lettering; Visible portable quest items.",
+      "required_details": [
+        "Generator casing",
+        "Wall conduit",
+        "Diffuse daylight"
+      ],
+      "forbidden_details": [
+        "Readable indicators",
+        "Sparks, smoke or motion implying running state",
+        "Visible socket contents",
+        "People",
+        "Lettering",
+        "Visible portable quest items"
+      ]
+    },
+    {
+      "id": "telescope_chamber",
+      "prompt": "Observatory telescope chamber. Restrained storybook digital painting, muted blue-grey and warm wood palette, diffuse daylight, square 512x512 establishing view, no people, no lettering, no visible portable quest items. Show: Telescope; Attached beacon housing; Console; Bench; Enclosed dome. Omit: Lit beacon; Rescue party; Open dome or open sky; Readable coordinates; People; Lettering; Visible portable quest items.",
+      "required_details": [
+        "Telescope",
+        "Attached beacon housing",
+        "Console",
+        "Bench",
+        "Enclosed dome"
+      ],
+      "forbidden_details": [
+        "Lit beacon",
+        "Rescue party",
+        "Open dome or open sky",
+        "Readable coordinates",
+        "People",
+        "Lettering",
+        "Visible portable quest items"
+      ]
+    }
+  ],
+  "speech": [
+    {
+      "id": "T01",
+      "text": "You stand in the entrance hall of the abandoned observatory. A dusty desk sits beside the library door.",
+      "focus_terms": [
+        "observatory",
+        "entrance hall",
+        "library"
+      ]
+    },
+    {
+      "id": "T02",
+      "text": "You inspect the desk and discover a small library key. It remains on the desk until you collect it.",
+      "focus_terms": [
+        "inspect",
+        "library key"
+      ]
+    },
+    {
+      "id": "T03",
+      "text": "You pick up the library key. The library door is still locked.",
+      "focus_terms": [
+        "library key",
+        "locked"
+      ]
+    },
+    {
+      "id": "T04",
+      "text": "The key turns in the lock. You can now enter the library, and the key remains in your possession.",
+      "focus_terms": [
+        "library",
+        "possession"
+      ]
+    },
+    {
+      "id": "T05",
+      "text": "The instruction manual explains the emergency beacon. Replace the fuse, start the generator, and align the beacon.",
+      "focus_terms": [
+        "instruction manual",
+        "emergency beacon",
+        "generator"
+      ]
+    },
+    {
+      "id": "T06",
+      "text": "Inside the workshop toolbox, you discover a spare fuse. After inspection, you close the toolbox lid again.",
+      "focus_terms": [
+        "workshop",
+        "toolbox",
+        "spare fuse"
+      ]
+    },
+    {
+      "id": "T07",
+      "text": "You fit the spare fuse into the generator's socket. The fuse is installed, but the generator has not started.",
+      "focus_terms": [
+        "generator's socket",
+        "installed"
+      ]
+    },
+    {
+      "id": "T08",
+      "text": "The generator starts. Power is restored to the observatory, but the beacon still needs alignment.",
+      "focus_terms": [
+        "generator",
+        "observatory",
+        "alignment"
+      ]
+    },
+    {
+      "id": "T09",
+      "text": "The valley station receives your signal. When the storm passes, rescuers arrive at the observatory.",
+      "focus_terms": [
+        "valley station",
+        "rescuers",
+        "observatory"
+      ]
+    },
+    {
+      "id": "T10",
+      "text": "You shelter in the telescope chamber until morning. No rescue signal was sent. You leave when the storm clears.",
+      "focus_terms": [
+        "telescope chamber",
+        "rescue signal",
+        "shelter"
+      ]
+    }
+  ]
+}

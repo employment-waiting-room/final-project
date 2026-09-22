@@ -50,7 +50,9 @@ Working world/action contract accepted on 21 September 2026, including shelter w
 - [ ] Compare model results by state complexity and language difficulty without adding extra adventures.
 - [x] Build labelled intent cases covering paraphrases, missing prerequisites, wrong verbs, ambiguity, compound requests, unsupported actions, and attempts to override rules.
 - [x] Add the user's 'look around' and 'knock' failures to development/regression cases, not held-out cases.
-- [ ] Prepare five illustration briefs and approximately ten narration passages with written quality rubrics.
+- [x] Prepare five illustration briefs and ten exact narration passages with written quality rubrics. Saved in evaluation/media_development.json and evaluation/media_protocol.md; no generation or human ratings yet.
+- [x] Prepare 16 state-grounded narrative development cases with required/forbidden facts, validated post-action inputs, output schema and structural checks. Full software suite: 128 passed (22 September 2026).
+- [ ] Implement comparison runners/adapters for the shared media fixtures, review trial settings and obtain approval before inference. Existing feasibility scripts still use historical inputs.
 - [x] Reserve new intent phrasings and state combinations before further tuning; record provenance and annotation rules. Added 30 assistant-authored cases, a reservation hash and offline separation checks. These are unrun model inputs in known task families, not blind-author or independently annotated data.
 - [ ] Independently review reserved intent labels against the frozen contract before final evaluation; do not use reserved cases to tune prompts or rules. Reserve media evaluation material separately.
 

@@ -6,6 +6,8 @@ __pycache__/
 !development_log.md
 !tasks.md
 !evaluation/README.md
+!evaluation/media_protocol.md
+!development_fixtures.md
 .env
 .env.*
 !.env.example

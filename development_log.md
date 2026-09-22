@@ -464,6 +464,20 @@ Validation: 108 software tests passed in 0.73 seconds. New checks covered action
 
 Next: prepare shared narrative, illustration and speech comparison fixtures and written rubrics, then seek authorisation for new model experiments. Keep this reserved intent set out of those development trials.
 
+## 38. Shared media development fixtures and scoring protocol (22 September 2026)
+
+Implemented the authorised preparation step: evaluation/media_development.json now contains 16 narrative cases referencing verified development state/action outcomes, five room illustration prompts and ten exact speech passages. Added observatory/media_fixtures.py with strict schemas, offline validation, public post-action projection and structural narrative checks; scripts/build_media_fixtures.py reproduces the inputs without overwriting existing files. No held-out intent file was edited or used to author media cases.
+
+Narrative coverage includes all rooms, discoveries and inventory changes, rejected prerequisites, repeated collection and both endings. Model inputs contain verified public facts, inventory, action/outcome, allowed suggestion pairs and a visual brief ID. Review checklists stay outside model input. Exact suggestion sets, duplicate suggestions, brief identity and 60-100-word successful descriptions are checked structurally; short rejected/unchanged messages are permitted. Semantic correctness remains explicitly pending human review.
+
+Adapted the existing media drafts to the accepted world, correcting the contradictory landscape/512x512 wording to a square trial canvas, preserving toolbox closure and including both endings in speech. Kept the earlier standalone feasibility scripts unchanged because their lantern and other historical scene facts differ from this contract. They are not yet comparison runners for these fixtures.
+
+Added evaluation/media_protocol.md with narrative required-fact/contradiction scoring, image detail and style checks, speech transcription/pronunciation criteria, anchored human ratings, evidence fields and timing/failure rules. Proposed repeated trials were documented, not executed or treated as an approved model-run budget. The protocol separates structural success from semantic correctness, raw model output from fallback behaviour, cold/loading from warm inference and pending ratings from actual results. Independent review and separate media holdouts remain outstanding.
+
+Validation: 128 software tests passed in 1.45 seconds, including fixture reproducibility, five-room/ending coverage, hidden-fact projection, corrupted references, changed inventory/outcomes, duplicate IDs, exact suggestions, word-count boundaries and pending semantic review. The tests used no model inference. The offline builder and tests used the approved Windows Python launcher outside the sandbox. Updated tasks.md, evaluation/README.md and the source draft; added targeted Git exceptions so the new protocol and source notes can be included in a later user-managed commit. No model downloads, new inference, gameplay integration, commit or push occurred.
+
+Next proposed implementation: a configurable narrative comparison runner consuming these inputs, preserving raw outputs and human-review fields; then review settings and obtain approval for a Qwen/Gemma narrative trial. Image/speech adapters and trials follow the same protocol. These fixtures and software tests are preparation, not measured model-selection evidence.
+
 ## Future entry template
 
 - Date/time and objective.

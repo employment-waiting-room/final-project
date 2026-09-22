@@ -19,7 +19,19 @@ From the project root, validate with:
 
 `observatory/fixtures.py` provides strict schemas and a reference transition function. The builder in `scripts/build_development_fixtures.py` records reproducible expectations and refuses to overwrite an existing dataset. Validation checks setup reachability, action/target pairs, state invariants, outcomes, IDs and complexity labels. Because generation and validation share the reference rules, these checks do not independently prove the rules correct; boundary assertions provide additional checks. The application's current engine still implements only the entrance-hall prototype. Passing fixture tests does not mean the full game or models pass these cases.
 
-All cases in `development.json` are development material. Do not report them as unseen evaluation. A separate reserved intent dataset is described below. Keep expected labels, setup traces and forbidden claims out of model inputs. Illustration and speech fixtures remain drafts in `development_fixtures.md`; these JSON datasets cover state and intent.
+All cases in `development.json` are development material. Do not report them as unseen evaluation. A separate reserved intent dataset is described below. Keep expected labels, setup traces and forbidden claims out of intent model inputs. Shared media development inputs are now in `media_development.json`, with their own protocol below.
+
+## Shared narrative, illustration and speech development fixtures
+
+`media_development.json` contains 16 verified post-action narrative inputs, five room illustration prompts and ten exact speech passages. Inputs were adapted from `development_fixtures.md` and the accepted world contract. Narrative references are checked against the existing development cases; no reserved intent case is used. Run the offline validator:
+
+```powershell
+.\.venv\Scripts\python.exe -m observatory.media_fixtures
+```
+
+`scripts/build_media_fixtures.py` reproduces the dataset and refuses to overwrite the saved file. `observatory/media_fixtures.py` defines strict fixture/output schemas and structural narrative checks. Its `check_narrative` function checks JSON, exact suggestion pairs, visual brief identity and description length; semantic review remains pending until a person reviews the prose. For later model input, use only each narrative fixture's `input` field. Required-fact and forbidden-claim checklists are reviewer material. Image prompts intentionally include their design constraints; speech uses the exact saved passage.
+
+Read [media_protocol.md](media_protocol.md) for per-role scoring, rating anchors, evidence requirements, proposed repeats, timing rules and limitations. This is development preparation only. Existing standalone feasibility scripts remain unchanged and do not consume this dataset. Comparison runners/adapters, authorised inference, human ratings and separate media holdouts remain outstanding. These files do not integrate models into gameplay or establish candidate quality.
 
 ## Reserved intent evaluation (22 September 2026)
 
@@ -37,7 +49,7 @@ The validator checks the reservation hash, schema, reachable setup, reference ou
 
 Before release, freeze model identity/digest, prompts, runtime/settings, scoring criteria and the dataset hash; obtain separate authorisation for the final model run. Review annotations against the contract without testing candidate predictions. Keep answer labels out of requests, retain all failures in denominators and report model-only results separately from player confirmation and engine enforcement. Any case inspected for prompt/rule tuning or selected based on model outputs must be retired to development; reserve a fresh replacement set before claiming a subsequent held-out result. Record annotation corrections as explicit version changes rather than silently updating the hash.
 
-The reservation is a workflow boundary, not access control: source files and tests can read it. Avoid exposing these cases to future tuning work. `.gitattributes` preserves dataset bytes across Git checkouts; the dataset and manifest are not ignored. Relevant documentation has explicit `.gitignore` exceptions so it can be included in the user's next commit. Nothing has been committed automatically. Media holdouts and the shared narrative/image/speech comparison fixtures remain separate work.
+The reservation is a workflow boundary, not access control: source files and tests can read it. Avoid exposing these cases to future tuning work. `.gitattributes` preserves dataset bytes across Git checkouts; the dataset and manifest are not ignored. Relevant documentation has explicit `.gitignore` exceptions so it can be included in the user's next commit. Nothing has been committed automatically. Shared media development fixtures are separate from this reservation; media holdouts remain outstanding.
 
 ## Intent evaluation runner
 
