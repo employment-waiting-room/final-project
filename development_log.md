@@ -490,6 +490,14 @@ Validation: 150 software tests passed in 1.03 seconds using simulated HTTP respo
 
 Next: review the proposed 64-request Qwen/Gemma comparison (or a separately labelled two-request compatibility check), then obtain authorisation before running models. Structural results must be followed by human factuality/readability review before model-selection claims.
 
+## 40. User-run narrative compatibility check reviewed (22 September 2026)
+
+Reviewed generated/narrative-evaluations/20260922T120510452882Z-8a9118f4: one N01 request per candidate, seed 42, narrative-eval-v1, Ollama 0.34.2. Both completed with stop rather than token-limit termination, valid schemas and correct visual brief IDs; there were no HTTP/runtime errors. Qwen returned 40 description words and all three expected suggestions. Gemma returned 47 words and an empty suggestion list. Both failed the 60-word minimum; Gemma additionally failed exact suggestions. Neither failure showed an exhausted 600-token budget (reported output token counts: Qwen 137, Gemma 75).
+
+Assistant inspection found Qwen's short prose consistent with the supplied facts without revealing the key or changing state. Gemma preserved the locked door and empty inventory but invented an eastward direction for the workshop passage, which the input did not specify. This is an assistant observation, not completed independent human annotation; saved review files and semantic scores remained pending. Wall times were approximately 1.084 and 0.669 seconds respectively, with substantial prompt-cache reuse reported in raw responses; two short outputs do not establish a speed or quality ranking.
+
+The compatibility check established that both runtimes accepted and completed this request configuration, not that their outputs met the narrative contract. Recommended next: preserve the prompt/settings and run the full 64-request development baseline before tuning from one case. The user will run all model experiments; provide commands and request the saved folder path/errors. No inference, downloads, code changes or test reruns were performed during this review.
+
 ## Future entry template
 
 - Date/time and objective.
