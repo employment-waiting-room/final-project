@@ -70,6 +70,8 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [x] Run and review the Qwen3:4b development baseline before comparing an alternative language model. Recorded V1-JSON development results: Qwen 49/53, Gemma 42/53. An initial narrative comparison was also reviewed; systematic human narrative scoring and held-out evaluation remain outstanding.
 - [ ] Make model identity/configuration replaceable in the trial scripts and adapters; retain raw outputs, versions, prompts, failures, and resource/timing measurements.
 - [ ] Compare at least two feasible language candidates on the same development intent and narrative cases.
+- [x] Review full narrative v2 development trials for five language candidates: Qwen, Gemma, Llama, Phi and Granite. All showed factual failures; structural counts are not semantic accuracy. See log entry 45.
+- [ ] Complete shared v1-json intent trials for Llama, Phi and Granite, then assess intent and independently reviewed narration separately before selection. All model execution is user-run.
 - [ ] Compare at least two feasible image candidates on matching scene briefs and criteria.
 - [ ] Compare Piper and a feasible alternative speech model on the same passages and listening criteria.
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.

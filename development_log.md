@@ -538,6 +538,16 @@ Assistant prose inspection found no obvious state contradiction in the Llama or 
 
 These three candidates now have one-case compatibility evidence, not full narrative or intent comparisons. Recommended the user run the unchanged full narrative v2 suite for all three (96 requests) before drawing model-selection conclusions. No model runs, downloads, code changes or test reruns occurred during this review. The expanded five-candidates-per-data-space goal is evaluation scope; image/speech candidate testing remains outstanding.
 
+## 45. Expanded language narrative comparison reviewed (22 September 2026)
+
+Reviewed user-run generated/narrative-evaluations/20260922T200831838642Z-53330a53: 96 completed requests, 16 narrative cases twice per candidate, no runtime failures. Shared dataset hash, exact v2 prompt, schema and generation settings matched the earlier Qwen/Gemma v2 comparison; both used Ollama 0.34.2. Candidate runs occurred in separate sessions, so timing is not a controlled five-model benchmark.
+
+Structural passes: Granite3.3:2b 18/32 (56.3%), Llama3.2:3b 17/32 (53.1%), Phi4-mini:3.8b 16/32 (50.0%). Earlier v2 results were Qwen 14/32 (43.8%) and Gemma 1/32 (3.1%). Granite and Phi each had 32/32 valid schemas, 24/32 exact suggestions and 32/32 correct brief IDs. Llama had 28/32 valid schemas/exact suggestions and 26/32 correct brief IDs; its four errors were invalid action/target contracts, including invented ending suggestions. Component checks remain gated by schema validation. No semantic pass rate has been measured.
+
+Targeted assistant review of discovery, collection, unlocking, fuse installation and ending cases found factual failures in every new candidate. Llama A0090 passed structure while starting the generator immediately after installation; A0010 instead kept it stopped but invented an inaccessible workshop. Phi A0032 passed structure while inventing another person occupying the shelter bench as the rejection reason; its collection samples unlocked/opened the door. Granite likewise unlocked during collection, started the generator after installation and invented missing manuals and new shelter prerequisites. All three opened the library door during unlocking despite the closed-door contract. These examples prevent treating structural ranking as narrative quality or a final model-selection decision; systematic human review remains pending.
+
+Mean/median wall seconds: Llama 0.944/0.927, Phi 1.148/1.150, Granite 0.998/1.002. Loading/cache and output-length differences limit comparisons to previous sessions. Five language candidates now have full narrative development trials, while only Qwen/Gemma have full intent results. Recommended next: user-run v1-json intent evaluations for Llama, Phi and Granite on the unchanged 53-case development set (159 requests total), then combine separate intent results and narrative review before selection. No models were run or downloaded by the assistant; no code changes or test reruns occurred during review.
+
 ## Future entry template
 
 - Date/time and objective.
