@@ -604,6 +604,14 @@ Non-blind assistant visual inspection found a closed panelled door and the reque
 
 Compatibility succeeded; scene fidelity did not fully satisfy the brief. Recommended the unchanged ten-image SDXL Turbo baseline (five rooms, seeds 42/43) before prompt tuning or comparative conclusions. The one-case smoke test remains separate evidence. No model was run by the assistant, no downloads occurred, and no software tests were rerun for this documentation-only review.
 
+## 52. Full SDXL Turbo development image baseline reviewed (22 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260922T205805515147Z-e8e9aa6f and viewed all ten images individually. Five rooms with seeds 42/43 completed successfully: 10/10 runtime completions and PNG integrity passes. Mean load-inclusive wall time was 13.388 seconds, range 13.082–13.862, total 133.884. Vulkan log identified the RX 7800 XT. This is fresh-process latency, not warm inference or peak-memory evidence. The seed-42 hall hash exactly matched the earlier smoke sample.
+
+Saved a separately labelled non-blind assistant inspection in evaluation/assistant_reviews/image_sdxl_baseline.md. Both entrance halls lacked a clear desk; both libraries lacked the required stairway/reading-stand arrangement; telescope scenes did not clearly show attached beacon housing or benches. Workshop toolbox identity and generator details require human adjudication. Style/palette appeared consistent, but this cannot compensate for missing scene content. Pending human review forms were preserved; no numeric semantic pass rate, independent ratings or five-model ranking was invented. Recorded the runtime's default VAE scaling warning without attributing visual failures to it.
+
+Next: prepare the second image candidate, SD-Turbo, checking exact artifact/licence and pinned-runtime settings before user-managed download/inference. Keep the current baseline unchanged for comparison. No model was run or downloaded by the assistant; this documentation-only review required no software test rerun.
+
 ## Future entry template
 
 
