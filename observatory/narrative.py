@@ -12,7 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .engine import GameState, allowed_actions
 
-POLICY_VERSION = "hall-narrative-guards-v1"
+POLICY_VERSION = "hall-narrative-guards-v1.1"
 PROMPT_VERSION = "hall-narrative-v1"
 PROMPT = """Describe the verified entrance-hall state in second person, in 60-100 words.
 Return only JSON with a description string. Copy each required sentence exactly
@@ -79,8 +79,10 @@ def validate_description(description, state):
     count = len(re.findall(r"\b\w+(?:[-']\w+)*\b", description))
     if not 60 <= count <= 100:
         reasons.append("description_length")
-    # Exclude canonical sentences: their negations/state are known to be correct.
-    extra = " ".join(s for s in sentences if s not in anchors).casefold()
+    # Exact supplied facts are trusted too, including negative power/ending facts.
+    # Only exempt whole sentences; appended or paraphrased claims stay checked.
+    trusted = set(anchors + payload(state)["scene_facts"])
+    extra = " ".join(s for s in sentences if s not in trusted).casefold()
     patterns = {
         "door_opening": r"\b(open|opens|opened|opening|ajar|swings?)\b",
         "unrequested_movement": r"\b(enter|entered|entering|leave|left|depart|travel|walk into)\b",

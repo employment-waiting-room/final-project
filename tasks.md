@@ -92,6 +92,7 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 - [ ] Carry confirmation into browser/full-world orchestration and measure user correction/cancellation separately from raw-model accuracy.
 - [x] Narrate accepted entrance-hall state changes only, with one generation attempt and factual fallback on failure; cancellation/rejection triggers no narration and narration cannot apply actions. Saved source/reasons separately from raw-model evaluation.
 - [ ] Review user-run guarded gameplay logs for factual errors, false rejections and fallback rate; bounded keyword/anchor checks do not guarantee prose truth.
+- [x] Review the first three guarded gameplay narrations and fix exact supplied-fact false rejections (policy v1.1). All three still failed length; 187 tests passed. Confirmation cancellation and broader live acceptance/fallback measurement remain outstanding.
 - [ ] Implement movement, inventory, puzzle flags, allowed actions, and both endings across the agreed world.
 - [ ] Resolve unintended action substitutions, including the reported looking/knocking failures, against the agreed action contract.
 - [ ] Implement clarification and unsupported-request handling; measure over-clarification rather than assuming heuristic guards solve ambiguity.

@@ -578,6 +578,14 @@ Saved unique gameplay narrative logs containing prompt/policy identity, state, r
 
 Validation: 182 tests passed in 3.05 seconds, using simulated responses only. Coverage included accepted text for each hall state, hidden-key protection, known door/power/inventory/entity violations, schema/HTTP/timeout/truncation/interruption fallback, immutable state under repeated rendering, unique logs, logging failure, confirmation gating and exactly one narration per numbered transition including completion. Tests used the approved Windows Python launcher outside the sandbox. Added gameplay_narration.md with the user-run command and limitations; updated tasks.md and Git visibility for the guide. No models were run or downloaded, and no commit or push occurred. Live narration and fallback-frequency measurement remain user-run future evaluation.
 
+## 49. First guarded gameplay trace and false-rejection fix (22 September 2026)
+
+Reviewed the user's terminal sequence and the three corresponding gameplay narrative logs (response times 20:35:55, 20:36:13 and 20:36:30 UTC). All three typed actions required confirmation and advanced the expected hall sequence, retaining the key and leaving the final door closed/unlocked. The user quit at the action prompt in an earlier launch; this trace did not exercise cancellation at the confirmation prompt. All three narrations used fallback. Generation completed normally; assistant inspection found no obvious factual contradiction in these three raw descriptions. All failed the 60-word minimum.
+
+Found an implementation false rejection: collection/unlocking responses copied supplied scene facts about daylight, absent electricity and no rescue signal, but keyword checks treated those exact trusted sentences as prohibited claims. Fixed the validator to exempt whole sentences matching supplied scene facts as well as required anchors. Appended/modified contradictory claims remain checked. Incremented gameplay policy to hall-narrative-guards-v1.1; prompt and the 60-100-word requirement were unchanged. Old logs/results were preserved. These same three outputs would still fail length, so this fix does not establish a lower overall fallback rate.
+
+Validation: 187 tests passed in 1.18 seconds, including exact supplied-fact acceptance and protection against contradictory additions. No models were run, and no downloads occurred. Live narrative quality and cancellation-at-confirmation testing remain outstanding. The results also show that this prompt often copies factual templates rather than producing varied prose; fallback correctness must not be presented as successful generative narration.
+
 ## Future entry template
 
 - Date/time and objective.

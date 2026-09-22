@@ -119,3 +119,20 @@ def test_log_failure_does_not_lose_scene(tmp_path, capsys):
 def test_unseen_inventions_are_not_claimed_to_be_detected():
     # Documents the practical boundary: these checks cannot prove arbitrary prose true.
     assert not validate_description(accepted_text(states()[2]) + " Purple butterflies hover nearby.", states()[2])
+
+
+@pytest.mark.parametrize("state", states()[1:])
+def test_exact_supplied_scene_facts_are_not_flagged_as_contradictions(state):
+    facts = payload(state)
+    text = " ".join(facts["required_sentences"] + facts["scene_facts"])
+    assert set(validate_description(text, state)) <= {"description_length"}
+
+
+@pytest.mark.parametrize("extra", [
+    "The generator is now running.",
+    "No electricity has been restored and no rescue signal has been sent, but now power returns.",
+])
+def test_trusted_fact_exemption_does_not_hide_appended_claims(extra):
+    state = states()[2]
+    text = " ".join(payload(state)["required_sentences"] + payload(state)["scene_facts"]) + " " + extra
+    assert "power_or_ending_claim" in validate_description(text, state)
