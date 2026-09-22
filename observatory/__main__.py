@@ -1,6 +1,8 @@
 """Run with python -m observatory from the project directory."""
+import argparse
 from .engine import ACTION_LABELS, GameState, allowed_actions, apply_action, describe
 from .intent import Interpreter, handle_text
+from .narrative import Narrator
 
 
 def confirm_action(proposal):
@@ -8,12 +10,17 @@ def confirm_action(proposal):
     return input("Apply this action? Type y/yes to confirm; anything else cancels: ")
 
 
-def main():
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--narrate", action="store_true", help="Generate guarded narration after accepted actions")
+    args = parser.parse_args(argv)
     state = GameState()
     interpreter = Interpreter()
+    narrator = Narrator() if args.narrate else None
+    scene = None
     print("The Last Observatory - entrance hall prototype")
     while True:
-        print(f"\n{describe(state)}")
+        print(f"\n{scene.description if scene else describe(state)}")
         print("Inventory: " + (", ".join(sorted(state.inventory)) or "empty"))
         if state.library_unlocked:
             print("Sequence complete. Exploring the library is not implemented yet.")
@@ -33,14 +40,25 @@ def main():
                 print("Enter an action or one of the displayed numbers.")
                 continue
             print("Interpreting action...")
+            previous = state
             try:
                 state, feedback = handle_text(state, answer, interpreter, confirm_action)
             except (EOFError, KeyboardInterrupt):
                 print("\nAction cancelled; state unchanged. Game closed.")
                 return
             print(feedback)
+            if narrator and state is not previous:
+                print("Generating scene description...")
+                scene = narrator.render(state)
+                if scene.source == "fallback":
+                    print("Using the factual scene description.")
             continue
         state = apply_action(state, actions[int(answer) - 1])
+        if narrator:
+            print("Generating scene description...")
+            scene = narrator.render(state)
+            if scene.source == "fallback":
+                print("Using the factual scene description.")
 
 
 if __name__ == "__main__":

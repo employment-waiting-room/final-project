@@ -57,7 +57,7 @@ Working world/action contract accepted on 21 September 2026, including shelter w
 - [ ] Complete per-attempt human factuality/readability annotation separately from structure checks; consider a versioned narrative improvement with the baseline preserved. Supply commands for all user-run model experiments.
 - [x] Add an opt-in narrative v2 prompt emphasising verified outcomes, unchanged facts and length; preserve v1 as default and keep fixtures/settings/scoring unchanged. Software tests: 153 passed (22 September 2026).
 - [x] Review the user-run narrative v2 comparison: Qwen structural passes rose 7/32 -> 14/32; Gemma fell 4/32 -> 1/32. Factual failures persisted, including structurally passing outputs. Kept v1 default unchanged; see log entry 43.
-- [ ] Agree the scope of bounded gameplay narrative validation/factual fallback and engine-owned suggestions/brief IDs. Stop further prompt expansion for now; implementation requires a new authorisation. Keep raw-model scores separate.
+- [x] Implement the subsequently authorised entrance-hall narrative safeguard with engine-owned suggestions/brief ID, bounded checks and factual fallback. Opt-in --narrate mode; 182 software tests passed. Live evaluation and full-world integration remain outstanding; see gameplay_narration.md.
 - [ ] Implement image/speech comparison adapters for the shared media fixtures, review settings and obtain approval before inference. Existing feasibility scripts still use historical inputs.
 - [x] Reserve new intent phrasings and state combinations before further tuning; record provenance and annotation rules. Added 30 assistant-authored cases, a reservation hash and offline separation checks. These are unrun model inputs in known task families, not blind-author or independently annotated data.
 - [ ] Independently review reserved intent labels against the frozen contract before final evaluation; do not use reserved cases to tune prompts or rules. Reserve media evaluation material separately.
@@ -90,6 +90,8 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 - [x] Add an entrance-hall typed-action confirmation safeguard: display the interpreted action/target, require explicit y/yes, and preserve state on cancellation, missing confirmation or interruption. Verified with simulated model responses; this does not fix model interpretation errors or complete browser/full-world integration.
 - [x] Test gameplay confirmation separately from model-only evaluation; keep ambiguous/compound prediction errors in model accuracy scores. Full software suite: 100 passed (21 September 2026).
 - [ ] Carry confirmation into browser/full-world orchestration and measure user correction/cancellation separately from raw-model accuracy.
+- [x] Narrate accepted entrance-hall state changes only, with one generation attempt and factual fallback on failure; cancellation/rejection triggers no narration and narration cannot apply actions. Saved source/reasons separately from raw-model evaluation.
+- [ ] Review user-run guarded gameplay logs for factual errors, false rejections and fallback rate; bounded keyword/anchor checks do not guarantee prose truth.
 - [ ] Implement movement, inventory, puzzle flags, allowed actions, and both endings across the agreed world.
 - [ ] Resolve unintended action substitutions, including the reported looking/knocking failures, against the agreed action contract.
 - [ ] Implement clarification and unsupported-request handling; measure over-clarification rather than assuming heuristic guards solve ambiguity.
