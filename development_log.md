@@ -648,6 +648,14 @@ Non-blind assistant visual inspection found a stylised blue panelled door and br
 
 The earlier user-reported curl write failure occurred before this successful run; its exact cause was not established. No model downloads or inference were performed by the assistant. Documentation-only review required no software test rerun, commit or push.
 
+## 58. Full SD 1.5 image baseline reviewed (23 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260923T105950381566Z-9838fd29 and individually viewed all ten images. Runtime completion and PNG integrity passed 10/10. Mean load-inclusive wall time was 13.886 seconds (range 13.360–14.976; total 138.857). Verified matching dataset/protocol hashes, exact prompts and seeds against SD-Turbo. The hall seed-42 hash matched the smoke output. Different sampling budgets/settings and separate sessions prevent controlled model-speed claims.
+
+Saved non-blind assistant per-image notes in evaluation/assistant_reviews/image_sd15_baseline.md. Required desks, stairs, generator casings and telescope accessories were missing/unclear. Several images became collages/object sheets; workshop seed 42 contained QUEST lettering, hall seed 43 included human figures, and telescope seed 43 showed open sky outdoors. Ambiguous details remain for human adjudication. Original human review forms remain pending; no numerical semantic pass rate or independent ratings were invented.
+
+Three of five image candidates now have full shared development baselines, all with scene-content failures. Recommended preparing SDXL Base 1.0 as candidate four, including checkpoint/VAE/runtime requirements, while preserving current prompts and evidence. No models were run or downloaded by the assistant; documentation-only review required no software test rerun, commit or push.
+
 ## Future entry template
 
 
