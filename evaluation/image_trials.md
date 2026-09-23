@@ -36,6 +36,20 @@ Generated evidence remains Git-ignored. Preserve the entire selected folder for 
 
 ## Five-candidate target
 
+### SD 1.5 preparation (23 September)
+
+Configuration: `evaluation/image_candidates_sd15.json`. Pinned maintained mirror revision `451f4fe16113bff5a5d2269ed5ad43b0592e9a14`; checkpoint `v1-5-pruned-emaonly.safetensors`, approximately 4.27 GB. Published SHA-256: `6ce0161689b3853acaa03779ec93eafe75a02f4ced659bee03f50797806fa2fa`. [Artifact source](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/blob/451f4fe16113bff5a5d2269ed5ad43b0592e9a14/v1-5-pruned-emaonly.safetensors). Repository metadata identifies CreativeML OpenRAIL-M; preserve model-card/licence provenance separately from the runtime licence.
+
+Predeclared starting settings: 30 steps, CFG 7.5, Euler, discrete scheduler, 512px. These are project trial choices, not claimed optimal settings. SD 1.5 is not a Turbo checkpoint, so reusing four steps/CFG 1 would not be a useful ordinary-generation baseline. Prompts, canvas and seeds remain shared; comparisons are of configured pipelines with different compute budgets, not equal-step model rankings. Installed-runtime compatibility remains subject to the user-run smoke test. Existing Turbo configurations/results remain unchanged.
+
+After downloading and verifying the pinned checkpoint, run:
+
+```powershell
+.\.venv\Scripts\python.exe -m observatory.evaluate_image --config evaluation/image_candidates_sd15.json --execute --limit 1 --repetitions 1
+```
+
+Send the saved folder/error before the ten-image baseline. Remove `--limit 1 --repetitions 1` only after smoke review. No model download or inference was performed during preparation.
+
 ### SD-Turbo preparation (22 September)
 
 Separate configuration: `evaluation/image_candidates_sd_turbo.json`. The default SDXL configuration and saved baseline remain unchanged. Pinned revision: `b261bac6fd2cf515557d5d0707481eafa0485ec2`; single-file `sd_turbo.safetensors`, approximately 5.21 GB. Published SHA-256: `3f067a1b943cf162f2b8f8588f6cf5824bd5b4c7d1d88d87164b9ca123616549`. [Pinned artifact metadata](https://huggingface.co/stabilityai/sd-turbo/blob/b261bac6fd2cf515557d5d0707481eafa0485ec2/sd_turbo.safetensors).

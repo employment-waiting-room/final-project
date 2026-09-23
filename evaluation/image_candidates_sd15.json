@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sd15",
+    "model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+    "checkpoint": "models/v1-5-pruned-emaonly.safetensors",
+    "revision": "451f4fe16113bff5a5d2269ed5ad43b0592e9a14",
+    "steps": 30,
+    "cfg": 7.5,
+    "sampler": "euler",
+    "scheduler": "discrete"
+  }
+]

@@ -634,6 +634,20 @@ Saved per-image non-blind assistant observations in evaluation/assistant_reviews
 
 Two image candidates now have full shared development baselines. Neither is selected as a final winner. Proposed next: prepare SD 1.5 checkpoint/configuration and user-run smoke commands while keeping existing prompts/results unchanged. No models were executed or downloaded by the assistant, and no software test rerun was needed for this documentation-only review.
 
+## 56. SD 1.5 comparison configuration prepared (23 September 2026)
+
+Prepared separate evaluation/image_candidates_sd15.json for the third image candidate. Verified maintained repository revision 451f4fe16113bff5a5d2269ed5ad43b0592e9a14 and published SHA-256 6ce0161689b3853acaa03779ec93eafe75a02f4ced659bee03f50797806fa2fa for the approximately 4.27 GB v1-5-pruned-emaonly.safetensors checkpoint. Repository metadata identifies CreativeML OpenRAIL-M. Added provenance and smoke instructions to evaluation/image_trials.md.
+
+Predeclared project trial settings: 30 steps, CFG 7.5, Euler/discrete, unchanged 512px briefs and seeds. This differs deliberately from the distilled Turbo configurations; no claim of optimal tuning or equal-compute comparison is made. Existing baseline configurations and evidence remain unchanged. Offline preview validates configuration/schedule only; real runtime compatibility and visual results remain user-run. No model downloads, inference, dependencies, commits or pushes were performed.
+
+## 57. SD 1.5 smoke test reviewed (23 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260923T105228086296Z-2ee0ad80. One entrance-hall image completed with exit code zero, valid 512x512 PNG integrity and matching published checkpoint SHA-256. The saved configuration used 30 steps, CFG 7.5, Euler/discrete; Vulkan execution succeeded. Load-inclusive wall time was 9.944 seconds. This is compatibility evidence, not a controlled speed comparison with the differently configured Turbo candidates.
+
+Non-blind assistant visual inspection found a stylised blue panelled door and brown shelving/walls, but no clear dusty desk. High frosted glazing was not clearly identifiable; the upper shapes and small door panel are ambiguous. No obvious person or key was visible. This image does not establish full scene-content compliance. Human review fields remain pending. Recommended the unchanged ten-image SD 1.5 baseline before model comparison or tuning.
+
+The earlier user-reported curl write failure occurred before this successful run; its exact cause was not established. No model downloads or inference were performed by the assistant. Documentation-only review required no software test rerun, commit or push.
+
 ## Future entry template
 
 
