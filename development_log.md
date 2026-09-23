@@ -744,6 +744,14 @@ Runner uses the existing ten exact passages, seeds 42/43 for supported APIs (Pip
 
 Validation: 220 offline tests passed in 3.83 seconds using fake subprocesses and synthetic WAV files. Coverage includes candidate order, seeds, shared text, failure retention, timeout, interruption, silence, missing audio, no retries, pending reviews and invalid settings. This is orchestration evidence, not real adapter synthesis success. Added evaluation/speech_trials.md with five-request smoke command and later 100-output full-run scope; updated tasks/README/Git visibility. No model downloads, dependency changes, inference, commits or pushes occurred. Next: user-run one-passage smoke results and listening before full comparison. Image review remains deferred.
 
+## 71. Five speech smoke outputs and developer feedback reviewed (23 September 2026)
+
+Reviewed generated/speech-evaluations/20260923T161045310963Z-219405ee: five completed attempts and valid audio files for T01. Recorded developer feedback separately in evaluation/assistant_reviews/speech_smoke_review.md: Piper/Kokoro/XTTS sounded good; SpeechT5 had lots of static and was very monotone, unclear and robotic; MMS had many mispronunciations. These are subjective developer smoke judgements, not independent ratings or complete passage annotations. Original review forms remain pending.
+
+Inspected SpeechT5/MMS logs, output metrics, local sample-rate configs and installed/reference generation path. Both used mono PCM16 at 16 kHz without full-scale clipped samples. SpeechT5's chosen speaker embedding was finite, shape (512,), norm 1.0. No obvious sample-rate, shape or normalisation error was found; the cause of static/mispronunciations remains unresolved. No raw float waveform was retained, and no independent assistant listening or model-quality attribution was claimed.
+
+Synthesis seconds / real-time factors: Piper 1.27/.22, Kokoro 1.32/.19, SpeechT5 3.80/.54, MMS .86/.11, XTTS 12.43/1.95. Loading was separately recorded and substantial for several models; these single samples do not establish warm inference performance or a general ranking. Full five-model development comparisons remain pending. No inference, downloads, fixes or tuning were performed by the assistant; no software test rerun was needed for this evidence review.
+
 ## Future entry template
 
 
