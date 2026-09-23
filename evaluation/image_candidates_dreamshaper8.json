@@ -1,0 +1,12 @@
+[
+  {
+    "id": "dreamshaper8",
+    "model": "Lykon/DreamShaper",
+    "checkpoint": "models/DreamShaper_8_pruned.safetensors",
+    "revision": "228d79cb20811466f5c5710aa91f05dabd0b8a14",
+    "steps": 30,
+    "cfg": 7.5,
+    "sampler": "euler",
+    "scheduler": "discrete"
+  }
+]

@@ -36,6 +36,20 @@ Generated evidence remains Git-ignored. Preserve the entire selected folder for 
 
 ## Five-candidate target
 
+### DreamShaper 8 preparation (23 September)
+
+Configuration: `evaluation/image_candidates_dreamshaper8.json`. Use creator repository `Lykon/DreamShaper`, revision `228d79cb20811466f5c5710aa91f05dabd0b8a14`, file `DreamShaper_8_pruned.safetensors` (approximately 2.13 GB). Published SHA-256: `879db523c30d3b9017143d56705015e15a2cb5628762c11d086fed9538abd7fd`. [Artifact metadata](https://huggingface.co/Lykon/DreamShaper/blob/main/DreamShaper_8_pruned.safetensors). This is the standard version-8 SD 1.5-family checkpoint, not the LCM, inpainting or XL variants, and not a fifth independent architecture. The repository metadata labels licensing as `other`; retain its model card and resolve exact applicable terms before final distribution rather than assuming a permissive licence. No separate LICENSE file was listed in the checked repository metadata.
+
+Predeclared settings match the SD 1.5 trial: 30 steps, CFG 7.5, Euler/discrete, unchanged 512px prompts/seeds. Use the checkpoint without extra embeddings, LoRAs or external VAE. These are starting comparison settings, not claimed optimal settings. Runtime/decoding compatibility remains subject to smoke review.
+
+Download only this file from the pinned revision, verify the SHA-256 above and retain README.md as model-card provenance. Then run:
+
+```powershell
+.\.venv\Scripts\python.exe -m observatory.evaluate_image --config evaluation/image_candidates_dreamshaper8.json --execute --limit 1 --repetitions 1
+```
+
+Send the saved folder or error before removing the limit/repetition flags for the ten-image baseline. No weights were downloaded or executed during preparation.
+
 ### SDXL Base preparation (23 September)
 
 Configuration: `evaluation/image_candidates_sdxl_base.json`. Official checkpoint revision `462165984030d82259a11f4367a4eed129e94a7b`, file `sd_xl_base_1.0.safetensors`, approximately 6.94 GB. Published SHA-256: `31e35c80fc4829d14f90153f4c74cd59c90b779f6afe05a74cd6120b893f7e5b`. [Artifact](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/462165984030d82259a11f4367a4eed129e94a7b/sd_xl_base_1.0.safetensors); [licence](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/462165984030d82259a11f4367a4eed129e94a7b/LICENSE.md) identified as OpenRAIL++ in repository metadata.

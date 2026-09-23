@@ -678,6 +678,12 @@ Saved non-blind per-image observations in evaluation/assistant_reviews/image_sdx
 
 Four of five image checkpoints now have full development baselines; all have scene-content failures. Proposed next: prepare DreamShaper 8, explicitly an SD 1.5-family fine-tune, with verified provenance/configuration and user-managed smoke commands. No models were downloaded or run by the assistant. Documentation-only review required no software test rerun, commit or push.
 
+## 62. DreamShaper 8 configuration prepared (23 September 2026)
+
+Prepared evaluation/image_candidates_dreamshaper8.json using creator repository Lykon/DreamShaper, revision 228d79cb20811466f5c5710aa91f05dabd0b8a14 and standard DreamShaper_8_pruned.safetensors (approximately 2.13 GB). Verified published SHA-256 879db523c30d3b9017143d56705015e15a2cb5628762c11d086fed9538abd7fd. Repository API metadata required a read-only network request after browser/API access failures; no weight downloads occurred. Metadata labels licensing as other and lists no separate LICENSE file; model-card retention and final applicable-terms review remain explicit.
+
+Matched SD 1.5 trial settings (30 steps, CFG 7.5, Euler/discrete), with shared 512px briefs/seeds and no extra embeddings/LoRA/VAE. This is an SD 1.5-family fine-tune, not an independent architecture. Added user-managed download/hash verification and smoke instructions; actual compatibility and results remain unmeasured. Offline preview validates configuration only. Existing baselines remain unchanged. No inference, model downloads, dependencies, commits or pushes were performed by the assistant.
+
 ## Future entry template
 
 
