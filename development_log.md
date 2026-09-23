@@ -722,6 +722,14 @@ Reviewed user-generated models/speech/download_receipt.json, timestamp 2026-09-2
 
 The planned speech model-asset bundle is now downloaded, alongside existing Piper. This does not establish runnable environments, successful speech synthesis or comparative quality. Runtime packages, phonemisation resources, speaker selection and adapters remain pending; additional supporting downloads may be needed during setup. Next: prepare isolated speech runtime environments and user-run installation commands without disturbing the working gameplay environment. Image human review remains deferred. No inference, dependency installation or model download was performed by the assistant, and no software tests were rerun for this documentation-only review.
 
+## 68. Isolated speech runtime setup prepared (23 September 2026)
+
+Added scripts/setup_speech_runtimes.py, scripts/check_speech_runtime.py and three runtime requirement files. User-run --install creates separate Python 3.11 environments for SpeechT5/MMS, Kokoro and maintained Coqui XTTS, leaving gameplay/Piper unchanged. Selected CPU PyTorch/torchaudio 2.8.0, transformers 4.57.6 and explicit core pins; Kokoro/Misaki 0.9.4 and coqui-tts 0.27.5. Checked official installation documentation and release metadata. These are proposed configurations, not proven installed compatibility. Transitive versions are resolver-selected and recorded, not fully locked.
+
+Kokoro setup explicitly includes spaCy's English small model wheel as an additional G2P resource. User command downloads packages/supporting resources only; no speech checkpoint loading or synthesis. Post-install pip check and offline import checks record package inventories/errors. Import checks set HF offline flags and block Python socket connections; they do not establish working G2P, voice selection or synthesis. Setup stops on failure with saved status and supports individual-profile retries. Added virtual-environment Git exclusions and updated user instructions/tasks. Actual installation remains user-run.
+
+Validation: 212 offline tests passed in 1.85 seconds, including command isolation, CPU index selection, continued collection of import failures and missing-class detection using simulated importers. No runtime packages were installed and no models were run/downloaded by the assistant. No commits or pushes occurred. Next evidence: user installation result folder and errors, then inspect import reports before preparing synthesis smoke tests. Image human review remains deferred.
+
 ## Future entry template
 
 
