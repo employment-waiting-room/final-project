@@ -85,6 +85,7 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [x] Complete a separately labelled assistant review of all 64 Qwen/Phi v2 narratives with per-case evidence and uncertain judgements. Qwen: 14 pass/10 fail/8 uncertain; Phi: 4 pass/23 fail/5 uncertain. See evaluation/assistant_reviews/narrative_v2_finalists.md; this does not complete independent human evaluation.
 - [ ] Obtain developer judgement on the flagged narrative ambiguities and record style preference separately. Qwen remains the provisional recommendation; final selection and bounded gameplay safeguards are not complete.
 - [ ] Compare at least five feasible image checkpoints on matching scene briefs and criteria; record exclusions/replacements explicitly.
+- [x] Prepare fourth candidate SDXL Base with pinned checkpoint/hash, embedded-VAE smoke configuration and user-run instructions. Actual compatibility/full baseline remain pending (log entry 59).
 - [ ] Compare at least five feasible speech models on matching passages and listening criteria; record exclusions/replacements explicitly.
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
 - [ ] Select the initial application models using quality, correctness, latency, resource use, and integration evidence.

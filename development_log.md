@@ -656,6 +656,12 @@ Saved non-blind assistant per-image notes in evaluation/assistant_reviews/image_
 
 Three of five image candidates now have full shared development baselines, all with scene-content failures. Recommended preparing SDXL Base 1.0 as candidate four, including checkpoint/VAE/runtime requirements, while preserving current prompts and evidence. No models were run or downloaded by the assistant; documentation-only review required no software test rerun, commit or push.
 
+## 59. SDXL Base smoke configuration prepared (23 September 2026)
+
+Prepared evaluation/image_candidates_sdxl_base.json for candidate four. Verified official revision 462165984030d82259a11f4367a4eed129e94a7b, approximately 6.94 GB single-file checkpoint and published SHA-256 31e35c80fc4829d14f90153f4c74cd59c90b779f6afe05a74cd6120b893f7e5b; recorded OpenRAIL++ licence provenance. Predeclared 30-step CFG 7 Euler/discrete configuration uses unchanged 512px briefs/seeds and embedded VAE with the pinned runtime's SDXL scaling path. No refiner/LoRA or external VAE was added. Decoding/resource compatibility remain subject to user-run smoke review; the 512px comparison is not a native-resolution model-quality claim.
+
+Added configuration and documentation without changing existing baselines or evaluator source. Offline preview checks parsing/schedule only. Provided user-managed resumable download/hash verification and smoke commands. No model download, inference, dependency installation, commit or push was performed by the assistant.
+
 ## Future entry template
 
 

@@ -36,6 +36,20 @@ Generated evidence remains Git-ignored. Preserve the entire selected folder for 
 
 ## Five-candidate target
 
+### SDXL Base preparation (23 September)
+
+Configuration: `evaluation/image_candidates_sdxl_base.json`. Official checkpoint revision `462165984030d82259a11f4367a4eed129e94a7b`, file `sd_xl_base_1.0.safetensors`, approximately 6.94 GB. Published SHA-256: `31e35c80fc4829d14f90153f4c74cd59c90b779f6afe05a74cd6120b893f7e5b`. [Artifact](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/462165984030d82259a11f4367a4eed129e94a7b/sd_xl_base_1.0.safetensors); [licence](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/462165984030d82259a11f4367a4eed129e94a7b/LICENSE.md) identified as OpenRAIL++ in repository metadata.
+
+Predeclared trial settings: 30 steps, CFG 7, Euler/discrete and the shared 512px canvas. This tests the application constraint, not SDXL's native-resolution quality. Use the single-file checkpoint's embedded VAE for the smoke test, with the pinned runtime's default SDXL Conv2D scaling path; no separate VAE, refiner or LoRA is added. Inspect decoded output and logs before full evaluation; if decoding fails, preserve that failure and explicitly revise the configuration rather than silently substituting assets. Local compatibility and resource headroom are unmeasured until the user runs it. Sampling settings are project choices, not a claim of optimal tuning or equal compute with Turbo.
+
+After user-managed download, SHA verification and licence retention, run:
+
+```powershell
+.\.venv\Scripts\python.exe -m observatory.evaluate_image --config evaluation/image_candidates_sdxl_base.json --execute --limit 1 --repetitions 1
+```
+
+Send the saved folder or error before running the full baseline. Existing configurations and model results remain unchanged. No weights were downloaded or executed during preparation.
+
 ### SD 1.5 preparation (23 September)
 
 Configuration: `evaluation/image_candidates_sd15.json`. Pinned maintained mirror revision `451f4fe16113bff5a5d2269ed5ad43b0592e9a14`; checkpoint `v1-5-pruned-emaonly.safetensors`, approximately 4.27 GB. Published SHA-256: `6ce0161689b3853acaa03779ec93eafe75a02f4ced659bee03f50797806fa2fa`. [Artifact source](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/blob/451f4fe16113bff5a5d2269ed5ad43b0592e9a14/v1-5-pruned-emaonly.safetensors). Repository metadata identifies CreativeML OpenRAIL-M; preserve model-card/licence provenance separately from the runtime licence.

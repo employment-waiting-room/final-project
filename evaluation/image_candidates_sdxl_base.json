@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sdxl-base",
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "checkpoint": "models/sd_xl_base_1.0.safetensors",
+    "revision": "462165984030d82259a11f4367a4eed129e94a7b",
+    "steps": 30,
+    "cfg": 7,
+    "sampler": "euler",
+    "scheduler": "discrete"
+  }
+]
