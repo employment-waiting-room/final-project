@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Last Observatory — image review</title>
+<style>
+body{font:16px system-ui;margin:24px;background:#f3f4f6;color:#182331}h1{font-size:24px}button,select,input,textarea{font:inherit;padding:8px;margin:4px}button{cursor:pointer}header,.panel{background:white;padding:16px;border-radius:8px;margin-bottom:16px}.layout{display:grid;grid-template-columns:minmax(280px,512px) 1fr;gap:24px}img{width:100%;max-width:512px}label{display:block;margin:8px 0}textarea{width:90%;min-height:64px}fieldset{margin:12px 0}small{display:block}#status{font-weight:bold} @media(max-width:800px){.layout{grid-template-columns:1fr}}
+</style>
+<h1>The Last Observatory — image review</h1>
+<p>Assess required objects and forbidden details separately from style. This is a developer review, not a blind study. No models or network services run here.</p>
+<header>
+<label>Your name <input id="reviewer" placeholder="Reviewer name"></label>
+<button id="export">Export review JSON</button><label>Resume an exported review <input type="file" id="import" accept="application/json"></label>
+<small>Changes are saved in this browser when storage is available. Export before closing: browser storage is not a backup.</small><p id="status" role="status"></p>
+<label>Image <select id="picker"></select></label><button id="prev">Previous</button><button id="next">Next</button><span id="progress"></span>
+</header>
+<div class="layout"><div class="panel"><h2 id="title"></h2><img id="image" alt="Generated observatory scene"><p id="source"></p></div><div class="panel" id="form"></div></div>
+<section class="panel"><h2>Style preference and coherence</h2><p>Complete after viewing the full sets. Coherence: 1 unrelated set; 2 strong differences; 3 mixed; 4 minor variation; 5 consistent. Style preference does not establish scene correctness.</p><div id="sets"></div>
+<label>Preferred visual style <select id="preferred"></select></label><label>Reason <textarea id="preferenceNotes"></textarea></label></section>
+<script id="data" type="application/json">__GALLERY_DATA__</script>
+<script>
+'use strict';
+const data=JSON.parse(document.getElementById('data').textContent), $=id=>document.getElementById(id);
+const key='observatory-image-review-'+data.gallery_id;
+let state={version:'image-human-review-v1',gallery_id:data.gallery_id,reviewer:'',reviews:{},coherence:{},preferred:'',preferenceNotes:''}, index=0;
+function message(s){$('status').textContent=s}
+function valid(s){return s && s.version===state.version && s.gallery_id===data.gallery_id && typeof s.reviewer==='string' && s.reviews && typeof s.reviews==='object' && !Array.isArray(s.reviews) && s.coherence && typeof s.coherence==='object' && !Array.isArray(s.coherence)}
+try{const saved=JSON.parse(localStorage.getItem(key));if(valid(saved))state=saved}catch(e){message('Browser saving unavailable. Export your review regularly.')}
+function save(){try{localStorage.setItem(key,JSON.stringify(state));message('Saved in this browser. Export for a portable backup.')}catch(e){message('Browser saving unavailable. Export now to keep your work.')}progress()}
+function record(row){return state.reviews[row.id] ||= {required:{},forbidden:{},clarity:'',style:'',notes:'',updated_at:null}}
+function complete(row){const r=record(row);return row.required.every(x=>['present','absent','unclear'].includes(r.required?.[x]))&&row.forbidden.every(x=>['present','absent','unclear'].includes(r.forbidden?.[x]))&&['1','2','3','4','5'].includes(r.clarity)&&['1','2','3','4','5'].includes(r.style)}
+function verdict(row){const r=record(row);if(!complete(row))return null;return row.required.every(x=>r.required[x]==='present')&&row.forbidden.every(x=>r.forbidden[x]==='absent')}
+function progress(){$('progress').textContent=` ${data.images.filter(complete).length}/${data.images.length} image forms complete`}
+function select(label,values,current,change,parent){const l=document.createElement('label');l.append(document.createTextNode(label+' '));const s=document.createElement('select');for(const [v,t] of [['','Not reviewed'],...values]){const o=document.createElement('option');o.value=v;o.textContent=t;s.append(o)}s.value=current||'';s.onchange=()=>change(s.value);l.append(s);parent.append(l)}
+function render(){const row=data.images[index],r=record(row);$('picker').value=String(index);$('title').textContent=`${row.candidate} · ${row.fixture} · seed ${row.seed}`;$('source').textContent=row.id;$('image').src=row.image;const form=$('form');form.replaceChildren();
+ const intro=document.createElement('p');intro.textContent='Mark each detail present, absent or unclear. A content pass needs all required details present and all forbidden details absent.';form.append(intro);
+ for(const group of ['required','forbidden']){const box=document.createElement('fieldset'),legend=document.createElement('legend');legend.textContent=group==='required'?'Required details':'Forbidden details';box.append(legend);for(const detail of row[group])select(detail,[['present','Present'],['absent','Absent'],['unclear','Unclear']],r[group]?.[detail],v=>{r[group] ||= {};r[group][detail]=v;r.updated_at=new Date().toISOString();save()},box);form.append(box)}
+ const ratings=[1,2,3,4,5].map(n=>[String(n),String(n)]);
+ select('Scene clarity (1 unrecognisable → 5 immediately clear)',ratings,r.clarity,v=>{r.clarity=v;save()},form);
+ select('Style adherence (1 contrary to brief → 5 consistently matches)',ratings,r.style,v=>{r.style=v;save()},form);
+ const guide=document.createElement('p');guide.textContent='Style brief: restrained storybook digital painting, muted blue-grey and warm wood, diffuse daylight. Clarity: 2 major objects hard to identify; 3 identifiable with ambiguity; 4 clear with minor clutter. Style: 2 mostly inconsistent; 3 partly matches; 4 mostly matches.';form.append(guide);
+ const label=document.createElement('label');label.textContent='Observations (especially missing, forbidden or unclear details)';const notes=document.createElement('textarea');notes.value=r.notes||'';notes.oninput=()=>{r.notes=notes.value;save()};label.append(notes);form.append(label);progress()}
+data.images.forEach((r,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${i+1}. ${r.fixture} · seed ${r.seed} · ${r.candidate}`;$('picker').append(o)});
+$('picker').onchange=()=>{index=Number($('picker').value);render()};$('prev').onclick=()=>{index=(index+data.images.length-1)%data.images.length;render()};$('next').onclick=()=>{index=(index+1)%data.images.length;render()};
+function globalFields(){$('reviewer').value=state.reviewer;$('preferenceNotes').value=state.preferenceNotes||'';$('sets').replaceChildren();$('preferred').replaceChildren();const empty=document.createElement('option');empty.value='';empty.textContent='No preference recorded';$('preferred').append(empty);for(const c of [...new Set(data.images.map(r=>r.candidate))]){const o=document.createElement('option');o.value=c;o.textContent=c;$('preferred').append(o);for(const seed of [42,43])select(`${c}, seed ${seed}: five-room coherence`,[1,2,3,4,5].map(n=>[String(n),String(n)]),state.coherence[c+':'+seed],v=>{state.coherence[c+':'+seed]=v;save()},$('sets'))}$('preferred').value=state.preferred||''}
+$('reviewer').oninput=()=>{state.reviewer=$('reviewer').value;save()};$('preferred').onchange=()=>{state.preferred=$('preferred').value;save()};$('preferenceNotes').oninput=()=>{state.preferenceNotes=$('preferenceNotes').value;save()};
+$('export').onclick=()=>{const result={...state,exported_at:new Date().toISOString(),review_type:'developer_non_blind',images:data.images.map(row=>({id:row.id,candidate:row.candidate,fixture:row.fixture,seed:row.seed,sha256:row.sha256,form_complete:complete(row),content_pass:verdict(row)}))};const url=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='observatory-image-review-'+Date.now()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);message('Review exported. Partial/unreviewed fields remain pending.')};
+$('import').onchange=async()=>{try{const s=JSON.parse(await $('import').files[0].text());if(!valid(s))throw Error('Wrong gallery or review format');for(const [id,r] of Object.entries(s.reviews)){const row=data.images.find(x=>x.id===id);if(!row||!r||typeof r!=='object'||!r.required||!r.forbidden)throw Error('Invalid image review');for(const group of ['required','forbidden'])for(const [detail,v] of Object.entries(r[group]))if(!row[group].includes(detail)||!['','present','absent','unclear'].includes(v))throw Error('Invalid checklist value');for(const field of ['clarity','style'])if(!['','1','2','3','4','5'].includes(r[field]))throw Error('Invalid rating')}
+ if(!confirm('Replace the current browser review with this imported file? Export current work first if needed.'))return;state=s;globalFields();render();save()}catch(e){message('Import failed: '+e.message)}};
+globalFields();render();
+</script></html>

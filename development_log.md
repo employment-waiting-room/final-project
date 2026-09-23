@@ -700,6 +700,14 @@ Libraries showed clear stairs, but open-manual/reading-stand requirements remain
 
 All five candidates now have ten-image development baselines: 50/50 runtime/PNG successes, with scene-content failures across candidates. Recorded mean wall seconds: SDXL Turbo 13.39, SD-Turbo 3.00, SD 1.5 13.89, SDXL Base 19.01, DreamShaper 8 8.99. Different compute budgets and separate sessions limit timing comparisons. Smoke samples are separate, and successful file checks are not content accuracy. Proposed next: developer visual checklist review/style preference, potentially aided by an offline gallery, before selection or versioned prompt improvements. Speech comparisons and integration remain outstanding. No models were run/downloaded by the assistant; documentation-only work required no software test rerun, commit or push.
 
+## 65. Offline image review gallery implemented (23 September 2026)
+
+Built observatory/image_gallery.py and its standalone HTML/JavaScript template, then generated generated/image-review-gallery.html from the 50 existing baseline images. Dataset/image hashes are checked against saved manifests/results; images are embedded for direct browser opening without a server/network/model. Original evaluator outputs and review forms remain unchanged. Images are grouped by room/seed across candidates and identified by run/attempt/hash.
+
+Added required/forbidden present/absent/unclear judgements, notes, separate clarity/style ratings, per-candidate/seed coherence and overall style preference. No ratings were prefilled. Exports identify the review as developer_non_blind and keep incomplete content judgements null; complete content passes require all required details present and forbidden details absent. Browser saving is best-effort with explicit export backup instructions. Import checks gallery identity/checklist values and asks before replacing current browser work. Export uses local JSON downloads, not writes into original evidence.
+
+Validation: 204 offline tests passed in 3.43 seconds, including source integrity failures, duplicate runs, safe HTML data embedding and preservation of original files. Gallery generation succeeded against all 50 real saved images. Browser interactions still require developer verification; automated builder tests are not a claim of browser end-to-end testing. Updated tasks and image-trial instructions. Generated gallery/exports remain ignored and need deliberate submission preservation. No models, downloads, dependency installations, commits or pushes occurred.
+
 ## Future entry template
 
 

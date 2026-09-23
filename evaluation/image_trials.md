@@ -1,5 +1,15 @@
 # Image development trials
 
+## Offline human review gallery
+
+The prepared `generated/image-review-gallery.html` embeds all 50 baseline images; open it directly in a browser. Rebuild offline with `.\.venv\Scripts\python.exe -m observatory.image_gallery`. The builder checks saved dataset/image hashes and leaves original results/reviews untouched. No models or network requests are used. Source: observatory/image_gallery.py and image_gallery.html.
+
+Enter your name, then review images using Previous/Next or the image selector (grouped by room and seed). For each required/forbidden detail choose present, absent or unclear. Rate scene clarity and adherence to the displayed style separately, adding observations for failures/uncertainty. After viewing full sets, rate five-room coherence separately for each candidate/seed and record your preferred style with a reason. A developer review is not a blind or independent user study; candidate names are visible.
+
+Browser storage is best-effort, especially with local files. Export review JSON regularly and before closing; the browser saves it to your Downloads folder or asks for a location. Partial exports retain pending fields. Resume using the import control; wrong-gallery imports are rejected and replacement requires confirmation. Send the exported file path for analysis. Original evidence is not edited. Content pass is derived only for completed image forms: all required present and all forbidden absent; unclear never counts as pass. Review completeness does not guarantee correctness or replace reviewer judgement.
+
+Gallery and exports contain submission evidence but are not automatically committed: generated/ remains ignored. Preserve exported reviews deliberately with the selected image runs. No human ratings were prefilled.
+
 The offline-tested `observatory.evaluate_image` adapter uses the installed stable-diffusion.cpp CLI, separately from gameplay. It never downloads weights. No new model results were collected during implementation.
 
 ## User-run commands
