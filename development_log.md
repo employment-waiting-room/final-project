@@ -662,6 +662,14 @@ Prepared evaluation/image_candidates_sdxl_base.json for candidate four. Verified
 
 Added configuration and documentation without changing existing baselines or evaluator source. Offline preview checks parsing/schedule only. Provided user-managed resumable download/hash verification and smoke commands. No model download, inference, dependency installation, commit or push was performed by the assistant.
 
+## 60. SDXL Base smoke test reviewed (23 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260923T115240381325Z-054d8145. Pinned checkpoint SHA-256 matched; runtime exited zero and the 512x512 PNG passed integrity checks. Thirty-step CFG 7 Euler/discrete execution completed through Vulkan with embedded-VAE decoding. Load-inclusive wall time was 19.516 seconds; internal sampling 15.59 seconds and VAE decoding 0.64 seconds. Internal timings are not additive independent measurements or whole-system peak-memory evidence.
+
+Non-blind assistant inspection found a coherent hall with closed wooden-framed door and an opaque/frosted-looking inset. No dusty desk was visible, and this inset does not clearly establish the required high frosted glazing. Prominent lettering appeared on a sign above the door, violating the no-lettering brief. Successful decoding therefore does not establish scene-content compliance. Original human review fields remain pending. Recommended the unchanged ten-image SDXL Base baseline before comparison or tuning; the shared 512px constraint is not a native-resolution quality assessment.
+
+No models were run or downloaded by the assistant, and no software tests were rerun for this documentation-only review. No commit or push occurred.
+
 ## Future entry template
 
 

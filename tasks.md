@@ -86,6 +86,7 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [ ] Obtain developer judgement on the flagged narrative ambiguities and record style preference separately. Qwen remains the provisional recommendation; final selection and bounded gameplay safeguards are not complete.
 - [ ] Compare at least five feasible image checkpoints on matching scene briefs and criteria; record exclusions/replacements explicitly.
 - [x] Prepare fourth candidate SDXL Base with pinned checkpoint/hash, embedded-VAE smoke configuration and user-run instructions. Actual compatibility/full baseline remain pending (log entry 59).
+- [x] Review SDXL Base smoke test: checkpoint matched, Vulkan/embedded-VAE decoding and PNG checks passed in 19.52 seconds. Desk missing and prominent lettering observed; full baseline/human ratings remain pending (log entry 60).
 - [ ] Compare at least five feasible speech models on matching passages and listening criteria; record exclusions/replacements explicitly.
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
 - [ ] Select the initial application models using quality, correctness, latency, resource use, and integration evidence.
