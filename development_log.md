@@ -708,6 +708,20 @@ Added required/forbidden present/absent/unclear judgements, notes, separate clar
 
 Validation: 204 offline tests passed in 3.43 seconds, including source integrity failures, duplicate runs, safe HTML data embedding and preservation of original files. Gallery generation succeeded against all 50 real saved images. Browser interactions still require developer verification; automated builder tests are not a claim of browser end-to-end testing. Updated tasks and image-trial instructions. Generated gallery/exports remain ignored and need deliberate submission preservation. No models, downloads, dependency installations, commits or pushes occurred.
 
+## 66. Speech downloads prepared; image human review deferred (23 September 2026)
+
+Following the user's request to put image review aside and get downloads done first, checked existing models and confirmed Piper Lessac ONNX/config are present. Prepared evaluation/speech_downloads.json with 32 revision-pinned files totaling 3,213,907,015 bytes: native Kokoro v1 weights/config/af_heart, SpeechT5 model/tokenizer/processor plus HiFi-GAN vocoder and speaker-embedding archive, MMS English safetensors/config/tokenizer, and XTTS-v2 model/config/vocabulary/supplied speakers/auxiliary assets. Model cards and available licence file included. Native Kokoro is an explicit change from the previous ONNX proposal; inference compatibility is not yet measured.
+
+Added scripts/download_speech_models.py: preview by default, explicit --download, resumable curl transfers, published LFS SHA-256 or Git blob/size verification, verified existing-file reuse, and final receipt. No inference/runtime imports or dependency installation. Download metadata was read online; weights were not downloaded by the assistant. Added user commands and limitations in evaluation/speech_downloads.md. Runtime environments, phonemisation resources, fixed-voice selection and speech adapters remain separate pending work; this is not a claim that every future supporting download is resolved.
+
+Validation: 209 offline software tests passed in 1.85 seconds, covering existing-file reuse, partial-file recovery, hash rejection before final rename, small-file Git blob verification, manifest identities and path boundaries. No model execution, commits or pushes occurred. User download receipt/errors are the next evidence required. Image ratings/selection remain deferred, not marked complete.
+
+## 67. Speech asset download receipt reviewed (23 September 2026)
+
+Reviewed user-generated models/speech/download_receipt.json, timestamp 2026-09-23T14:47:05.832723+00:00. Receipt manifest SHA-256 matched the current pinned download manifest. All 32 expected entries were present with matching revisions, existing local files and expected sizes (3,213,907,015 bytes total); recorded large-file hashes matched published manifest hashes. No discrepancies found. This review checked the downloader's integrity receipt and current file sizes rather than independently rehashing all downloaded bytes.
+
+The planned speech model-asset bundle is now downloaded, alongside existing Piper. This does not establish runnable environments, successful speech synthesis or comparative quality. Runtime packages, phonemisation resources, speaker selection and adapters remain pending; additional supporting downloads may be needed during setup. Next: prepare isolated speech runtime environments and user-run installation commands without disturbing the working gameplay environment. Image human review remains deferred. No inference, dependency installation or model download was performed by the assistant, and no software tests were rerun for this documentation-only review.
+
 ## Future entry template
 
 

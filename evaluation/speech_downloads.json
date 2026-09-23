@@ -1,0 +1,325 @@
+{
+    "version":  "speech-downloads-v1",
+    "files":  [
+                  {
+                      "repo":  "hexgrad/Kokoro-82M",
+                      "revision":  "f3ff3571791e39611d31c381e3a41a3af07b4987",
+                      "file":  "README.md",
+                      "destination":  "kokoro/README.md",
+                      "url":  "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/README.md",
+                      "size":  6348,
+                      "sha256":  null,
+                      "git_blob":  "d6dc124205ad567631d14cd8700f1af77a861c3f"
+                  },
+                  {
+                      "repo":  "hexgrad/Kokoro-82M",
+                      "revision":  "f3ff3571791e39611d31c381e3a41a3af07b4987",
+                      "file":  "VOICES.md",
+                      "destination":  "kokoro/VOICES.md",
+                      "url":  "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/VOICES.md",
+                      "size":  7625,
+                      "sha256":  null,
+                      "git_blob":  "ed78a806ffa121525449a848624600eae34037c7"
+                  },
+                  {
+                      "repo":  "hexgrad/Kokoro-82M",
+                      "revision":  "f3ff3571791e39611d31c381e3a41a3af07b4987",
+                      "file":  "config.json",
+                      "destination":  "kokoro/config.json",
+                      "url":  "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/config.json",
+                      "size":  2351,
+                      "sha256":  null,
+                      "git_blob":  "14a726edd3718279eac426630879ff743955b16a"
+                  },
+                  {
+                      "repo":  "hexgrad/Kokoro-82M",
+                      "revision":  "f3ff3571791e39611d31c381e3a41a3af07b4987",
+                      "file":  "kokoro-v1_0.pth",
+                      "destination":  "kokoro/kokoro-v1_0.pth",
+                      "url":  "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/kokoro-v1_0.pth",
+                      "size":  327212226,
+                      "sha256":  "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+                      "git_blob":  "15769c415594dcb424579ba3dfae3085578aac4e"
+                  },
+                  {
+                      "repo":  "hexgrad/Kokoro-82M",
+                      "revision":  "f3ff3571791e39611d31c381e3a41a3af07b4987",
+                      "file":  "voices/af_heart.pt",
+                      "destination":  "kokoro/voices/af_heart.pt",
+                      "url":  "https://huggingface.co/hexgrad/Kokoro-82M/resolve/f3ff3571791e39611d31c381e3a41a3af07b4987/voices/af_heart.pt",
+                      "size":  523425,
+                      "sha256":  "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+                      "git_blob":  "23a296174457c31b22b694f6e07e4e1b558122bf"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_tts",
+                      "revision":  "30fcde30f19b87502b8435427b5f5068e401d5f6",
+                      "file":  "README.md",
+                      "destination":  "speecht5/README.md",
+                      "url":  "https://huggingface.co/microsoft/speecht5_tts/resolve/30fcde30f19b87502b8435427b5f5068e401d5f6/README.md",
+                      "size":  10818,
+                      "sha256":  null,
+                      "git_blob":  "af29df33f059ac33f51d4216d9c904658aef35de"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_tts",
+                      "revision":  "30fcde30f19b87502b8435427b5f5068e401d5f6",
+                      "file":  "config.json",
+                      "destination":  "speecht5/config.json",
+                      "url":  "https://huggingface.co/microsoft/speecht5_tts/resolve/30fcde30f19b87502b8435427b5f5068e401d5f6/config.json",
+                      "size":  2062,
+                      "sha256":  null,
+                      "git_blob":  "514fdbbaeba312703da722a42d8b9a2092b9ab17"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_tts",
+                      "revision":  "30fcde30f19b87502b8435427b5f5068e401d5f6",
+                      "file":  "pytorch_model.bin",
+                      "destination":  "speecht5/pytorch_model.bin",
+                      "url":  "https://huggingface.co/microsoft/speecht5_tts/resolve/30fcde30f19b87502b8435427b5f5068e401d5f6/pytorch_model.bin",
+                      "size":  585476837,
+                      "sha256":  "d60d28067349ef66b50d8cd643ae56b6d6b8f27def929bc4ef6fcad907954190",
+                      "git_blob":  "12e831b4a25e890ea64d1561d8142160c1c147b7"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_tts",
+                      "revision":  "30fcde30f19b87502b8435427b5f5068e401d5f6",
+                      "file":  "added_tokens.json",
+                      "destination":  "speecht5/added_tokens.json",
+                      "url":  "https://huggingface.co/microsoft/speecht5_tts/resolve/30fcde30f19b87502b8435427b5f5068e401d5f6/added_tokens.json",
+                      "size":  40,
+                      "sha256":  null,
+                      "git_blob":  "cd5b477a9075c49d99de65622db37bb06a251985"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_tts",
+                      "revision":  "30fcde30f19b87502b8435427b5f5068e401d5f6",
+                      "file":  "preprocessor_config.json",
+                      "destination":  "speecht5/preprocessor_config.json",
+                      "url":  "https://huggingface.co/microsoft/speecht5_tts/resolve/30fcde30f19b87502b8435427b5f5068e401d5f6/preprocessor_config.json",
+                      "size":  433,
+                      "sha256":  null,
+                      "git_blob":  "56c1f9d83dd904d72234cf309b82fc5aa6c84e9a"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_tts",
+                      "revision":  "30fcde30f19b87502b8435427b5f5068e401d5f6",
+                      "file":  "special_tokens_map.json",
+                      "destination":  "speecht5/special_tokens_map.json",
+                      "url":  "https://huggingface.co/microsoft/speecht5_tts/resolve/30fcde30f19b87502b8435427b5f5068e401d5f6/special_tokens_map.json",
+                      "size":  234,
+                      "sha256":  null,
+                      "git_blob":  "4ee24ec69861cfc94abbe2c8c934aa0744aa623c"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_tts",
+                      "revision":  "30fcde30f19b87502b8435427b5f5068e401d5f6",
+                      "file":  "spm_char.model",
+                      "destination":  "speecht5/spm_char.model",
+                      "url":  "https://huggingface.co/microsoft/speecht5_tts/resolve/30fcde30f19b87502b8435427b5f5068e401d5f6/spm_char.model",
+                      "size":  238473,
+                      "sha256":  "7fcc48f3e225f627b1641db410ceb0c8649bd2b0c982e150b03f8be3728ab560",
+                      "git_blob":  "8fb73691942626fa75df80b61aab0e9b9340d8e2"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_tts",
+                      "revision":  "30fcde30f19b87502b8435427b5f5068e401d5f6",
+                      "file":  "tokenizer_config.json",
+                      "destination":  "speecht5/tokenizer_config.json",
+                      "url":  "https://huggingface.co/microsoft/speecht5_tts/resolve/30fcde30f19b87502b8435427b5f5068e401d5f6/tokenizer_config.json",
+                      "size":  232,
+                      "sha256":  null,
+                      "git_blob":  "8ec6dd020a165d2e720a3cd30a8fd00463b12bd9"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_hifigan",
+                      "revision":  "bb6f429406e86a9992357a972c0698b22043307d",
+                      "file":  "README.md",
+                      "destination":  "speecht5-hifigan/README.md",
+                      "url":  "https://huggingface.co/microsoft/speecht5_hifigan/resolve/bb6f429406e86a9992357a972c0698b22043307d/README.md",
+                      "size":  1143,
+                      "sha256":  null,
+                      "git_blob":  "2ad58df7fbd052cfbcac2975f625f3a3fc88cb64"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_hifigan",
+                      "revision":  "bb6f429406e86a9992357a972c0698b22043307d",
+                      "file":  "config.json",
+                      "destination":  "speecht5-hifigan/config.json",
+                      "url":  "https://huggingface.co/microsoft/speecht5_hifigan/resolve/bb6f429406e86a9992357a972c0698b22043307d/config.json",
+                      "size":  636,
+                      "sha256":  null,
+                      "git_blob":  "0a7082eeb84ebcfd0ae7cfd9e3ce5939dcbe39c4"
+                  },
+                  {
+                      "repo":  "microsoft/speecht5_hifigan",
+                      "revision":  "bb6f429406e86a9992357a972c0698b22043307d",
+                      "file":  "pytorch_model.bin",
+                      "destination":  "speecht5-hifigan/pytorch_model.bin",
+                      "url":  "https://huggingface.co/microsoft/speecht5_hifigan/resolve/bb6f429406e86a9992357a972c0698b22043307d/pytorch_model.bin",
+                      "size":  50672453,
+                      "sha256":  "b171e9bcd8a2b50dc9780040478dfa26783a9ee4be012cf5776914f091d6887b",
+                      "git_blob":  "693c1e5f1cbc803d068e94bc34c0c12fa0f7b4d7"
+                  },
+                  {
+                      "repo":  "facebook/mms-tts-eng",
+                      "revision":  "c71de0fe7204c83f1c10820a7d696d0b450048ba",
+                      "file":  "README.md",
+                      "destination":  "mms-eng/README.md",
+                      "url":  "https://huggingface.co/facebook/mms-tts-eng/resolve/c71de0fe7204c83f1c10820a7d696d0b450048ba/README.md",
+                      "size":  4002,
+                      "sha256":  null,
+                      "git_blob":  "e6c902e9218c4209f64b118d4fd2daa24f8dcb41"
+                  },
+                  {
+                      "repo":  "facebook/mms-tts-eng",
+                      "revision":  "c71de0fe7204c83f1c10820a7d696d0b450048ba",
+                      "file":  "config.json",
+                      "destination":  "mms-eng/config.json",
+                      "url":  "https://huggingface.co/facebook/mms-tts-eng/resolve/c71de0fe7204c83f1c10820a7d696d0b450048ba/config.json",
+                      "size":  1641,
+                      "sha256":  null,
+                      "git_blob":  "5f06bace91bc2be88912491d4575ddef044cb273"
+                  },
+                  {
+                      "repo":  "facebook/mms-tts-eng",
+                      "revision":  "c71de0fe7204c83f1c10820a7d696d0b450048ba",
+                      "file":  "model.safetensors",
+                      "destination":  "mms-eng/model.safetensors",
+                      "url":  "https://huggingface.co/facebook/mms-tts-eng/resolve/c71de0fe7204c83f1c10820a7d696d0b450048ba/model.safetensors",
+                      "size":  145227512,
+                      "sha256":  "69cf8b651c1493f1801dfd2311c298d694a38357bc9a1e41f410491ea6f0e1be",
+                      "git_blob":  "8361267864d7b5527739873256f3c8a6c21bc5b8"
+                  },
+                  {
+                      "repo":  "facebook/mms-tts-eng",
+                      "revision":  "c71de0fe7204c83f1c10820a7d696d0b450048ba",
+                      "file":  "special_tokens_map.json",
+                      "destination":  "mms-eng/special_tokens_map.json",
+                      "url":  "https://huggingface.co/facebook/mms-tts-eng/resolve/c71de0fe7204c83f1c10820a7d696d0b450048ba/special_tokens_map.json",
+                      "size":  47,
+                      "sha256":  null,
+                      "git_blob":  "106a9a4c07ec6f37211ce6032423f67e6ed7af16"
+                  },
+                  {
+                      "repo":  "facebook/mms-tts-eng",
+                      "revision":  "c71de0fe7204c83f1c10820a7d696d0b450048ba",
+                      "file":  "tokenizer_config.json",
+                      "destination":  "mms-eng/tokenizer_config.json",
+                      "url":  "https://huggingface.co/facebook/mms-tts-eng/resolve/c71de0fe7204c83f1c10820a7d696d0b450048ba/tokenizer_config.json",
+                      "size":  287,
+                      "sha256":  null,
+                      "git_blob":  "b6ca2175b8c7e731f3840b9e23018aa393cdb9c6"
+                  },
+                  {
+                      "repo":  "facebook/mms-tts-eng",
+                      "revision":  "c71de0fe7204c83f1c10820a7d696d0b450048ba",
+                      "file":  "vocab.json",
+                      "destination":  "mms-eng/vocab.json",
+                      "url":  "https://huggingface.co/facebook/mms-tts-eng/resolve/c71de0fe7204c83f1c10820a7d696d0b450048ba/vocab.json",
+                      "size":  413,
+                      "sha256":  null,
+                      "git_blob":  "30097ea3f9c56d26292cab7ef5fc56feaa370131"
+                  },
+                  {
+                      "repo":  "coqui/XTTS-v2",
+                      "revision":  "6c2b0d75eae4b7047358e3b6bd9325f857d43f77",
+                      "file":  "README.md",
+                      "destination":  "xtts-v2/README.md",
+                      "url":  "https://huggingface.co/coqui/XTTS-v2/resolve/6c2b0d75eae4b7047358e3b6bd9325f857d43f77/README.md",
+                      "size":  4263,
+                      "sha256":  null,
+                      "git_blob":  "cd6ef8d005510db554781aa90025b8eabed271bf"
+                  },
+                  {
+                      "repo":  "coqui/XTTS-v2",
+                      "revision":  "6c2b0d75eae4b7047358e3b6bd9325f857d43f77",
+                      "file":  "LICENSE.txt",
+                      "destination":  "xtts-v2/LICENSE.txt",
+                      "url":  "https://huggingface.co/coqui/XTTS-v2/resolve/6c2b0d75eae4b7047358e3b6bd9325f857d43f77/LICENSE.txt",
+                      "size":  4014,
+                      "sha256":  null,
+                      "git_blob":  "e41830fcc6069d335d201e63eb30f487aada1093"
+                  },
+                  {
+                      "repo":  "coqui/XTTS-v2",
+                      "revision":  "6c2b0d75eae4b7047358e3b6bd9325f857d43f77",
+                      "file":  "config.json",
+                      "destination":  "xtts-v2/config.json",
+                      "url":  "https://huggingface.co/coqui/XTTS-v2/resolve/6c2b0d75eae4b7047358e3b6bd9325f857d43f77/config.json",
+                      "size":  4368,
+                      "sha256":  null,
+                      "git_blob":  "3224e97bddc5facc012f8c7668b47c8f2dc30065"
+                  },
+                  {
+                      "repo":  "coqui/XTTS-v2",
+                      "revision":  "6c2b0d75eae4b7047358e3b6bd9325f857d43f77",
+                      "file":  "model.pth",
+                      "destination":  "xtts-v2/model.pth",
+                      "url":  "https://huggingface.co/coqui/XTTS-v2/resolve/6c2b0d75eae4b7047358e3b6bd9325f857d43f77/model.pth",
+                      "size":  1867929118,
+                      "sha256":  "c7ea20001c6a0a841c77e252d8409f6a74fb423e79b3206a0771ba5989776187",
+                      "git_blob":  "2ee8003f7539e728937890d70ee73e98d4d483c3"
+                  },
+                  {
+                      "repo":  "coqui/XTTS-v2",
+                      "revision":  "6c2b0d75eae4b7047358e3b6bd9325f857d43f77",
+                      "file":  "speakers_xtts.pth",
+                      "destination":  "xtts-v2/speakers_xtts.pth",
+                      "url":  "https://huggingface.co/coqui/XTTS-v2/resolve/6c2b0d75eae4b7047358e3b6bd9325f857d43f77/speakers_xtts.pth",
+                      "size":  7754818,
+                      "sha256":  "f0f6137c19a4eab0cbbe4c99b5babacf68b1746e50da90807708c10e645b943b",
+                      "git_blob":  "85e8ff78084dcdf67231297758a9eefb770301c3"
+                  },
+                  {
+                      "repo":  "coqui/XTTS-v2",
+                      "revision":  "6c2b0d75eae4b7047358e3b6bd9325f857d43f77",
+                      "file":  "vocab.json",
+                      "destination":  "xtts-v2/vocab.json",
+                      "url":  "https://huggingface.co/coqui/XTTS-v2/resolve/6c2b0d75eae4b7047358e3b6bd9325f857d43f77/vocab.json",
+                      "size":  361219,
+                      "sha256":  null,
+                      "git_blob":  "77b4748525aad284e548729ef7af162b929b0fff"
+                  },
+                  {
+                      "repo":  "coqui/XTTS-v2",
+                      "revision":  "6c2b0d75eae4b7047358e3b6bd9325f857d43f77",
+                      "file":  "dvae.pth",
+                      "destination":  "xtts-v2/dvae.pth",
+                      "url":  "https://huggingface.co/coqui/XTTS-v2/resolve/6c2b0d75eae4b7047358e3b6bd9325f857d43f77/dvae.pth",
+                      "size":  210514388,
+                      "sha256":  "b29bc227d410d4991e0a8c09b858f77415013eeb9fba9650258e96095557d97a",
+                      "git_blob":  "8615724c5bd21738638210ac62090133d0713ebb"
+                  },
+                  {
+                      "repo":  "coqui/XTTS-v2",
+                      "revision":  "6c2b0d75eae4b7047358e3b6bd9325f857d43f77",
+                      "file":  "mel_stats.pth",
+                      "destination":  "xtts-v2/mel_stats.pth",
+                      "url":  "https://huggingface.co/coqui/XTTS-v2/resolve/6c2b0d75eae4b7047358e3b6bd9325f857d43f77/mel_stats.pth",
+                      "size":  1067,
+                      "sha256":  "1f69422a8a8f344c4fca2f0c6b8d41d2151d6615b7321e48e6bb15ae949b119c",
+                      "git_blob":  "ed4d6e4f71fba223d920da25f1bbd0c8619433b5"
+                  },
+                  {
+                      "repo":  "Matthijs/cmu-arctic-xvectors",
+                      "revision":  "5c1297a9eb6c91714ea77c0d4ac5aca9b6a952e5",
+                      "file":  "README.md",
+                      "destination":  "speecht5-speakers/README.md",
+                      "url":  "https://huggingface.co/datasets/Matthijs/cmu-arctic-xvectors/resolve/5c1297a9eb6c91714ea77c0d4ac5aca9b6a952e5/README.md",
+                      "size":  1012,
+                      "sha256":  null,
+                      "git_blob":  "21538bae48916c801f5d689cb444118f5b13ce18"
+                  },
+                  {
+                      "repo":  "Matthijs/cmu-arctic-xvectors",
+                      "revision":  "5c1297a9eb6c91714ea77c0d4ac5aca9b6a952e5",
+                      "file":  "spkrec-xvect.zip",
+                      "destination":  "speecht5-speakers/spkrec-xvect.zip",
+                      "url":  "https://huggingface.co/datasets/Matthijs/cmu-arctic-xvectors/resolve/5c1297a9eb6c91714ea77c0d4ac5aca9b6a952e5/spkrec-xvect.zip",
+                      "size":  17943510,
+                      "sha256":  "28ea1b685a49fedce92d1af7e68b22bf511a23432bc7a13d621a4deeee9fe9a1",
+                      "git_blob":  "4ee79eae2c8ed83e49ce4bcb10fa5b622fdbe6cc"
+                  }
+              ]
+}

@@ -93,6 +93,8 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [x] Review SDXL Base smoke test: checkpoint matched, Vulkan/embedded-VAE decoding and PNG checks passed in 19.52 seconds. Desk missing and prominent lettering observed; full baseline/human ratings remain pending (log entry 60).
 - [x] Review full SDXL Base baseline: 10/10 runtime/PNG passes, mean 19.01 seconds including loading; matching shared inputs. Assistant inspection found missing objects, open door, lettering and object-sheet compositions. Four of five image baselines complete; human ratings remain pending (log entry 61).
 - [ ] Compare at least five feasible speech models on matching passages and listening criteria; record exclusions/replacements explicitly.
+- [x] Prepare pinned speech asset bundle/downloader for Kokoro, SpeechT5 plus vocoder/embeddings, MMS English and XTTS-v2; Piper already present. 209 offline tests passed. User downloads, runtime setup and actual speech trials remain pending. Image human review/selection deferred at user's request.
+- [x] Review completed speech download receipt: all 32 planned assets present with expected sizes/revisions and matching manifest identity; 3.21 GB bundle downloaded. Runtime setup and synthesis tests remain pending (log entry 67).
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
 - [ ] Select the initial application models using quality, correctness, latency, resource use, and integration evidence.
 - [ ] Connect one typed request through interpretation, engine validation, accepted narrative, matching illustration, and narration of that exact accepted text.
