@@ -684,6 +684,22 @@ Prepared evaluation/image_candidates_dreamshaper8.json using creator repository 
 
 Matched SD 1.5 trial settings (30 steps, CFG 7.5, Euler/discrete), with shared 512px briefs/seeds and no extra embeddings/LoRA/VAE. This is an SD 1.5-family fine-tune, not an independent architecture. Added user-managed download/hash verification and smoke instructions; actual compatibility and results remain unmeasured. Offline preview validates configuration only. Existing baselines remain unchanged. No inference, model downloads, dependencies, commits or pushes were performed by the assistant.
 
+## 63. DreamShaper 8 smoke test reviewed (23 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260923T122617633743Z-4ab0fa01. Saved checkpoint SHA-256 matched the pinned published hash. One 512x512 image completed with exit zero and passed PNG integrity. Thirty-step CFG 7.5 Euler/discrete execution and VAE decoding succeeded through Vulkan. Load-inclusive wall time was 8.850 seconds; internal generate_image time 8.55 seconds. One separate-session sample does not establish a comparative speed ranking.
+
+Non-blind assistant inspection found an indoor hall/library-like scene with desk/cabinet-like furniture, but a clearly visible person and open double doors violate the no-people and closed-library-door requirements. Dust on the desk and high frosted glazing were not clearly established. Bright light through glazing does not establish frosting. Technical compatibility therefore succeeded while scene-content compliance failed. Original human review fields remain pending; no human ratings were invented.
+
+Recommended the unchanged ten-image DreamShaper 8 baseline to complete the five-checkpoint development runs before comparison/tuning. No models were run or downloaded by the assistant. Documentation-only review required no software test rerun, commit or push.
+
+## 64. DreamShaper baseline and five-image-candidate overview (23 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260923T123604219662Z-9ecf0176 and individually viewed all ten images. Runtime completion and 512x512 PNG integrity passed 10/10. Mean load-inclusive wall time was 8.992 seconds (8.888–9.144; total 89.923). Dataset/protocol hashes, prompts and seeds matched SDXL Base. Hall seed-42 hash matched the smoke image. Saved non-blind per-image observations and a five-candidate overview in evaluation/assistant_reviews/image_dreamshaper8_baseline.md.
+
+Libraries showed clear stairs, but open-manual/reading-stand requirements remained unclear. Both hall scenes opened the doors and the first included a person. Telescope scenes lacked clearly identifiable required equipment; glow and enclosure ambiguities were left for human adjudication. Human forms remained pending; no semantic success rate, independent ratings or final model winner was invented.
+
+All five candidates now have ten-image development baselines: 50/50 runtime/PNG successes, with scene-content failures across candidates. Recorded mean wall seconds: SDXL Turbo 13.39, SD-Turbo 3.00, SD 1.5 13.89, SDXL Base 19.01, DreamShaper 8 8.99. Different compute budgets and separate sessions limit timing comparisons. Smoke samples are separate, and successful file checks are not content accuracy. Proposed next: developer visual checklist review/style preference, potentially aided by an offline gallery, before selection or versioned prompt improvements. Speech comparisons and integration remain outstanding. No models were run/downloaded by the assistant; documentation-only work required no software test rerun, commit or push.
+
 ## Future entry template
 
 
