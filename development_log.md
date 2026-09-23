@@ -736,6 +736,14 @@ Reviewed generated/speech-runtime-setup/20260923T152149711580Z. Setup status com
 
 This confirms installed dependency/import readiness, not checkpoint loading, phonemisation, voice selection, audio correctness or synthesis latency. Next proposed implementation: a shared speech development runner and local adapters using the existing ten passages, with user-run one-passage smoke tests before full comparisons. Image human review remains deferred. No inference or installations were performed by the assistant during this documentation-only review; no software test rerun, commit or push occurred.
 
+## 70. Shared speech evaluator and local adapters implemented (23 September 2026)
+
+Implemented observatory.evaluate_speech with isolated scripts/speech_worker.py adapters for Piper, Kokoro, SpeechT5/HiFi-GAN, MMS English and XTTS-v2. Read installed runtime source before selecting local loading APIs. Workers use CPU/local paths with offline HF flags and blocked Python socket connections. No checkpoints were loaded or models executed by the assistant. Fixed initial voices: Lessac, af_heart, archived SLT b0258 embedding, MMS English default and supplied Ana Florence. Real voice availability/G2P/loading remain subject to the user smoke run; no silent substitution is allowed.
+
+Runner uses the existing ten exact passages, seeds 42/43 for supported APIs (Piper unsupported), reversed candidate order on repetition two and fresh processes per attempt. Saves source snapshots/hashes, local asset hashes, full schedule/requests/commands, runtime logs, worker package versions/timings, audio, incremental failures, summary and null listening-review fields. Timeout/nonzero exit/missing or invalid audio/interruption are retained without retry/fallback. Audio checks cover nonempty complete mono PCM16 data, nonzero samples, duration/sample rate/hash and clipping observations. Real-time factor excludes loading; synthesis time includes front-end processing and WAV encoding. These file checks do not judge spoken content. Resource peaks are unavailable.
+
+Validation: 220 offline tests passed in 3.83 seconds using fake subprocesses and synthetic WAV files. Coverage includes candidate order, seeds, shared text, failure retention, timeout, interruption, silence, missing audio, no retries, pending reviews and invalid settings. This is orchestration evidence, not real adapter synthesis success. Added evaluation/speech_trials.md with five-request smoke command and later 100-output full-run scope; updated tasks/README/Git visibility. No model downloads, dependency changes, inference, commits or pushes occurred. Next: user-run one-passage smoke results and listening before full comparison. Image review remains deferred.
+
 ## Future entry template
 
 

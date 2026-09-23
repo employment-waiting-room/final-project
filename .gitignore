@@ -10,6 +10,7 @@ __pycache__/
 !evaluation/media_protocol.md
 !evaluation/image_trials.md
 !evaluation/speech_downloads.md
+!evaluation/speech_trials.md
 !model_candidates.md
 !evaluation/assistant_reviews/*.md
 !gameplay_narration.md

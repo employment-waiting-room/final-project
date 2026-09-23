@@ -1,5 +1,7 @@
 # Development evaluation fixtures
 
+Speech development runner: see [speech trial instructions](speech_trials.md) for user-run five-candidate smoke commands, local voice choices, timing definitions and listening-review boundaries. The implementation was tested offline; real synthesis remains user-run.
+
 Image development preparation is now available: see [image trial instructions](image_trials.md) for the offline preview, user-run SDXL Turbo smoke command, configuration and evidence limitations. No new image comparison results are claimed.
 
 `development.json` contains 53 development cases for world contract v2:
