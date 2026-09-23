@@ -752,6 +752,12 @@ Inspected SpeechT5/MMS logs, output metrics, local sample-rate configs and insta
 
 Synthesis seconds / real-time factors: Piper 1.27/.22, Kokoro 1.32/.19, SpeechT5 3.80/.54, MMS .86/.11, XTTS 12.43/1.95. Loading was separately recorded and substantial for several models; these single samples do not establish warm inference performance or a general ranking. Full five-model development comparisons remain pending. No inference, downloads, fixes or tuning were performed by the assistant; no software test rerun was needed for this evidence review.
 
+## 72. Speech technical summary only (24 September 2026)
+
+At the user's explicit request, created a temporary script, summarized saved JSON records and deleted the script afterward. Saved technical_summary.json in full run generated/speech-evaluations/20260923T165609248021Z-c2e173fa; excluded the earlier five-attempt smoke run. No audio files were opened, no detailed review performed and no models executed.
+
+All 100 unique planned attempts completed with valid-audio flags and no recorded errors: 20 per candidate. Mean synthesis seconds / mean per-clip real-time factor: Piper .176/.033, Kokoro 1.125/.171, SpeechT5 2.799/.417, MMS .659/.100, XTTS 9.859/1.516. Loading is separate; mean full wall seconds were 1.631, 7.622, 7.116, 3.971 and 23.244 respectively. XTTS synthesis exceeded audio duration in every recorded attempt. Piper had a tiny nonzero full-scale sample fraction in every clip (maximum .00268%); this is not a perceptual clipping diagnosis. Saved file checks do not establish pronunciation or quality; earlier listening feedback applies only to smoke samples. Detailed listening review remains deferred.
+
 ## Future entry template
 
 
