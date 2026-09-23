@@ -96,6 +96,7 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [x] Prepare pinned speech asset bundle/downloader for Kokoro, SpeechT5 plus vocoder/embeddings, MMS English and XTTS-v2; Piper already present. 209 offline tests passed. User downloads, runtime setup and actual speech trials remain pending. Image human review/selection deferred at user's request.
 - [x] Review completed speech download receipt: all 32 planned assets present with expected sizes/revisions and matching manifest identity; 3.21 GB bundle downloaded. Runtime setup and synthesis tests remain pending (log entry 67).
 - [x] Prepare isolated CPU speech setup for HF, Kokoro and XTTS with explicit package pins, pip checks, offline import reports and user-run installation command. 212 offline tests passed; actual installation, G2P and model-load/synthesis checks remain pending (log entry 68).
+- [x] Review user-installed speech environments: all three setup profiles completed, all 21 import checks passed, CPU package versions and freezes recorded. Model loading, G2P and synthesis remain untested (log entry 69).
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
 - [ ] Select the initial application models using quality, correctness, latency, resource use, and integration evidence.
 - [ ] Connect one typed request through interpretation, engine validation, accepted narrative, matching illustration, and narration of that exact accepted text.

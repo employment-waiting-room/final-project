@@ -730,6 +730,12 @@ Kokoro setup explicitly includes spaCy's English small model wheel as an additio
 
 Validation: 212 offline tests passed in 1.85 seconds, including command isolation, CPU index selection, continued collection of import failures and missing-class detection using simulated importers. No runtime packages were installed and no models were run/downloaded by the assistant. No commits or pushes occurred. Next evidence: user installation result folder and errors, then inspect import reports before preparing synthesis smoke tests. Image human review remains deferred.
 
+## 69. Speech runtime installation reports reviewed (23 September 2026)
+
+Reviewed generated/speech-runtime-setup/20260923T152149711580Z. Setup status completed for hf, kokoro and xtts, with successful import reports and saved package freezes for all three isolated interpreters. All 21 recorded import checks passed (8 HF, 8 Kokoro, 5 XTTS). Reports recorded PyTorch/torchaudio 2.8.0+cpu and transformers 4.57.6 throughout, Kokoro 0.9.4 and coqui-tts 0.27.5 in their respective environments. Completed sequential setup also indicates its pip check commands returned successfully. Each report explicitly recorded inference_performed false.
+
+This confirms installed dependency/import readiness, not checkpoint loading, phonemisation, voice selection, audio correctness or synthesis latency. Next proposed implementation: a shared speech development runner and local adapters using the existing ten passages, with user-run one-passage smoke tests before full comparisons. Image human review remains deferred. No inference or installations were performed by the assistant during this documentation-only review; no software test rerun, commit or push occurred.
+
 ## Future entry template
 
 
