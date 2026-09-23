@@ -670,6 +670,14 @@ Non-blind assistant inspection found a coherent hall with closed wooden-framed d
 
 No models were run or downloaded by the assistant, and no software tests were rerun for this documentation-only review. No commit or push occurred.
 
+## 61. Full SDXL Base image baseline reviewed (23 September 2026)
+
+Reviewed user-run generated/image-evaluations/20260923T120515449565Z-d094ed1a and individually viewed all ten outputs. Runtime and 512x512 PNG integrity passed 10/10. Mean load-inclusive wall time was 19.006 seconds (18.696–19.669; total 190.065). Dataset/protocol hashes, exact prompts and seeds matched the SD 1.5 baseline; hall seed-42 hash matched the smoke sample. Separate sessions/configurations and the 512px task constraint limit comparative speed and native-resolution quality claims.
+
+Saved non-blind per-image observations in evaluation/assistant_reviews/image_sdxl_base_baseline.md. Library seed 42 showed shelves and stairs but lacked a clear reading stand/manual. Hall seed 43 opened the door. Four seed-43 images became object sheets, including generator/telescope sheets with lettering. Other missing or ambiguous objects were recorded without invented human ratings or a numerical semantic pass rate. Original pending human review forms remain unchanged.
+
+Four of five image checkpoints now have full development baselines; all have scene-content failures. Proposed next: prepare DreamShaper 8, explicitly an SD 1.5-family fine-tune, with verified provenance/configuration and user-managed smoke commands. No models were downloaded or run by the assistant. Documentation-only review required no software test rerun, commit or push.
+
 ## Future entry template
 
 
