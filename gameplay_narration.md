@@ -1,5 +1,17 @@
 # Entrance-hall narrative safeguard
 
+## Full-world rules mode
+
+The complete five-room deterministic engine is now separately playable without models:
+
+```powershell
+.\.venv\Scripts\python.exe -m observatory --world
+```
+
+Choose numbered actions; use `r` to restart and `q` to quit. Explore the workshop, install the fuse and start the generator; unlock the library to reach the telescope chamber. Reading the manual and aligning the beacon enable rescue. Shelter requires power but not manual reading/alignment. Both endings are explicit choices. Look around reveals only known contents and does not advance the state revision. Restart resets progress with a new session identity.
+
+This mode does not yet connect typed model interpretation, generated narration, illustrations or speech; combining --world with media flags is rejected explicitly. The original command below still runs the integrated entrance-hall prototype. Full-world browser/model integration remains outstanding.
+
 Narration implemented 22 September 2026; optional speech and illustration added 24 September. This remains an entrance-hall presentation adapter; full-world and browser integration are incomplete. Speech integration passed offline software tests, and the developer subsequently reported that live playback "worked great". This positive report does not provide individual cancellation, exact-text or failure-recovery check results. Combined image/narration/speech playback awaits a live user check.
 
 ## Optional hall illustration

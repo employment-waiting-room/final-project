@@ -796,6 +796,18 @@ Developer testing found that the previous change left the initial scene as displ
 
 Validation: 254 offline tests passed in 2.71 seconds with mocked narration/speech. Updated checks distinguish opening from action calls, verify no extra speech on cancellation/rejection/redraw, and retain completion despite speech failure. No real model calls, downloads, commits or pushes. Next: user verifies the opening is spoken before the first action and later outcomes remain short.
 
+## 78. Full-world deterministic engine and terminal rules mode (24 September 2026)
+
+Recorded developer confirmation that the corrected opening-to-action integration flow works. Expanded gameplay with observatory/world.py and --world numbered-action terminal mode. Kept the previously working AI/media hall prototype intact; full-world typed interpretation, confirmation orchestration and model presentation are subsequent work, not claimed here.
+
+Implemented five connected rooms, locked library access, discovery/collection separation, retained key, consumed installed fuse, manual/power/alignment prerequisites, explicit rescue/shelter endings, factual observations and repeated-action no-ops. State is immutable with constructor invariant checks, visited rooms, revision increments exactly once per change and unique restart session IDs. Optional session/revision request checks reject stale/replayed requests. Post-ending gameplay commands are rejected; terminal restart creates a fresh state. Room descriptions hide undiscovered contents and reflect power/puzzle progress. No model or evaluation code owns gameplay transitions.
+
+Tests independently replay all 53 saved development fixture setups and compare action-labelled outcomes against the production engine; non-action labels do not test a model interpreter. Separate routes verify both endings with workshop-first progression, shelter without manual/alignment, retained key and consumed fuse. Exhaustive finite-state exploration checks that all reachable states have a route to an ending (revision/session counters are excluded from graph identity). Also tested invalid state/action pairs, observations/repeats, stale requests, restart and terminal route completion without model construction. One initial test assertion matched 'fuse' inside 'diffuse'; corrected it to a whole-word check.
+
+No models, downloads or installations were run. No commits or pushes occurred. Next: user playthrough with --world, then connect the full-world interpretation/media flow before the browser interface. Existing evaluator rules and saved results remain unchanged.
+
+Validation for entry 78: 322 offline tests passed in 2.04 seconds, including the existing AI/media tests with mocked inference and the new full-world rules/route tests. Live user playthrough of --world remains pending.
+
 ## Future entry template
 
 

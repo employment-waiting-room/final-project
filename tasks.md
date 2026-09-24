@@ -109,7 +109,7 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [x] Record developer report that the combined interaction works; repeated full-scene narration after small actions was identified as a flow issue. Detailed visual/state/log verification remains separate.
 - [x] Replace CLI full-scene recaps with short narration of the verified action outcome, including brief factual fallbacks and matching speech. 254 offline tests passed; model-only evaluation unchanged.
 - [x] Restore full opening narration once at startup, with optional speech, before short action outcomes. Cancellation/redraw does not replay the opening; 254 offline tests passed.
-- [ ] User-test opening plus revised action-focused narration with --narrate --illustrate --speak; retain logs and verify concise outcomes, visual correctness and cancellation.
+- [x] Record developer confirmation that the corrected opening-to-action flow works. This is reported integration feedback, not a measured model accuracy result; detailed run-log preservation remains outstanding.
 - [ ] Save evidence of the shared state, verified outcome, and three real model outputs, including fresh generation.
 - [ ] Demonstrate that rejected requests leave state unchanged and model failures retain a usable fallback.
 
@@ -124,7 +124,8 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 - [x] Narrate accepted entrance-hall state changes only, with one generation attempt and factual fallback on failure; cancellation/rejection triggers no narration and narration cannot apply actions. Saved source/reasons separately from raw-model evaluation.
 - [ ] Review user-run guarded gameplay logs for factual errors, false rejections and fallback rate; bounded keyword/anchor checks do not guarantee prose truth.
 - [x] Review the first three guarded gameplay narrations and fix exact supplied-fact false rejections (policy v1.1). All three still failed length; 187 tests passed. Confirmation cancellation and broader live acceptance/fallback measurement remain outstanding.
-- [ ] Implement movement, inventory, puzzle flags, allowed actions, and both endings across the agreed world.
+- [x] Implement five-room deterministic gameplay in observatory/world.py: movement, inventory, flags, prerequisites, observations, both endings, revisions/session IDs and restart. Playable through --world with numbered choices; the existing AI/media hall prototype remains separate.
+- [ ] Connect full-world typed interpretation/confirmation and room-aware media to the tested world engine. --world currently runs without models.
 - [ ] Resolve unintended action substitutions, including the reported looking/knocking failures, against the agreed action contract.
 - [ ] Implement clarification and unsupported-request handling; measure over-clarification rather than assuming heuristic guards solve ambiguity.
 - [ ] Validate structured action/target references and engine prerequisites before any state change.
@@ -136,7 +137,7 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 - [ ] Associate outputs with state revisions; prevent duplicate transitions and discard stale responses after restart or later actions.
 - [ ] Log interpretation source (model or local rule), validation, transition, prompts, model versions, latency, failures, and cache use.
 - [ ] Add full engine and orchestration tests: prerequisites, wrong actions, both endings, restart, repeated requests, stale responses, and model failures.
-- [ ] Run scripted routes to both endings and check for unintended dead ends.
+- [x] Run both ending routes, including workshop-first ordering and shelter without manual/alignment; exhaustively verify every reachable rules state has a route to an ending. Software evidence only; user playthrough remains pending.
 
 Gate: complete gameplay and failure recovery work before final user evaluation. A mechanically legal transition must not be counted as correct if it misrepresents the player's request.
 
