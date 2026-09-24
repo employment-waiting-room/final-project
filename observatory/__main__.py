@@ -20,10 +20,8 @@ def main(argv=None):
     parser.add_argument('--world', action='store_true', help='Play the full world with confirmed typed actions or model-free numbered choices')
     args = parser.parse_args(argv)
     if args.world:
-        if args.narrate or args.speak or args.illustrate:
-            parser.error('--world does not yet support model presentation flags')
         from .world_cli import main as world_main
-        return world_main()
+        return world_main(narrate=args.narrate, illustrate=args.illustrate, speak=args.speak)
     state = GameState()
     interpreter = Interpreter()
     narrator = Narrator() if args.narrate else None

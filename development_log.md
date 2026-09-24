@@ -816,6 +816,16 @@ State-changing proposals display canonical action and target and require y/yes. 
 
 Saved interpretation source, prompt/request/raw response/timing, session/revision and separate confirmation decision logs under ignored generated/world-intent-logs. Offline tests cover explicit approvals/cancellation, interrupted confirmation, missing prerequisites, observation, repeated actions, model schema/errors/timeouts, local guards and terminal typed cancellation followed by movement. Validation: 346 tests passed in 2.09 seconds. No models, downloads, installations, commits or pushes occurred. Next: user-run typed world test; room-aware generated narration/images/speech and browser remain outstanding.
 
+## 80. Full-world narrative, illustration and speech integration (24 September 2026)
+
+Recorded developer confirmation that full-world typed actions work. Connected --world with optional --narrate --illustrate --speak. Startup, movement and look-around use full scene presentation; puzzle/inventory actions and endings use short outcomes. Cancelled/rejected/unchanged actions trigger no presentation. Engine state changes remain separate from model outputs and generated suggestions are never accepted as actions.
+
+Added WorldNarrator with world-gameplay-narrative-v1/world-gameplay-guards-v1. Requires exact engine-derived factual sentences and bounded length (140 words scene, 70 outcome), permits at most one extra sentence and rejects known contradictory claim patterns/recaps. Qwen uses a 30-second timeout and one attempt; failure yields the engine text. These conservative checks can reject valid prose and miss novel inventions, explicitly documented by a test. Endings use their actual engine outcome. Speech reads exactly the displayed accepted text through the existing Kokoro adapter.
+
+Copied the five approved static image briefs into gameplay JSON; generalized the existing SDXL Turbo image adapter while preserving hall defaults. Each room gets one attempt per session; room revisits reopen saved art without regeneration. Actions in the same room retain the image. Restart clears the in-memory image session but preserves evidence files. SDXL Turbo remains provisional beyond the reviewed hall subset. Image/speech failures retain text, and all work remains synchronous rather than claiming browser responsiveness or asynchronous stale-response support.
+
+Validation: 408 offline tests passed in 2.36 seconds. Tests cover all saved fixture states' factual scene fallback, short outcome acceptance/failures, exact speech text, room reuse/restart and cancellation without extra presentation. Existing engine/confirmation/media-failure tests still pass. No models, downloads or installations were run; no commit or push occurred. New full-world narration logs include session/revision/location/mode, exact requests/raw responses and accepted text. Generated logs/audio/images remain ignored and require deliberate submission retention. Model-only evaluation is unchanged. Next: user runs the combined command across rooms, revisits, endings and restart; browser interface remains outstanding.
+
 ## Future entry template
 
 

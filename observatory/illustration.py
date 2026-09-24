@@ -19,14 +19,15 @@ def open_image(path):
 
 class Illustrator:
     def __init__(self, output=ROOT / 'generated/gameplay-images', runner=subprocess.run,
-                 viewer=open_image, timeout=120):
+                 viewer=open_image, timeout=120, location='entrance_hall', prompt=HALL_PROMPT):
         self.output, self.runner, self.viewer, self.timeout = output, runner, viewer, timeout
+        self.location, self.prompt = location, prompt
         self.attempted = False
         self.path = None
 
     def show(self, location):
         """Attempt once per hall session; reuse static art without reopening it."""
-        if location != 'entrance_hall':
+        if location != self.location:
             print('No illustration brief available; continuing with text.')
             return None
         if self.attempted:
@@ -36,7 +37,7 @@ class Illustrator:
         self.attempted = True
         folder = None
         started = time.perf_counter()
-        record = {'version': 'hall-image-v1', 'location': location, 'prompt': HALL_PROMPT,
+        record = {'version': 'world-image-v1', 'location': location, 'prompt': self.prompt,
                   'model': 'stabilityai/sdxl-turbo',
                   'revision': '71153311d3dbb46851df1931d3ca6e939de83304',
                   'seed': 42, 'success': False, 'viewer_requested': False,
@@ -45,7 +46,7 @@ class Illustrator:
             folder = self.output / (datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ') + '-' + uuid4().hex[:8])
             folder.mkdir(parents=True)
             prompt = folder / 'prompt.txt'
-            prompt.write_text(HALL_PROMPT, encoding='utf-8')
+            prompt.write_text(self.prompt, encoding='utf-8')
             path = (folder / 'image.png').resolve()
             command = [str(ROOT / 'tools/stable-diffusion/d04e895/sd-cli.exe'),
                        '-m', str(ROOT / 'models/sd_xl_turbo_1.0_fp16.safetensors'),

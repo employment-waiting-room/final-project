@@ -14,9 +14,23 @@ Typed requests use local Ollama Qwen3:4b with the explicitly selected V1-JSON pr
 
 Gameplay-only guards reject common unsupported verbs and request clarification for ambiguous references, alternatives, compound actions, bare `use the key` and vague `finish`. These conservative checks can over-clarify; confirmation still matters and no new interpretation accuracy is claimed. Output schema/action-target validation and engine prerequisites are independent of the prompt. Logs under ignored `generated/world-intent-logs/` separate model/local-guard interpretations from confirmation decisions and include session/revision, raw model responses and timing. The model-only evaluator/results are unchanged.
 
-Full-world generated narration, illustrations and speech are not connected yet; combining --world with media flags is rejected explicitly. The original command below still runs the integrated entrance-hall prototype. Browser integration remains outstanding.
+Full-world media can now be enabled together (with Ollama and the existing local runtimes/assets available):
 
-Narration implemented 22 September 2026; optional speech and illustration added 24 September. This remains an entrance-hall presentation adapter; full-world and browser integration are incomplete. Speech integration passed offline software tests, and the developer subsequently reported that live playback "worked great". This positive report does not provide individual cancellation, exact-text or failure-recovery check results. Combined image/narration/speech playback awaits a live user check.
+```powershell
+.\.venv\Scripts\python.exe -m observatory --world --narrate --illustrate --speak
+```
+
+Startup, room entry/re-entry and explicit look-around request a scene description. Accepted puzzle/inventory actions and endings request short outcome narration. The exact accepted text is displayed then spoken by Kokoro, including factual fallback after generation/schema/guard failure. Cancelled, rejected and already-completed actions do not generate media. Engine-approved choices remain separate from generated prose.
+
+Each room uses its approved static brief with SDXL Turbo. Illustrations generate once per room/session, reopen from the saved PNG on revisits and are retained during small actions. Restart discards the session cache and makes fresh generation possible; old files are preserved. One failed image attempt is retained without automatic retry during that session. Text remains usable if image generation/viewer or speech fails. Processing is synchronous; the terminal waits for media to finish. This is not yet the browser interface.
+
+World narration logs live under `generated/world-narratives/`, image logs under `generated/gameplay-images/`, and speech logs under `generated/gameplay-speech/`. Generated artifacts remain Git-ignored. Gameplay prompts/guards are separate from evaluation; bounds and known-claim checks cannot prove prose true. All five room illustrations still require live visual review; SDXL Turbo selection was provisional from the hall subset.
+
+Test a cancelled request, movement to the workshop, inspection/collection, return to the hall, both endings across separate sessions, and restart. Check that room entry gets a scene, actions get short responses, revisits reuse images, and speech matches displayed text. Send run folders and any contradictions or failures. Offline integration tests passed; this combined full-world command has not been run by the assistant.
+
+## Earlier entrance-hall prototype
+
+The sections below describe the preserved hall-only mode (omit --world). The developer confirmed its combined playback and corrected opening-to-action flow worked. Full-world media uses the separate integration described above and awaits a live check; browser integration remains incomplete.
 
 ## Optional hall illustration
 

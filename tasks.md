@@ -126,7 +126,9 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 - [x] Review the first three guarded gameplay narrations and fix exact supplied-fact false rejections (policy v1.1). All three still failed length; 187 tests passed. Confirmation cancellation and broader live acceptance/fallback measurement remain outstanding.
 - [x] Implement five-room deterministic gameplay in observatory/world.py: movement, inventory, flags, prerequisites, observations, both endings, revisions/session IDs and restart. Playable through --world with numbered choices; the existing AI/media hall prototype remains separate.
 - [x] Connect full-world typed interpretation to the deterministic engine with explicit y/yes confirmation, action/target validation, prerequisite checks and separate interpretation/decision logs. Numbered actions remain model-free. 346 offline tests passed; live model interpretation remains user-run.
-- [ ] User-test full-world typed movement/puzzles/endings and cancellation with local Qwen; then connect room-aware narration, images and speech.
+- [x] Record developer report that full-world typed actions work; no new model accuracy or exhaustive user route coverage was inferred.
+- [x] Connect full-world scene/outcome narration, five room briefs with session image reuse, and speech of exact accepted text; keep failure fallback and cancelled-action silence. 408 offline tests passed.
+- [ ] User-test --world --narrate --illustrate --speak across rooms, revisits, both endings and restart; preserve logs and assess factuality, visual errors and waiting time.
 - [ ] Resolve unintended action substitutions, including the reported looking/knocking failures, against the agreed action contract.
 - [ ] Implement clarification and unsupported-request handling; measure over-clarification rather than assuming heuristic guards solve ambiguity.
 - [ ] Validate structured action/target references and engine prerequisites before any state change.
