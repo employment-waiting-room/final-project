@@ -17,7 +17,7 @@ def main(argv=None):
     parser.add_argument("--narrate", action="store_true", help="Generate guarded narration after accepted actions")
     parser.add_argument("--speak", action="store_true", help="Speak displayed scene text with local Kokoro after accepted changes")
     parser.add_argument('--illustrate', action='store_true', help='Generate a local SDXL Turbo hall image after an accepted change')
-    parser.add_argument('--world', action='store_true', help='Play the complete deterministic world with numbered actions (no models)')
+    parser.add_argument('--world', action='store_true', help='Play the full world with confirmed typed actions or model-free numbered choices')
     args = parser.parse_args(argv)
     if args.world:
         if args.narrate or args.speak or args.illustrate:

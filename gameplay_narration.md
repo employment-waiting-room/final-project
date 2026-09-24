@@ -2,7 +2,7 @@
 
 ## Full-world rules mode
 
-The complete five-room deterministic engine is now separately playable without models:
+The complete five-room engine supports confirmed typed actions and model-free numbered choices:
 
 ```powershell
 .\.venv\Scripts\python.exe -m observatory --world
@@ -10,7 +10,11 @@ The complete five-room deterministic engine is now separately playable without m
 
 Choose numbered actions; use `r` to restart and `q` to quit. Explore the workshop, install the fuse and start the generator; unlock the library to reach the telescope chamber. Reading the manual and aligning the beacon enable rescue. Shelter requires power but not manual reading/alignment. Both endings are explicit choices. Look around reveals only known contents and does not advance the state revision. Restart resets progress with a new session identity.
 
-This mode does not yet connect typed model interpretation, generated narration, illustrations or speech; combining --world with media flags is rejected explicitly. The original command below still runs the integrated entrance-hall prototype. Full-world browser/model integration remains outstanding.
+Typed requests use local Ollama Qwen3:4b with the explicitly selected V1-JSON prompt. Run the same command with Ollama available, type `go to the workshop`, cancel once, then repeat and confirm with y/yes. The interpreted action/target is displayed before any proposed state change is accepted. Observations, completed actions and prerequisite rejections do not require confirmation or advance revision. Missing confirmation, any other reply, EOF or Ctrl+C cancels. Numbered actions remain direct and never call the model.
+
+Gameplay-only guards reject common unsupported verbs and request clarification for ambiguous references, alternatives, compound actions, bare `use the key` and vague `finish`. These conservative checks can over-clarify; confirmation still matters and no new interpretation accuracy is claimed. Output schema/action-target validation and engine prerequisites are independent of the prompt. Logs under ignored `generated/world-intent-logs/` separate model/local-guard interpretations from confirmation decisions and include session/revision, raw model responses and timing. The model-only evaluator/results are unchanged.
+
+Full-world generated narration, illustrations and speech are not connected yet; combining --world with media flags is rejected explicitly. The original command below still runs the integrated entrance-hall prototype. Browser integration remains outstanding.
 
 Narration implemented 22 September 2026; optional speech and illustration added 24 September. This remains an entrance-hall presentation adapter; full-world and browser integration are incomplete. Speech integration passed offline software tests, and the developer subsequently reported that live playback "worked great". This positive report does not provide individual cancellation, exact-text or failure-recovery check results. Combined image/narration/speech playback awaits a live user check.
 

@@ -808,6 +808,14 @@ No models, downloads or installations were run. No commits or pushes occurred. N
 
 Validation for entry 78: 322 offline tests passed in 2.04 seconds, including the existing AI/media tests with mocked inference and the new full-world rules/route tests. Live user playthrough of --world remains pending.
 
+## 79. Full-world typed actions and explicit confirmation (24 September 2026)
+
+Recorded the developer's report that full-world rules mode works. Added WorldInterpreter and handle_world_text, connected to --world while preserving direct numbered choices. Interpretation explicitly selects the existing V1-JSON prompt text with Qwen3:4b; gameplay uses its own validated action/target schema, public scene/inventory/known flags and independent local guards. This is not an identical evaluation request or a new accuracy result. Model-only scoring, defaults and saved results are unchanged.
+
+State-changing proposals display canonical action and target and require y/yes. The engine builds a validated immutable proposal; only confirmation adopts it as live state, with one revision increment. Missing/negative confirmation, EOF and interruption preserve the original state. Observations, repeated actions and rejected prerequisites preserve revision and need no confirmation. Existing session/revision checks remain active, and repeated completed commands cannot duplicate effects. Conservative guards cover common unsupported verbs, pronouns, compound/alternative requests, bare key use and vague finish; over-clarification and unrecognised paraphrases remain possible.
+
+Saved interpretation source, prompt/request/raw response/timing, session/revision and separate confirmation decision logs under ignored generated/world-intent-logs. Offline tests cover explicit approvals/cancellation, interrupted confirmation, missing prerequisites, observation, repeated actions, model schema/errors/timeouts, local guards and terminal typed cancellation followed by movement. Validation: 346 tests passed in 2.09 seconds. No models, downloads, installations, commits or pushes occurred. Next: user-run typed world test; room-aware generated narration/images/speech and browser remain outstanding.
+
 ## Future entry template
 
 
