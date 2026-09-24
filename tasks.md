@@ -163,7 +163,7 @@ Gate: a player can reach an ending without developer intervention.
 - [x] Record developer report that speech caching works; retain descriptive developer feedback separately from measured speedup.
 - [x] Prepare reserved intent release workflow and scoring protocol: validate the original 30-case reservation, freeze source/dataset/settings plus installed Qwen digest/Ollama version, block drift and accidental reruns, retain errors/partial runs. 439 offline tests passed; no reserved predictions generated.
 - [x] Review user-captured final intent freeze: 30 cases, Qwen3:4b digest 359d7dd4bcda..., Ollama 0.34.3, explicit V1-JSON, one pass. Offline verification passed on 25 September; no release receipt exists yet.
-- [ ] User executes the frozen reserved intent run and supplies its results folder; no held-out predictions have been reviewed yet.
+- [x] Review completed reserved intent run 20260924T223002881754Z-c981b195: 23/30 exact (76.7%), 30/30 contract-valid, zero errors; all seven mistakes falsely selected actions instead of clarification. Freeze/receipt matched. See evaluation/assistant_reviews/final_intent_review.md; no tuning or rerun performed.
 - [ ] Freeze remaining narrative/image/speech configurations and acceptance criteria; reserve separate media cases. The current release workflow covers model-only intent only.
 - [ ] Measure action/target accuracy, false acceptance/rejection, ambiguity handling, and rule-bypass outcomes by request category.
 - [ ] Report raw-model interpretation separately from local guards, engine enforcement, and end-to-end outcomes.

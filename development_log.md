@@ -866,6 +866,14 @@ Reviewed the user-created evaluation/final_intent_freeze.json and independently 
 
 No model inference or downloads were performed. Frozen source/protocol/dataset files were not changed; only task/log status was updated. No software suite rerun was needed for this documentation update. Next: user runs --execute once and returns the saved results folder; if interrupted, retain the release receipt and partial evidence rather than rerunning. No commit or push occurred.
 
+## 86. Reserved intent results reviewed without tuning (25 September 2026)
+
+Reviewed user-run generated/final-intent-evaluations/20260924T223002881754Z-c981b195. Manifest reports completed; 30 unique cases recorded. Saved freeze matches the current freeze; manifest/release receipt SHA-256 is 8bbd2471df0337d051c14f11f6580cc2d68fe61f59ea495b969ea0136764843b. Qwen3:4b with V1-JSON achieved 23/30 exact status/action/target (76.7%), 30/30 structural validity and 23/30 reference agreement, with zero runtime/schema errors.
+
+Direct 7/7, paraphrase 7/7, unsupported 4/4, adversarial 4/4, ambiguous 1/4, compound 0/4. All seven failures (H15/H16/H18/H19-H22) predicted an action where clarification was expected. Mean wall latency .541 seconds, median .262, maximum 7.929; loading remains included. Saved detailed tracked review in evaluation/assistant_reviews/final_intent_review.md. These results measure model-only interpretation, not the guarded browser or confirmation safety. Small assistant-authored sample and pending independent annotation limit generalisation; development 49/53 is not a matched comparison.
+
+No source, prompt, rule, label, frozen protocol or raw results were changed; no model inference or test rerun occurred. Preserve the release receipt and generated raw evidence. Using these failures for future tuning retires them from unseen status. No commit or push. Next evaluation work concerns separately prepared media and end-to-end evidence, rather than repeating this reserved intent run.
+
 ## Future entry template
 
 
