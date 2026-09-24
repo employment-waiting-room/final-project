@@ -136,3 +136,46 @@ def test_trusted_fact_exemption_does_not_hide_appended_claims(extra):
     state = states()[2]
     text = " ".join(payload(state)["required_sentences"] + payload(state)["scene_facts"]) + " " + extra
     assert "power_or_ending_claim" in validate_description(text, state)
+
+
+@pytest.mark.parametrize('index', [1, 2, 3])
+@pytest.mark.parametrize('failure', [False, True])
+def test_outcome_narration_and_fallback_are_brief_and_action_specific(tmp_path, index, failure):
+    from observatory.narrative import OUTCOMES, outcome_payload
+    previous, state = states()[index - 1:index + 1]
+    facts = outcome_payload(previous, state)
+    expected = OUTCOMES[facts['action']]
+    def respond(request):
+        sent = json.loads(request.content)
+        assert json.loads(sent['messages'][1]['content'])['action'] == facts['action']
+        return httpx.Response(500) if failure else httpx.Response(200, json={
+            'done': True, 'message': {'content': json.dumps({'description': expected})}})
+    with httpx.Client(transport=httpx.MockTransport(respond)) as client:
+        scene = Narrator(client, tmp_path).render(state, previous=previous)
+    assert scene.description == expected
+    assert scene.source == ('fallback' if failure else 'model')
+    assert 'daylight' not in scene.description and 'storm' not in scene.description
+    assert state == states()[index]
+    record = json.loads(next(tmp_path.glob('*.json')).read_text())
+    assert record['action'] == facts['action'] and record['prompt_version'] == 'hall-outcome-v1'
+
+
+@pytest.mark.parametrize('extra,reason', [
+    (' The daylight fills the hall.', 'scene_recap'),
+    (' The door swings open.', 'door_opening'),
+    (' You enter the library.', 'unrequested_movement'),
+    (' The key disappears.', 'extra_inventory_or_lock_claim'),
+    (' Soft dust settles.' * 20, 'description_length'),
+])
+def test_outcome_rejects_recaps_and_invented_transitions(extra, reason):
+    previous, state = states()[1:3]
+    text = 'You pick up the library key.' + extra
+    assert reason in validate_description(text, state, previous)
+
+
+def test_outcome_requires_actual_single_transition():
+    from observatory.narrative import outcome_payload
+    with pytest.raises(ValueError):
+        outcome_payload(states()[0], states()[2])
+    with pytest.raises(ValueError):
+        outcome_payload(states()[1], states()[1])

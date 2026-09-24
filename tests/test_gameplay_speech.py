@@ -18,8 +18,8 @@ def test_only_confirmed_text_is_spoken(monkeypatch, reply, count):
         def interpret(self, text, state):
             return Intent(status='action', action='inspect_desk', target='desk')
     class Narrator:
-        def render(self, state):
-            return Scene('Exact accepted fallback.', (), 'entrance_hall', 'fallback')
+        def render(self, state, previous=None):
+            return Scene('Opening scene.' if previous is None else 'Exact accepted fallback.', (), 'entrance_hall', 'fallback')
     class FakeSpeaker:
         def speak(self, text):
             spoken.append(text)
@@ -29,7 +29,7 @@ def test_only_confirmed_text_is_spoken(monkeypatch, reply, count):
     monkeypatch.setattr(cli, 'Speaker', FakeSpeaker)
     monkeypatch.setattr('builtins.input', lambda _: next(answers))
     cli.main(['--narrate', '--speak'])
-    assert spoken == ['Exact accepted fallback.'] * count
+    assert spoken == ['Opening scene.'] + ['Exact accepted fallback.'] * count
 
 
 @pytest.mark.parametrize('failure', [None, 'timeout', 'playback', 'interrupt', 'exit'])
@@ -65,22 +65,24 @@ def test_numbered_sequence_speaks_final_state_once(monkeypatch):
     answers = iter(['1', '1', '1'])
     monkeypatch.setattr('builtins.input', lambda _: next(answers))
     cli.main(['--speak'])
-    assert len(spoken) == 3
+    assert len(spoken) == 4
 
 
 @pytest.mark.parametrize('status', ['clarify', 'unsupported'])
 def test_unaccepted_intent_is_silent(monkeypatch, status):
+    spoken = []
     class Interpreter:
         def interpret(self, text, state):
             return Intent(status=status, action=None, target=None)
     class FakeSpeaker:
         def speak(self, text):
-            pytest.fail('Unaccepted action triggered speech')
+            spoken.append(text)
     monkeypatch.setattr(cli, 'Interpreter', Interpreter)
     monkeypatch.setattr(cli, 'Speaker', FakeSpeaker)
     answers = iter(['some request', 'q'])
     monkeypatch.setattr('builtins.input', lambda _: next(answers))
     cli.main(['--speak'])
+    assert len(spoken) == 1  # Opening only; rejected input adds no speech.
 
 
 def test_failed_speech_does_not_block_game_completion(monkeypatch, tmp_path, capsys):
@@ -91,4 +93,4 @@ def test_failed_speech_does_not_block_game_completion(monkeypatch, tmp_path, cap
     monkeypatch.setattr('builtins.input', lambda _: next(answers))
     cli.main(['--speak'])
     assert 'Sequence complete.' in capsys.readouterr().out
-    assert len(list(tmp_path.glob('*/result.json'))) == 3
+    assert len(list(tmp_path.glob('*/result.json'))) == 4

@@ -69,8 +69,13 @@ def test_image_failure_preserves_sequence(monkeypatch, tmp_path, capsys):
 def test_combined_pipeline_uses_post_action_state_and_accepted_text(monkeypatch):
     events = []
     class Narrator:
-        def render(self, state):
+        def render(self, state, previous=None):
+            if previous is None:
+                assert not state.desk_inspected
+                events.append('opening')
+                return Scene('Opening text.', (), 'entrance_hall', 'fallback')
             assert state.desk_inspected
+            assert previous is not None and not previous.desk_inspected
             events.append('narrate')
             return Scene('Accepted factual text.', (), 'entrance_hall', 'fallback')
     class Image:
@@ -85,4 +90,5 @@ def test_combined_pipeline_uses_post_action_state_and_accepted_text(monkeypatch)
     answers = iter(['1', '', 'q'])
     monkeypatch.setattr('builtins.input', lambda _: next(answers))
     cli.main(['--narrate', '--illustrate', '--speak'])
-    assert events == ['narrate', ('image', 'entrance_hall'), ('speech', 'Accepted factual text.')]
+    assert events == ['opening', ('speech', 'Opening text.'), 'narrate',
+                      ('image', 'entrance_hall'), ('speech', 'Accepted factual text.')]

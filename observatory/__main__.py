@@ -23,10 +23,15 @@ def main(argv=None):
     narrator = Narrator() if args.narrate else None
     scene = None
     speaker = Speaker() if args.speak else None
-    speech_pending = False
+    speech_pending = speaker is not None
     illustrator = Illustrator() if args.illustrate else None
     image_pending = False
     print("The Last Observatory - entrance hall prototype")
+    if narrator:
+        print("Generating opening scene description...")
+        scene = narrator.render(state)
+        if scene.source == "fallback":
+            print("Using the factual opening description.")
     while True:
         print(f"\n{scene.description if scene else describe(state)}")
         print("Inventory: " + (", ".join(sorted(state.inventory)) or "empty"))
@@ -66,16 +71,17 @@ def main(argv=None):
             image_pending = illustrator is not None and state is not previous
             if narrator and state is not previous:
                 print("Generating scene description...")
-                scene = narrator.render(state)
+                scene = narrator.render(state, previous=previous)
                 if scene.source == "fallback":
                     print("Using the factual scene description.")
             continue
+        previous = state
         state = apply_action(state, actions[int(answer) - 1])
         speech_pending = speaker is not None
         image_pending = illustrator is not None
         if narrator:
             print("Generating scene description...")
-            scene = narrator.render(state)
+            scene = narrator.render(state, previous=previous)
             if scene.source == "fallback":
                 print("Using the factual scene description.")
 

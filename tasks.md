@@ -106,7 +106,10 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [ ] Select the initial application models using quality, correctness, latency, resource use, and integration evidence.
 - [x] Record developer review of first ten hall images; provisionally select SDXL Turbo, exclude SD 1.5/SDXL Base from gameplay, and retain other candidates' limitations. See evaluation/assistant_reviews/image_developer_selection.md.
 - [x] Implement optional --illustrate using the approved hall brief, local SDXL Turbo, session reuse, timeout and text fallback. Combined narration/image/speech orchestration is offline-tested; browser integration remains pending.
-- [ ] Verify one live typed request through interpretation, confirmation, engine validation, accepted narrative, SDXL Turbo illustration and Kokoro speech using --narrate --illustrate --speak. Retain logs and inspect visual correctness.
+- [x] Record developer report that the combined interaction works; repeated full-scene narration after small actions was identified as a flow issue. Detailed visual/state/log verification remains separate.
+- [x] Replace CLI full-scene recaps with short narration of the verified action outcome, including brief factual fallbacks and matching speech. 254 offline tests passed; model-only evaluation unchanged.
+- [x] Restore full opening narration once at startup, with optional speech, before short action outcomes. Cancellation/redraw does not replay the opening; 254 offline tests passed.
+- [ ] User-test opening plus revised action-focused narration with --narrate --illustrate --speak; retain logs and verify concise outcomes, visual correctness and cancellation.
 - [ ] Save evidence of the shared state, verified outcome, and three real model outputs, including fresh generation.
 - [ ] Demonstrate that rejected requests leave state unchanged and model failures retain a usable fallback.
 

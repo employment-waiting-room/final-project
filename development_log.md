@@ -782,6 +782,20 @@ Saved prompt/configuration/command, runtime logs, image/hash and result/error un
 
 Validation for entry 75: 242 offline tests passed in 2.92 seconds with simulated generation/viewers. This establishes software behavior, not live combined model success or visual accuracy.
 
+## 76. Short action outcomes replaced repeated scene recaps (24 September 2026)
+
+The developer reported that combined illustration/narration/speech worked, but full room descriptions repeated after collecting the key and unlocking the door. Changed gameplay narration to use the verified before-and-after state pair to identify exactly one legal completed action. Both typed-confirmed and numbered actions supply this context. No transition is applied to live state by the narrator; immutable engine transitions are compared only to validate the event.
+
+New gameplay prompt hall-outcome-v1 and policy hall-outcome-guards-v1 require the factual action sentence(s), 1-3 sentences and at most 45 words. Known contradiction checks remain, with common room/weather recaps rejected. Fallbacks describe discovery, pickup or unlocking only; speech reads the same accepted text. The initial room introduction remains displayed and static hall art remains reused. Full-scene rendering remains available for direct calls without previous state; additional room entry/look-around gameplay is still unimplemented. Checks are bounded and can miss paraphrased repetition or novel inventions.
+
+Validation: 254 offline tests passed in 4.05 seconds. Added all-three-action model/fallback checks, before/after event validation, recap/contradiction/length cases and updated CLI/combined adapter assertions. No models were run or downloaded; revised live narration quality is unmeasured. Evaluation prompts and saved results remain unchanged. Updated tasks and run guide; no commit or push. Next: user runs the same combined command and reviews the shorter action responses.
+
+## 77. Restored spoken opening before brief action outcomes (24 September 2026)
+
+Developer testing found that the previous change left the initial scene as displayed text only. The CLI now requests the full initial scene once when --narrate is enabled, before accepting actions, and --speak reads the accepted opening once (or deterministic text without --narrate). Existing full-scene guards/factual fallback apply and conceal the undiscovered key. Subsequent accepted actions retain brief outcome narration. Cancellation, clarification and redraw do not regenerate/replay the opening. Image generation remains after the first accepted action.
+
+Validation: 254 offline tests passed in 2.71 seconds with mocked narration/speech. Updated checks distinguish opening from action calls, verify no extra speech on cancellation/rejection/redraw, and retain completion despite speech failure. No real model calls, downloads, commits or pushes. Next: user verifies the opening is spoken before the first action and later outcomes remain short.
+
 ## Future entry template
 
 

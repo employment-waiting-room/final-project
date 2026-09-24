@@ -28,7 +28,7 @@ cd C:\Users\PC\Desktop\Github\EmploymentWaitingRoom\final-project
 .\.venv\Scripts\python.exe -m observatory --narrate --speak
 ```
 
-Cancel one typed inspection first: no audio should play and state should remain unchanged. Then confirm inspection, collect the key and unlock the door. Each accepted transition should display its description before speaking that exact description once, including factual fallback text. The initial scene and unchanged redraws are silent. Numbered choices also trigger speech after their accepted transition. Without `--speak`, no speech worker is launched; `--speak` alone speaks deterministic scene descriptions.
+The full opening description is generated/displayed once at startup and spoken when --speak is enabled. After it finishes, cancel one typed inspection: no additional audio should play and state should remain unchanged. Then confirm inspection, collect the key and unlock the door. Each accepted transition displays and speaks its brief outcome once, including factual fallback text. Unchanged redraws are silent. Numbered choices also trigger speech after their accepted transition. Without --speak, no speech worker is launched; --speak alone reads deterministic opening/action descriptions.
 
 Kokoro runs locally on CPU in its existing isolated environment with `af_heart`, seed 42 and the existing offline worker. Each transition starts a fresh process, so model loading adds delay. Synthesis has a 120-second timeout; Windows WAV playback is synchronous. Generation/playback errors or interruption produce a text-only continuation, with no retry, model substitution or repeated state transition. The speech adapter receives text only. It does not assess narrative truth or change evaluator prompts/results.
 
@@ -47,7 +47,19 @@ This command runs local models when you play; the assistant did not execute it. 
 
 Try cancelling a typed inspection first: state should remain unchanged and no scene generation should occur. Then confirm inspection, collect the key and unlock the library door. Each accepted change requests at most one narration. The final description should leave the door **closed and unlocked**, keep the key carried and keep the player in the hall. The prototype still ends there. You can use numbered choices to test narration independently of intent interpretation. Send the generated log filenames and any surprising text when you run it.
 
-## Implemented behaviour
+## Action-focused narration (24 September update)
+
+After the developer's successful combined image/speech check, repeated full-scene narration was reported as disruptive. The CLI now supplies the before-and-after state to the narrator. The adapter identifies the one legal completed action and requests 1-3 sentences, at most 45 words, focused on its outcome. Model failure or rejected output uses these short factual responses:
+
+- Inspect: "You discover a library key on the dusty desk. It is not yet collected."
+- Collect: "You pick up the library key."
+- Unlock: "You unlock the library door. It remains closed."
+
+Speech reads the same accepted outcome text. The full opening is generated once before the first action using the existing full-scene guards/fallback, then displayed and optionally spoken. Entering other rooms and explicit look-around are not implemented. The unchanged hall illustration is reused after its first accepted-action generation. Outcome logs use hall-outcome-v1 and hall-outcome-guards-v1 and include previous state and action. These bounded checks reject known contradictions, excessive length and common room/weather recaps; they cannot prove arbitrary prose factual or eliminate every repetition.
+
+Validation: 254 offline tests passed; real output from this revised prompt remains user-run. Use the same combined command above and report whether the three responses are brief and action-specific. Model-only evaluation prompts/results remain unchanged.
+
+## Original full-scene behavior (retained for direct scene rendering)
 
 - The engine applies the action before narration. Cancellation, clarification and rejection do not trigger narration. The narrator has no transition function and cannot modify the frozen state.
 - Canonical required sentences describe location, lock/closed status and key discovery/possession. The initial context does not disclose the hidden key. The three-step prototype's current state uniquely determines these facts; this is not a general full-world event/history implementation.

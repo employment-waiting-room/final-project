@@ -10,10 +10,24 @@ from uuid import uuid4
 import httpx
 from pydantic import BaseModel, ConfigDict, Field
 
-from .engine import GameState, allowed_actions
+from .engine import GameState, allowed_actions, apply_action
 
 POLICY_VERSION = "hall-narrative-guards-v1.1"
 PROMPT_VERSION = "hall-narrative-v1"
+OUTCOME_PROMPT_VERSION = "hall-outcome-v1"
+OUTCOME_POLICY_VERSION = "hall-outcome-guards-v1"
+OUTCOME_PROMPT = """Describe only the completed action's outcome in second person.
+Return only JSON with a description string: 1-3 sentences, at most 45 words.
+Copy each required sentence exactly once. You may add one brief grounded detail
+about this action, but do not recap the room, weather, lighting or earlier actions.
+Context is for consistency only. Do not invent events, items or people, open the
+door, move the player, suggest actions or perform another transition.
+"""
+OUTCOMES = {
+    "inspect_desk": "You discover a library key on the dusty desk. It is not yet collected.",
+    "collect_key": "You pick up the library key.",
+    "unlock_library": "You unlock the library door. It remains closed.",
+}
 PROMPT = """Describe the verified entrance-hall state in second person, in 60-100 words.
 Return only JSON with a description string. Copy each required sentence exactly
 once as a complete sentence. Surround it with concise prose grounded only in the
@@ -65,7 +79,19 @@ def payload(state):
             "inventory": sorted(state.inventory)}
 
 
-def validate_description(description, state):
+def outcome_payload(previous, state):
+    """Derive the event from an actual legal before/after pair, not model output."""
+    context = payload(state)
+    matches = [action for action in allowed_actions(previous)
+               if apply_action(previous, action) == state]
+    if len(matches) != 1:
+        raise ValueError("Expected one legal entrance-hall transition")
+    action = matches[0]
+    return {"action": action, "required_sentences": re.split(r'(?<=[.!?])\s+', OUTCOMES[action]),
+            "context_only": context}
+
+
+def validate_description(description, state, previous=None):
     """Conservative anchors + known failure patterns; not arbitrary semantic validation.
 
     Matching is deliberately conservative and may reject benign wording. Unseen
@@ -73,16 +99,20 @@ def validate_description(description, state):
     """
     reasons = []
     sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", description.strip())]
-    anchors = required_sentences(state)
+    anchors = required_sentences(state) if previous is None else outcome_payload(previous, state)["required_sentences"]
     if any(sentences.count(anchor) != 1 for anchor in anchors):
         reasons.append("missing_or_repeated_required_fact")
     count = len(re.findall(r"\b\w+(?:[-']\w+)*\b", description))
-    if not 60 <= count <= 100:
+    if (previous is None and not 60 <= count <= 100) or (previous is not None and not 1 <= count <= 45):
         reasons.append("description_length")
+    if previous is not None and len(sentences) > 3:
+        reasons.append("outcome_sentence_count")
     # Exact supplied facts are trusted too, including negative power/ending facts.
     # Only exempt whole sentences; appended or paraphrased claims stay checked.
-    trusted = set(anchors + payload(state)["scene_facts"])
+    trusted = set(anchors + (payload(state)["scene_facts"] if previous is None else []))
     extra = " ".join(s for s in sentences if s not in trusted).casefold()
+    if previous is not None and re.search(r'\b(room|hall|weather|storm|daylight|glazing|lighting)\b', extra):
+        reasons.append("scene_recap")
     patterns = {
         "door_opening": r"\b(open|opens|opened|opening|ajar|swings?)\b",
         "unrequested_movement": r"\b(enter|entered|entering|leave|left|depart|travel|walk into)\b",
@@ -105,18 +135,23 @@ class Narrator:
         self.model = model
         self.log_dir = Path(log_dir) if log_dir else Path(__file__).resolve().parents[1] / "generated/gameplay-narratives"
 
-    def render(self, state: GameState):
-        facts = payload(state)
-        fallback = " ".join(facts["required_sentences"] + facts["scene_facts"])
+    def render(self, state: GameState, previous=None):
+        facts = payload(state) if previous is None else outcome_payload(previous, state)
+        fallback = " ".join(facts["required_sentences"] + (facts["scene_facts"] if previous is None else []))
         request = {"model": self.model, "stream": False, "think": False,
                    "format": GeneratedText.model_json_schema(),
                    "options": {"temperature": 0.3, "seed": 42, "num_ctx": 4096, "num_predict": 600},
-                   "messages": [{"role": "system", "content": PROMPT},
+                   "messages": [{"role": "system", "content": PROMPT if previous is None else OUTCOME_PROMPT},
                                 {"role": "user", "content": json.dumps(facts)}]}
         record = {"policy_version": POLICY_VERSION, "prompt_version": PROMPT_VERSION,
                   "state": {"location": state.location, "inventory": sorted(state.inventory),
                             "desk_inspected": state.desk_inspected, "library_unlocked": state.library_unlocked},
                   "request": request, "source": "fallback", "validation_reasons": []}
+        if previous is not None:
+            record.update(policy_version=OUTCOME_POLICY_VERSION, prompt_version=OUTCOME_PROMPT_VERSION,
+                          action=facts['action'], previous_state={
+                              'location': previous.location, 'inventory': sorted(previous.inventory),
+                              'desk_inspected': previous.desk_inspected, 'library_unlocked': previous.library_unlocked})
         started = time.perf_counter()
         text = fallback
         try:
@@ -131,7 +166,7 @@ class Narrator:
             if not isinstance(body, dict) or body.get("done") is not True or body.get("done_reason") == "length":
                 raise ValueError("Incomplete narrative response")
             generated = GeneratedText.model_validate_json(body["message"]["content"])
-            reasons = validate_description(generated.description, state)
+            reasons = validate_description(generated.description, state, previous)
             record["validation_reasons"] = list(reasons)
             if not reasons:
                 text = generated.description
