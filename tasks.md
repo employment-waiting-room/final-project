@@ -104,7 +104,9 @@ Gate: the intended behaviour is defined well enough to test. Do not let a model 
 - [x] Review five user-run speech smoke outputs and developer feedback: all file checks passed; Piper/Kokoro/XTTS sounded good, SpeechT5 static/monotone/unclear, MMS mispronunciations. Basic rate/embedding diagnostics found no obvious mismatch; cause unresolved. Full comparison and detailed listening ratings remain pending (log entry 71).
 - [ ] Explain necessary model-specific settings and exclusions; do not claim unrun comparisons or treat different voices alone as different model architectures.
 - [ ] Select the initial application models using quality, correctness, latency, resource use, and integration evidence.
-- [ ] Connect one typed request through interpretation, engine validation, accepted narrative, matching illustration, and narration of that exact accepted text.
+- [x] Record developer review of first ten hall images; provisionally select SDXL Turbo, exclude SD 1.5/SDXL Base from gameplay, and retain other candidates' limitations. See evaluation/assistant_reviews/image_developer_selection.md.
+- [x] Implement optional --illustrate using the approved hall brief, local SDXL Turbo, session reuse, timeout and text fallback. Combined narration/image/speech orchestration is offline-tested; browser integration remains pending.
+- [ ] Verify one live typed request through interpretation, confirmation, engine validation, accepted narrative, SDXL Turbo illustration and Kokoro speech using --narrate --illustrate --speak. Retain logs and inspect visual correctness.
 - [ ] Save evidence of the shared state, verified outcome, and three real model outputs, including fresh generation.
 - [ ] Demonstrate that rejected requests leave state unchanged and model failures retain a usable fallback.
 

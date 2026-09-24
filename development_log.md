@@ -772,6 +772,16 @@ After receiving the --narrate --speak run instructions, the developer reported "
 
 Updated tasks.md and gameplay_narration.md to reflect the report. Confirmed the existing generated/image-review-gallery.html is present for the next developer review of saved images. Image selection and integration remain outstanding; no image ratings or model choice were inferred from speech feedback. No generated artifacts were changed, no models were run or downloaded, and no commit or push occurred. Documentation-only change; software tests were not rerun. Next: use the existing offline gallery to resume image review and record a provisional image choice before integration.
 
+## 75. Provisional image selection and terminal illustration integration (24 September 2026)
+
+Recorded the developer's nonblind first-ten-image feedback in evaluation/assistant_reviews/image_developer_selection.md. SDXL Turbo worked best; SD 1.5/SDXL Base were explicitly rejected for gameplay; DreamShaper style was good but content had omissions/additions; SD-Turbo had prompt errors. This supports a provisional hall choice, not all-room accuracy or a completed 50-image review. No numerical ratings were invented.
+
+Added --illustrate and a presentation-only hall adapter. It copies the approved static brief unchanged into separate gameplay configuration, calls the existing local SDXL Turbo runtime (four steps, CFG 1, Euler/sgm_uniform, seed 42), checks PNG integrity and opens the output in the Windows default viewer. Accepted changes trigger presentation; cancellation and unchanged redraws do not. The first hall image is reused within the session because the brief omits changing items/lock details. One attempt per session, 120-second timeout, no automatic retries. Failure/interruption leaves text/state usable; a new session attempts fresh generation. This is not a browser implementation or persistent cache.
+
+Saved prompt/configuration/command, runtime logs, image/hash and result/error under ignored generated/gameplay-images. Visual content remains unvalidated until user inspection. Image generation is synchronous before speech; the speaker receives the exact accepted narrative/fallback text. Model-only evaluation and previous evidence remain unchanged. Offline tests cover cancellation, single attempt/reuse, timeout/interruption/runtime/viewer/corrupt-file failures, game completion despite failure and combined adapter ordering. No models, downloads or installations were run; no commit or push occurred. Next is the user-run combined command in gameplay_narration.md, with saved artifacts and visual review.
+
+Validation for entry 75: 242 offline tests passed in 2.92 seconds with simulated generation/viewers. This establishes software behavior, not live combined model success or visual accuracy.
+
 ## Future entry template
 
 

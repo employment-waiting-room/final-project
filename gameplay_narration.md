@@ -1,6 +1,23 @@
 # Entrance-hall narrative safeguard
 
-Narration implemented 22 September 2026; optional speech added 24 September. This remains an entrance-hall presentation adapter; full-world, browser and image integration are incomplete. Speech integration passed offline software tests, and the developer subsequently reported that live playback "worked great". This positive report does not provide individual cancellation, exact-text or failure-recovery check results.
+Narration implemented 22 September 2026; optional speech and illustration added 24 September. This remains an entrance-hall presentation adapter; full-world and browser integration are incomplete. Speech integration passed offline software tests, and the developer subsequently reported that live playback "worked great". This positive report does not provide individual cancellation, exact-text or failure-recovery check results. Combined image/narration/speech playback awaits a live user check.
+
+## Optional hall illustration
+
+SDXL Turbo was provisionally selected from the developer's first ten image reviews. Run the combined terminal interaction with the existing local assets, runtime and Ollama service:
+
+```powershell
+cd C:\Users\PC\Desktop\Github\EmploymentWaitingRoom\final-project
+.\.venv\Scripts\python.exe -m observatory --narrate --illustrate --speak
+```
+
+Cancel a typed inspection first: no image generation or speech should occur. Confirm inspection next: accepted text appears, a fresh 512x512 hall PNG is generated and opened with the Windows default viewer, then Kokoro speaks the accepted description. Return to the terminal to collect the key and unlock the door. The same image is retained without another generation/viewer launch. This is a terminal-plus-image-viewer interaction, not the browser game.
+
+The approved establishing brief omits portable quest items and changing lock details, so it remains applicable across the three hall actions. It is selected by the engine location, never model-generated prose. Gameplay uses a separate fixed configuration matching the measured baseline: SDXL Turbo, four steps, CFG 1, Euler/sgm_uniform, seed 42. No evaluator configuration or saved results are changed.
+
+Only one generation attempt occurs per session, with a 120-second timeout. Missing runtime, invalid PNG, generation failure, interruption or viewer failure retains text gameplay. New sessions make a new attempt; there is no persistent image cache yet. Generation is synchronous and delays speech. PNG integrity checks do not establish scene correctness: inspect the art for missing objects, open doors or unwanted people/items. The textual state remains authoritative.
+
+`generated/gameplay-images/` records prompt, command/configuration, runtime output, image hash/integrity, elapsed time and errors. Viewer launch success does not prove the image was seen. Generated artifacts are Git-ignored; retain the run folders deliberately. Send the image folder path and any visual/playback issues after your live check. Live combined integration is still unverified.
 
 ## Optional Kokoro speech
 
