@@ -1,6 +1,6 @@
 # Entrance-hall narrative safeguard
 
-Narration implemented 22 September 2026; optional speech added 24 September. This remains an entrance-hall presentation adapter; full-world, browser and image integration are incomplete. Speech integration is software-tested with simulated inference/playback; live gameplay playback remains user-run.
+Narration implemented 22 September 2026; optional speech added 24 September. This remains an entrance-hall presentation adapter; full-world, browser and image integration are incomplete. Speech integration passed offline software tests, and the developer subsequently reported that live playback "worked great". This positive report does not provide individual cancellation, exact-text or failure-recovery check results.
 
 ## Optional Kokoro speech
 

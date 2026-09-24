@@ -766,6 +766,12 @@ Added optional --speak and a text-only Speaker adapter reusing the existing loca
 
 Validation: 232 offline tests passed in 1.87 seconds, using fake workers/playback and synthetic WAVs. No real models, downloads or installations were run. Model-only evaluation behavior is unchanged. Fresh process loading adds latency; live playback and broader multimodal integration remain unverified. User next runs --narrate --speak, cancels once and completes the hall sequence. No commit or push was performed.
 
+## 74. Live gameplay speech success reported (24 September 2026)
+
+After receiving the --narrate --speak run instructions, the developer reported "it worked great". Recorded this as positive developer feedback on live playback, separate from entry 73's 232 passing offline software tests. No exact run path or per-check outcomes were supplied; cancellation, exact displayed/spoken text matching, full route completion and live failure recovery are not individually claimed as verified by this feedback.
+
+Updated tasks.md and gameplay_narration.md to reflect the report. Confirmed the existing generated/image-review-gallery.html is present for the next developer review of saved images. Image selection and integration remain outstanding; no image ratings or model choice were inferred from speech feedback. No generated artifacts were changed, no models were run or downloaded, and no commit or push occurred. Documentation-only change; software tests were not rerun. Next: use the existing offline gallery to resume image review and record a provisional image choice before integration.
+
 ## Future entry template
 
 
