@@ -840,6 +840,16 @@ API tests cover confirmation/cancellation/replay, stale requests, restart during
 
 Validation for entry 82: 417 offline tests passed in 2.55 seconds with two dependency deprecation warnings. No additional dependencies were installed. Actual browser layout/accessibility and local model playback remain user verification tasks.
 
+## 83. Browser success reported and persistent speech caching implemented (24 September 2026)
+
+Recorded the developer's report that the browser flow worked great. This is informal developer feedback rather than a measured player study, detailed accessibility review or independently verified full-route evidence. At the developer's authorization, implemented the previously deferred speech cache shared by terminal and browser Speaker instances.
+
+Cache identity includes exact text (without whitespace normalization), Kokoro/af_heart, seed/speed/language/device/thread/sample-rate/encoding settings, SHA-256 of the model/config/voice, worker script, runtime interpreter and installed package METADATA. File hashes are memoized by path/size/mtime/ctime within a process; changed file metadata causes rehashing. This fingerprints installed versions/assets, not every transitive runtime source file. Identity read failures bypass caching rather than preventing synthesis.
+
+Each request retains a separate result log; an atomic index under generated/gameplay-speech/_cache points to a previously generated WAV. Cache lookup validates WAV structure/non-silence and matching SHA-256 before reuse. Missing/corrupt/changed files regenerate once; cache read/write failures retain normal synthesis/playback. Successful audio is cached independently of playback success. Browser hits return the existing file without desktop playback; terminal hits play it normally. Old pre-cache outputs are not retroactively indexed, and original evaluation files are untouched. Changed generated prose causes a miss even on the same room visit. No cache eviction or cross-process generation deduplication is implemented.
+
+Logs distinguish cache_hit, key/configuration, lookup time, request time and synthesis/worker time. Hits have null synthesis/worker durations and launch no worker. Cache and audio remain Git-ignored and depend on retained generated files. Validation: 432 offline tests passed in 6.68 seconds (two existing dependency deprecation warnings), using fake workers and synthetic WAVs. Tests cover cross-instance reuse, exact input/config changes, corrupt/missing/silent/replaced WAVs, malformed index, cached playback failure, cache write failure and fingerprint invalidation. No models, downloads or installations were run, no live speedup was claimed, and no commit or push occurred. Next: user verifies repeated identical accepted text reuses audio in the browser, then freeze configurations and prepare held-out evaluation.
+
 ## Future entry template
 
 

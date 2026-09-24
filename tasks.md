@@ -136,7 +136,8 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 - [ ] Add bounded retries and factual narrative fallback without applying an action twice.
 - [ ] Implement interchangeable text/image/speech adapters with timeouts and explicit failure handling.
 - [ ] Generate illustrations from accepted location briefs; avoid hidden solutions and changing inventory details.
-- [ ] Cache images by visual facts/configuration and speech by exact accepted text/voice/configuration. Speech caching explicitly deferred at the developer's request: implement during performance work after the full-world media flow is verified. Reuse valid audio for identical accepted text, model/voice and synthesis settings, including room revisits; changed text/settings or missing/invalid files must trigger fresh synthesis. Record cache hits separately from generation timing.
+- [x] Implement persistent gameplay speech caching after developer-reported browser success: exact text, model/voice/settings, worker/assets and runtime package metadata identify entries. Validate audio and hash on reuse; missing/invalid/changed entries regenerate. Cache hits and synthesis timing are logged separately. 432 offline tests passed; live cache timing remains unmeasured.
+- [ ] Complete persistent image caching by visual facts/configuration; existing image reuse is session-only.
 - [ ] Associate outputs with state revisions; prevent duplicate transitions and discard stale responses after restart or later actions.
 - [ ] Log interpretation source (model or local rule), validation, transition, prompts, model versions, latency, failures, and cache use.
 - [ ] Add full engine and orchestration tests: prerequisites, wrong actions, both endings, restart, repeated requests, stale responses, and model failures.
@@ -152,7 +153,8 @@ Gate: complete gameplay and failure recovery work before final user evaluation. 
 - [ ] Display text before media finishes; show loading, retry, and fallback states.
 - [x] Prevent repeated submissions server-side and in the UI; consume confirmation proposals once, reject stale session/revision requests, discard stale background results, and display restart/endings.
 - [ ] Check keyboard access, readable text, and browser layout.
-- [ ] Complete a browser playthrough using all three models, including fresh generation and failures.
+- [x] Record developer-reported successful browser use with the integrated models. This is informal feedback, not a measured study or detailed failure-injection record.
+- [ ] Retain a documented browser playthrough including fresh generation, a speech cache hit and deliberate model-failure recovery.
 
 Gate: a player can reach an ending without developer intervention.
 
