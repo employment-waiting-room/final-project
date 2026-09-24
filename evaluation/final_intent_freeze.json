@@ -1,0 +1,53 @@
+{
+  "version": "final-intent-freeze-v1",
+  "created_utc": "2026-09-24T22:25:39.177614+00:00",
+  "case_count": 30,
+  "configuration": {
+    "files": {
+      "observatory\\__init__.py": "5c1f795fbfa87a5ed8b9ef12c616f970a170d3f44a7cd75a552e298dc040633a",
+      "observatory\\__main__.py": "12da836b8971bdcf80b2f9d08b0e4e14999ea5f21145f526c47c91468c67577f",
+      "observatory\\browser.py": "0bbc6dc5614fa791d047a8d4114e4094bdf39f9df6ba83019a01a68757728f68",
+      "observatory\\engine.py": "681bb3463547900f981300dde3259702a3c7dcdef40f65992ccde2f456ce2f28",
+      "observatory\\evaluate_image.py": "f53b7934b4dccb033488ecf7b755f817662072c9400a97dc6237511adf28dfbe",
+      "observatory\\evaluate_intent.py": "9891b1bda98a436d36cce6e558af00105998811fa4235d5183cc008881d89f72",
+      "observatory\\evaluate_narrative.py": "da069ece7216df5ebbe7778f0cf9a8eba77496028d90a2f456f2470d61b98992",
+      "observatory\\evaluate_speech.py": "9c09f0bbadc0afa8d1faeaaf3fa92ca35ad7422ff5944934ebbccd87a0dd8f2a",
+      "observatory\\final_intent.py": "a125b702b2709ee7f41e7807e24903dcdcacdcb4b12d56df618c05518b7e2f02",
+      "observatory\\fixtures.py": "fe5e45f786e6ca63590354c20c4c44109dd084c3f0293d7a42eff8fa88903681",
+      "observatory\\held_out.py": "c37196fbffc9cf613c0fdcdbe9f7194166ea208850a0a87ee1da9b152ff7480a",
+      "observatory\\illustration.py": "aac7311902523499ef2fc35acf99425c1efacc6056dd6afb2189b0bdaa5ddf8e",
+      "observatory\\image_gallery.py": "973ad8c63ff7475f6c5668f7971eb9eefc349d4c1770c8d499f617c8148a70e2",
+      "observatory\\intent.py": "97b48e216afb805212eca7c9aba2f8f5eb43768676ea6fdb7257c974a864fa12",
+      "observatory\\media_fixtures.py": "ca8d2bdfc9a771740334bd604126f8a47827f41ce21a72fffe0848c1dfb245ac",
+      "observatory\\narrative.py": "f75c7d518dfbf9de8d2acf9cc52250fc924d593fd3ff510fd364c5142c303fc5",
+      "observatory\\speech.py": "e8b7bce6bc40e1ae655ccab5a42b2f1bcd09acb1987a6fe3810350dc20177cd2",
+      "observatory\\speech_cache.py": "fbebf7470da99dfc252ac5f524ae9a0c187dfc1d06f176896310234af0bb1980",
+      "observatory\\world.py": "1d1af0406f934219b3d82712bd64873e56c0f26cc85d1665416a1bc2dd7e4709",
+      "observatory\\world_cli.py": "6665dca0055415c8e37b2a69268c44ba32e5a86098d9d02990eca4febed86075",
+      "observatory\\world_intent.py": "d336786fcf5de5e5339810a29aca0f1a273b3a5e17cdfbee22add38a46ae10e9",
+      "observatory\\world_media.py": "1e16995ccb368a227f755d9cbdac7c303a4ed8076f7b145c12c4c0939ca9f262",
+      "observatory\\world_narrative.py": "c68f09985dbb7899b722c85d6bf14daa7a6cf73940f91e3c34dc83e5735815b7",
+      "evaluation\\held_out_intent.json": "bff183e769d26d7042d08d86c081c76be387e404b47e58919e1edcd7f2366b12",
+      "evaluation\\held_out_intent_reservation.json": "c86a14bf7f9bafa2e3f95e14689e525c333ca43cef78367c5cf36959ee84a33b",
+      "evaluation\\final_intent_protocol.md": "6322fe4bdf979d91504d427ee9160dda161e861211ad9dfb864af0f569050fc8",
+      "requirements.txt": "098f78925f300fee6fae4af5ded2bba4c7ea0ef018a6ad30635e9e195653d474"
+    },
+    "python": "3.11.9",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5"
+    },
+    "model": "qwen3:4b",
+    "prompt_version": "v1-json",
+    "prompt_sha256": "631e1c168066624d643f7987c3f5593b7884a0b8a564483db427703eb69cff18",
+    "think": false,
+    "timeout_seconds": 60,
+    "repetitions": 1,
+    "mode": "model_only_no_local_guards",
+    "scoring": "exact_status_action_target_all_attempts_errors_in_denominator"
+  },
+  "runtime": {
+    "ollama_version": "0.34.3",
+    "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+  }
+}

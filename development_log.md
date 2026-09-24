@@ -850,6 +850,16 @@ Each request retains a separate result log; an atomic index under generated/game
 
 Logs distinguish cache_hit, key/configuration, lookup time, request time and synthesis/worker time. Hits have null synthesis/worker durations and launch no worker. Cache and audio remain Git-ignored and depend on retained generated files. Validation: 432 offline tests passed in 6.68 seconds (two existing dependency deprecation warnings), using fake workers and synthetic WAVs. Tests cover cross-instance reuse, exact input/config changes, corrupt/missing/silent/replaced WAVs, malformed index, cached playback failure, cache write failure and fingerprint invalidation. No models, downloads or installations were run, no live speedup was claimed, and no commit or push occurred. Next: user verifies repeated identical accepted text reuses audio in the browser, then freeze configurations and prepare held-out evaluation.
 
+## 84. Existing reserved intent cases prepared for final release (24 September 2026)
+
+Recorded developer confirmation that speech caching works. Continued final-evaluation preparation using the existing 30-case intent reservation from 22 September; did not replace or tune against its wording. Offline validation confirmed the original dataset hash, labels/reachable states and development-wording separation. This establishes reservation integrity, not independent annotation or semantic novelty; shared world states/actions are intentional. Media holdouts have not been created in this step.
+
+Added observatory.final_intent and evaluation/final_intent_protocol.md. User-run --freeze captures local source/dataset/protocol/settings/environment hashes and reads only Ollama version/tags to pin the installed Qwen digest. --verify performs an offline integrity comparison; --execute requires the matching freeze/runtime and releases all 30 cases using explicit V1-JSON, one pass, no retries/partial limit. Reuses the original model-only request/scoring functions, not gameplay guards or confirmation. A durable release receipt is created before inference and blocks accidental reruns; interruption retains partial rows/summary and is not labelled complete. Original reservation metadata remains historical and unchanged.
+
+Primary scoring is exact status/action/target accuracy with model/schema/HTTP errors in the attempted denominator. Reference agreement is secondary; reports must distinguish complete from interrupted runs, raw-model accuracy from engine enforcement, and loading from inference timing. Results/requests/raw responses and the freeze copy are retained in ignored generated/final-intent-evaluations; preserve for submission. Freeze and release JSON are Git-visible; protocol has an explicit Markdown ignore exception.
+
+Validation: 439 offline tests passed in 3.85 seconds with two existing dependency warnings. Workflow tests use development cases and simulated responses, covering metadata-only capture, no overwrite, source/model/runtime drift, retained failures, blocked repeat release and interruption. Reserved validation generated no predictions. No model inference, downloads, installs, commits or pushes occurred. Next: user captures and sends the freeze; installed model/runtime identity is still pending, so the final configuration is not yet sealed and no held-out result is claimed.
+
 ## Future entry template
 
 
