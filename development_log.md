@@ -860,6 +860,12 @@ Primary scoring is exact status/action/target accuracy with model/schema/HTTP er
 
 Validation: 439 offline tests passed in 3.85 seconds with two existing dependency warnings. Workflow tests use development cases and simulated responses, covering metadata-only capture, no overwrite, source/model/runtime drift, retained failures, blocked repeat release and interruption. Reserved validation generated no predictions. No model inference, downloads, installs, commits or pushes occurred. Next: user captures and sends the freeze; installed model/runtime identity is still pending, so the final configuration is not yet sealed and no held-out result is claimed.
 
+## 85. Final intent freeze verified before release (25 September 2026)
+
+Reviewed the user-created evaluation/final_intent_freeze.json and independently ran --verify offline successfully. It pins 30 reserved cases, Qwen3:4b digest 359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7, Ollama 0.34.3, explicit V1-JSON, thinking off, 60-second timeout and one model-only pass without gameplay guards. Freeze creation timestamp is 2026-09-24T22:25:39 UTC (25 September locally). No release receipt was present.
+
+No model inference or downloads were performed. Frozen source/protocol/dataset files were not changed; only task/log status was updated. No software suite rerun was needed for this documentation update. Next: user runs --execute once and returns the saved results folder; if interrupted, retain the release receipt and partial evidence rather than rerunning. No commit or push occurred.
+
 ## Future entry template
 
 
