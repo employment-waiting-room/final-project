@@ -32,7 +32,7 @@ def test_only_confirmed_text_is_spoken(monkeypatch, reply, count):
     assert spoken == ['Opening scene.'] + ['Exact accepted fallback.'] * count
 
 
-@pytest.mark.parametrize('failure', [None, 'timeout', 'playback', 'interrupt', 'exit'])
+@pytest.mark.parametrize('failure', [None, 'timeout', 'playback', 'interrupt', 'exit', 'browser'])
 def test_speaker_preserves_exact_text_and_contains_failures(tmp_path, failure):
     calls = []
     def runner(command, **kwargs):
@@ -50,9 +50,11 @@ def test_speaker_preserves_exact_text_and_contains_failures(tmp_path, failure):
     def player(path):
         if failure == 'playback':
             raise OSError('no device')
-    result = Speaker(tmp_path, runner, player).speak('The door remains closed.')
+    result = Speaker(tmp_path, runner, None if failure == 'browser' else player).speak('The door remains closed.')
     assert calls == ['The door remains closed.']
-    assert result['success'] == (failure is None)
+    assert result['success'] == (failure in (None, 'browser'))
+    if failure == 'browser':
+        assert result['played'] is False and Path(result['audio_path']).is_file()
     assert len(list(tmp_path.glob('*/result.json'))) == 1
 
 

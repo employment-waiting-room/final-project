@@ -128,7 +128,7 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 - [x] Connect full-world typed interpretation to the deterministic engine with explicit y/yes confirmation, action/target validation, prerequisite checks and separate interpretation/decision logs. Numbered actions remain model-free. 346 offline tests passed; live model interpretation remains user-run.
 - [x] Record developer report that full-world typed actions work; no new model accuracy or exhaustive user route coverage was inferred.
 - [x] Connect full-world scene/outcome narration, five room briefs with session image reuse, and speech of exact accepted text; keep failure fallback and cancelled-action silence. 408 offline tests passed.
-- [ ] User-test --world --narrate --illustrate --speak across rooms, revisits, both endings and restart; preserve logs and assess factuality, visual errors and waiting time.
+- [x] Record developer report that the combined full-world terminal media flow worked. This is informal feedback; detailed per-route annotations, timing and evidence retention remain outstanding.
 - [ ] Resolve unintended action substitutions, including the reported looking/knocking failures, against the agreed action contract.
 - [ ] Implement clarification and unsupported-request handling; measure over-clarification rather than assuming heuristic guards solve ambiguity.
 - [ ] Validate structured action/target references and engine prerequisites before any state change.
@@ -136,7 +136,7 @@ Gate: one real integrated interaction works locally. Finish this before expandin
 - [ ] Add bounded retries and factual narrative fallback without applying an action twice.
 - [ ] Implement interchangeable text/image/speech adapters with timeouts and explicit failure handling.
 - [ ] Generate illustrations from accepted location briefs; avoid hidden solutions and changing inventory details.
-- [ ] Cache images by visual facts/configuration and speech by exact accepted text/voice/configuration.
+- [ ] Cache images by visual facts/configuration and speech by exact accepted text/voice/configuration. Speech caching explicitly deferred at the developer's request: implement during performance work after the full-world media flow is verified. Reuse valid audio for identical accepted text, model/voice and synthesis settings, including room revisits; changed text/settings or missing/invalid files must trigger fresh synthesis. Record cache hits separately from generation timing.
 - [ ] Associate outputs with state revisions; prevent duplicate transitions and discard stale responses after restart or later actions.
 - [ ] Log interpretation source (model or local rule), validation, transition, prompts, model versions, latency, failures, and cache use.
 - [ ] Add full engine and orchestration tests: prerequisites, wrong actions, both endings, restart, repeated requests, stale responses, and model failures.
@@ -146,11 +146,11 @@ Gate: complete gameplay and failure recovery work before final user evaluation. 
 
 ## 5. Build the browser experience
 
-- [ ] Display location, generated illustration, accepted narrative, inventory, and objective.
-- [ ] Add free-text input with optional engine-approved suggestions and understandable clarification/rejection messages.
-- [ ] Add narration playback, stop, and replay controls.
+- [x] Implement local browser display for location, generated illustration, accepted narrative, inventory and objective. Real browser/model playthrough remains user-run.
+- [x] Add browser free-text input, explicit interpretation confirmation, engine-approved action buttons and clarification/rejection messages; verified via offline API tests.
+- [x] Add browser audio controls for play/pause/replay and a stop button; synthesis no longer invokes desktop playback in browser mode.
 - [ ] Display text before media finishes; show loading, retry, and fallback states.
-- [ ] Prevent repeated submissions while processing; add restart and ending screens.
+- [x] Prevent repeated submissions server-side and in the UI; consume confirmation proposals once, reject stale session/revision requests, discard stale background results, and display restart/endings.
 - [ ] Check keyboard access, readable text, and browser layout.
 - [ ] Complete a browser playthrough using all three models, including fresh generation and failures.
 

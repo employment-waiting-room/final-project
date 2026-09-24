@@ -41,8 +41,10 @@ class Speaker:
             if completed.returncode or not worker.get('success'):
                 raise RuntimeError('Speech generation failed')
             result.update(inspect_audio(folder / 'audio.wav'))
-            self.player(folder / 'audio.wav')
-            result.update(success=True, played=True)
+            result['audio_path'] = str((folder / 'audio.wav').resolve())
+            if self.player is not None:
+                self.player(folder / 'audio.wav')
+            result.update(success=True, played=self.player is not None)
         except (Exception, KeyboardInterrupt) as exc:
             result['error'] = f'{type(exc).__name__}: {exc}'
             print('Speech unavailable or interrupted; continuing with the displayed text.')

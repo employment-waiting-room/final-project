@@ -826,6 +826,20 @@ Copied the five approved static image briefs into gameplay JSON; generalized the
 
 Validation: 408 offline tests passed in 2.36 seconds. Tests cover all saved fixture states' factual scene fallback, short outcome acceptance/failures, exact speech text, room reuse/restart and cancellation without extra presentation. Existing engine/confirmation/media-failure tests still pass. No models, downloads or installations were run; no commit or push occurred. New full-world narration logs include session/revision/location/mode, exact requests/raw responses and accepted text. Generated logs/audio/images remain ignored and require deliberate submission retention. Model-only evaluation is unchanged. Next: user runs the combined command across rooms, revisits, endings and restart; browser interface remains outstanding.
 
+## 81. Speech caching deferred to performance work (24 September 2026)
+
+The developer requested that speech caching be scheduled for an appropriate later stage. Clarified the existing task: after full-world media verification, cache by exact accepted text plus model/voice/synthesis configuration, reuse valid audio on matching room revisits, regenerate for changed inputs or missing/invalid files, and distinguish cache hits from synthesis timing. Current playback still synthesizes a new file per request. No caching was implemented, models run or tests rerun; this was a planning/documentation change only. No commit or push occurred.
+
+## 82. Local browser interface implemented (24 September 2026)
+
+Recorded developer feedback that combined full-world terminal media worked. Implemented observatory.browser using the already-installed FastAPI/uvicorn dependencies and a responsive plain HTML/CSS/JavaScript page. Displays objective, room/image, accepted narrative, inventory, engine choices, status, ending and restart. Typed interpretations use a separate single-use confirmation proposal; cancel leaves state untouched. Browser audio uses native play/pause/replay plus stop, with manual playback. Speaker can now generate an audio artifact without desktop playback and truthfully logs played=false.
+
+Background work uses a single worker. The browser immediately receives verified fallback text while narration/images/audio load, polls progress and blocks repeated actions. Session/revision checks and consumed proposal IDs prevent stale or repeated application; restart changes job identity and discards late interpretation/media output. Old in-flight processes are not forcibly terminated and can delay new work. Room images reuse existing session artifacts; speech caching remains deferred. Local service binds loopback, checks Host and a session token for mutations, and serves registered assets rather than arbitrary filesystem paths. One game is shared across tabs; no multi-user deployment is claimed.
+
+API tests cover confirmation/cancellation/replay, stale requests, restart during interpretation/narration, both ending routes, local API/asset restrictions, text before audio and model failure without state rollback. JavaScript syntax check passed with Node. No real models, downloads, package changes or browser visual/playback tests were run. Existing TestClient dependencies emit two deprecation warnings; they do not fail tests. User next runs python -m observatory.browser and opens the loopback URL for a real browser playthrough. No commit or push occurred.
+
+Validation for entry 82: 417 offline tests passed in 2.55 seconds with two dependency deprecation warnings. No additional dependencies were installed. Actual browser layout/accessibility and local model playback remain user verification tasks.
+
 ## Future entry template
 
 

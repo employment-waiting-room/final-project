@@ -1,5 +1,21 @@
 # Entrance-hall narrative safeguard
 
+## Local browser interface
+
+With Ollama running and the existing model assets/runtimes installed:
+
+```powershell
+.\.venv\Scripts\python.exe -m observatory.browser
+```
+
+Open http://127.0.0.1:8000. The page starts opening-scene generation and shows factual text immediately while it loads. Use typed input (confirm or cancel the interpreted action) or an engine-approved action button. Images appear inside the page; audio uses browser controls, with manual play/pause/replay and a separate stop button. Audio does not autoplay. Restart discards pending proposals/results from the old session and begins a new opening; ending state exposes restart instead of gameplay choices. One shared local game is served per process, including across tabs; this is not a multi-user service.
+
+For a model-free UI check, run `python -m observatory.browser --no-media` with the project's Python environment and use only action buttons. Typed input still calls Ollama. Stop the server with Ctrl+C. Use --port 8001 if the default port is occupied.
+
+The server binds only to loopback, checks Host and a page-session token for mutations, serves only registered media artifacts, and disables new actions while work is running. Media work runs on one background worker. Restart invalidates old outputs but cannot immediately stop an in-flight model process; new work may wait for it. Factual text remains visible during generation, and failed media leaves gameplay usable. Speech caching remains deferred. No browser/model playthrough has been performed by the assistant; API/software tests and JavaScript syntax checks do not establish visual or playback quality.
+
+Test the opening, a typed cancellation/confirmation, room revisits, audio controls, an ending and restart. Send any console/server error and explain which action triggered it. Generated evidence remains under the existing ignored generated/ directories.
+
 ## Full-world rules mode
 
 The complete five-room engine supports confirmed typed actions and model-free numbered choices:
