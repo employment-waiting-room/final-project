@@ -1,6 +1,21 @@
 # Entrance-hall narrative safeguard
 
-Implemented 22 September 2026; software-tested with simulated responses only. Live gameplay generation and fallback frequency have not been evaluated. This is an entrance-hall presentation adapter, not full-world, browser, image or speech integration.
+Narration implemented 22 September 2026; optional speech added 24 September. This remains an entrance-hall presentation adapter; full-world, browser and image integration are incomplete. Speech integration is software-tested with simulated inference/playback; live gameplay playback remains user-run.
+
+## Optional Kokoro speech
+
+With the existing speech assets/runtime and Ollama available:
+
+```powershell
+cd C:\Users\PC\Desktop\Github\EmploymentWaitingRoom\final-project
+.\.venv\Scripts\python.exe -m observatory --narrate --speak
+```
+
+Cancel one typed inspection first: no audio should play and state should remain unchanged. Then confirm inspection, collect the key and unlock the door. Each accepted transition should display its description before speaking that exact description once, including factual fallback text. The initial scene and unchanged redraws are silent. Numbered choices also trigger speech after their accepted transition. Without `--speak`, no speech worker is launched; `--speak` alone speaks deterministic scene descriptions.
+
+Kokoro runs locally on CPU in its existing isolated environment with `af_heart`, seed 42 and the existing offline worker. Each transition starts a fresh process, so model loading adds delay. Synthesis has a 120-second timeout; Windows WAV playback is synchronous. Generation/playback errors or interruption produce a text-only continuation, with no retry, model substitution or repeated state transition. The speech adapter receives text only. It does not assess narrative truth or change evaluator prompts/results.
+
+Logs under `generated/gameplay-speech/` retain the exact text request, runtime output, worker metadata, WAV when generated and result/error. These are ignored by Git; preserve useful run evidence separately. Send the run-folder paths and describe any silence, wrong words or playback errors after the user-run check. No real gameplay speech has been run by the assistant.
 
 ## User-run check
 

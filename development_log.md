@@ -758,6 +758,14 @@ At the user's explicit request, created a temporary script, summarized saved JSO
 
 All 100 unique planned attempts completed with valid-audio flags and no recorded errors: 20 per candidate. Mean synthesis seconds / mean per-clip real-time factor: Piper .176/.033, Kokoro 1.125/.171, SpeechT5 2.799/.417, MMS .659/.100, XTTS 9.859/1.516. Loading is separate; mean full wall seconds were 1.631, 7.622, 7.116, 3.971 and 23.244 respectively. XTTS synthesis exceeded audio duration in every recorded attempt. Piper had a tiny nonzero full-scale sample fraction in every clip (maximum .00268%); this is not a perceptual clipping diagnosis. Saved file checks do not establish pronunciation or quality; earlier listening feedback applies only to smoke samples. Detailed listening review remains deferred.
 
+## 73. Developer listening subset and optional gameplay speech (24 September 2026)
+
+Recorded user listening feedback for 15 clips (T03/T05/T10, repetition one) from speech run 20260923T165609248021Z-c2e173fa. Final preference: Kokoro, XTTS, Piper, SpeechT5, MMS. SpeechT5 was described as robotic/monotonous/static; MMS had pronunciation/enunciation problems. Preserved this as nonblind developer subset feedback without invented numeric ratings or claiming all 100 outputs were listened to. Kokoro af_heart is the provisional gameplay choice.
+
+Added optional --speak and a text-only Speaker adapter reusing the existing local CPU worker in the isolated Kokoro environment. Accepted scene descriptions, including narrative fallback, display before synchronous Windows playback. Only accepted state changes trigger speech; initial scene, cancellation, clarification, rejection and unchanged redraws stay silent. Final hall transition is spoken once before completion. Speech synthesis timeout, missing runtime, playback errors and interruption retain usable text and the already-accepted state. No retry or automatic model substitution occurs. Saved request/runtime/worker/audio/result artifacts remain Git-ignored; review notes and run instructions are explicitly Git-visible.
+
+Validation: 232 offline tests passed in 1.87 seconds, using fake workers/playback and synthetic WAVs. No real models, downloads or installations were run. Model-only evaluation behavior is unchanged. Fresh process loading adds latency; live playback and broader multimodal integration remain unverified. User next runs --narrate --speak, cancels once and completes the hall sequence. No commit or push was performed.
+
 ## Future entry template
 
 
