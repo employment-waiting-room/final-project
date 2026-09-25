@@ -4,6 +4,8 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 *.md
+*.csv
+/evaluation/playthrough_protocol.md
 !development_log.md
 !tasks.md
 !evaluation/README.md
@@ -22,5 +24,17 @@ __pycache__/
 models/
 generated/
 
+# Local report drafts and exports are not submission source-code artifacts.
+/reports/
+/literature_review.*
+/final_report.*
+/report.*
+
 # Downloaded local model runtime
 tools/stable-diffusion/
+
+# Local planning, report and review material (overrides earlier Markdown exceptions).
+*.md
+/evaluation/assistant_reviews/
+/evaluation/final_intent_freeze*.json
+# Keep source, tests, fixture data and runtime setup manifests available in Git.
