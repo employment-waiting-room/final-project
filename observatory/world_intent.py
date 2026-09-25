@@ -13,12 +13,33 @@ from pydantic import BaseModel, ConfigDict, model_validator
 from .evaluate_intent import PROMPTS
 from .world import Command, Result, ROOMS, TARGETS, describe_world, label, perform
 
+GAMEPLAY_PROMPT_VERSION = 'world-gameplay-intent-v2'
+CANONICAL_TARGETS = {action: [target] for action, target in TARGETS.items()}
+CANONICAL_TARGETS['move'] = list(ROOMS)
+GAMEPLAY_PROMPT = PROMPTS['v1-json'][1] + '''
+Action and target are separate fields. Never put an action/target pair such as
+"look_around/current_room" in the action field. Use exactly the canonical IDs
+below, including underscores. Players use normal language and do not need IDs.
+Checking a named desk means inspecting that desk, not looking around the room.
+"check the desk" -> {"status":"action","action":"inspect_desk","target":"desk"}
+"go to the telescope chamber" -> {"status":"action","action":"move","target":"telescope_chamber"}
+"go to telescope room" means the same destination, telescope_chamber.
+Interpret explicit requests even when a route or prerequisite is unavailable;
+the engine will check feasibility. Preserve clarification for compound requests.
+Canonical action to target mapping:
+''' + json.dumps(CANONICAL_TARGETS, sort_keys=True)
+
 
 class WorldIntent(BaseModel):
     model_config = ConfigDict(extra='forbid', strict=True)
     status: Literal['action', 'clarify', 'unsupported']
-    action: str | None
-    target: str | None
+    action: Literal['look_around', 'inspect_desk', 'collect_key', 'unlock_library',
+                    'move', 'read_manual', 'inspect_toolbox', 'collect_fuse',
+                    'install_fuse', 'start_generator', 'align_beacon', 'signal_rescue', 'shelter'] | None
+    target: Literal['current_room', 'desk', 'library_key', 'library_door', 'manual',
+                    'toolbox', 'spare_fuse', 'fuse_socket', 'generator', 'beacon',
+                    'signalling_console', 'shelter_bench', 'entrance_hall', 'library',
+                    'workshop', 'generator_room', 'telescope_chamber'] | None
 
     @model_validator(mode='after')
     def pair(self):
@@ -45,8 +66,8 @@ class WorldInterpreter:
             print('Warning: could not save typed-action log.')
 
     def interpret(self, text, state):
-        # Explicitly select the measured JSON configuration, never runner defaults.
-        version, prompt = PROMPTS['v1-json']
+        # Gameplay revision based on V1-JSON; frozen evaluation stays unchanged.
+        version, prompt = GAMEPLAY_PROMPT_VERSION, GAMEPLAY_PROMPT
         record = {'kind': 'interpretation', 'policy': 'world-gameplay-guards-v1',
                   'session_id': state.session_id, 'revision': state.revision, 'input': text,
                   'prompt_version': version, 'source': 'local_guard'}
