@@ -1,5 +1,6 @@
 """Deterministic entrance-hall rules, independent of model output."""
 from dataclasses import dataclass, replace
+from .world import OUTCOMES
 
 
 @dataclass(frozen=True)
@@ -57,5 +58,5 @@ def describe(state: GameState) -> str:
     if "library_key" in state.inventory:
         return "You carry the library key. The library door remains locked."
     if state.desk_inspected:
-        return "You discover a library key on the dusty desk. The library door is locked."
+        return OUTCOMES['inspect_desk'] + " The library door is locked."
     return "You stand in the entrance hall. A dusty desk sits beside the locked library door."

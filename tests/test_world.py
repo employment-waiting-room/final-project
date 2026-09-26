@@ -4,7 +4,7 @@ import re
 import pytest
 
 from observatory.fixtures import load_dataset
-from observatory.world import WorldState, Command, TARGETS, choices, describe_world, perform
+from observatory.world import WorldState, Command, TARGETS, OUTCOMES, choices, describe_world, perform
 
 
 def project(state):
@@ -56,7 +56,7 @@ def test_both_endings_with_workshop_first_and_terminal_freeze(ending):
     assert state.inventory == frozenset({'library_key'})
     if ending == 'sheltered':
         assert not {'manual_read', 'beacon_aligned'} & state.flags
-        assert 'No rescue signal' in describe_world(state)
+        assert describe_world(state) == OUTCOMES['shelter']
     assert choices(state) == ()
     for a, t in TARGETS.items():
         result = perform(state, Command(a, t))
@@ -144,5 +144,5 @@ def test_world_cli_routes_restart_and_no_model_calls(monkeypatch, capsys):
     monkeypatch.setattr(cli, 'Interpreter', lambda: pytest.fail('World mode invoked interpreter'))
     cli.main(['--world'])
     output = capsys.readouterr().out
-    assert 'No rescue signal was sent' in output
+    assert OUTCOMES['shelter'] in output
     assert output.count('Inventory: empty') >= 2

@@ -3,7 +3,7 @@ import json
 import httpx
 import pytest
 
-from observatory.world import WorldState, Command, perform, describe_world
+from observatory.world import WorldState, Command, OUTCOMES, perform, describe_world
 from observatory.world_narrative import WorldNarrator, validate, sentences
 from observatory import world_media, world_cli
 from observatory.media_fixtures import load_media
@@ -26,7 +26,7 @@ def test_factual_world_scene_fallback_matches_verified_state(tmp_path, case):
 @pytest.mark.parametrize('fault', [None, 'invented', 'schema', 'timeout', 'interrupt', 'recap'])
 def test_short_outcome_acceptance_and_failure(tmp_path, fault):
     state = perform(WorldState(), Command('inspect_desk', 'desk')).state
-    outcome = 'You discover a library key on the desk. It is not yet collected.'
+    outcome = OUTCOMES['inspect_desk']
     def respond(_):
         if fault == 'timeout': raise httpx.ReadTimeout('test')
         if fault == 'interrupt': raise KeyboardInterrupt
@@ -96,3 +96,8 @@ def test_world_cli_cancel_does_not_present_again(monkeypatch):
 def test_checks_are_not_semantic_proof():
     text = 'You pick up the library key.'
     assert not validate(text + ' Purple butterflies hover nearby.', sentences(text), 'outcome')
+
+
+@pytest.mark.parametrize('text', OUTCOMES.values())
+def test_authored_outcomes_fit_narration_contract(text):
+    assert validate(text, sentences(text), 'outcome') == []

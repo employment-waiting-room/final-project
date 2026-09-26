@@ -36,17 +36,17 @@ LABELS = {
     'signal_rescue': 'Send the rescue signal', 'shelter': 'Shelter until morning',
 }
 OUTCOMES = {
-    'inspect_desk': 'You discover a library key on the desk. It is not yet collected.',
-    'collect_key': 'You pick up the library key.',
-    'unlock_library': 'You unlock the library door. It remains closed.',
-    'read_manual': 'The manual explains: install the fuse, start the generator, align the beacon, then signal for rescue. Powered shelter is another option.',
-    'inspect_toolbox': 'You discover a spare fuse in the toolbox and close the lid again.',
-    'collect_fuse': 'You collect the spare fuse and close the toolbox.',
-    'install_fuse': 'You install the spare fuse in the socket. It is no longer in your inventory.',
-    'start_generator': 'You start the generator. Observatory power is restored.',
-    'align_beacon': 'You align the beacon using the manual procedure.',
-    'signal_rescue': 'The valley station receives your signal. Rescue arrives after the storm.',
-    'shelter': 'You shelter in the powered observatory and leave when the storm clears. No rescue signal was sent.',
+    'inspect_desk': 'Among the dusty books on the desk, you spot a key.',
+    'collect_key': 'You take the key and put it in your bag.',
+    'unlock_library': 'The lock clicks. A faint scent of old books drifts through the gap as the door opens slightly.',
+    'read_manual': 'The manual shows a generator that needs a working fuse and a beacon that must be aligned to reach the valley station. You study the alignment procedure. With power restored, the observatory can also provide shelter until morning.',
+    'inspect_toolbox': 'Inside the toolbox, you find a spare fuse.',
+    'collect_fuse': 'You shift tools out of the way and grab the spare fuse.',
+    'install_fuse': 'The spare fuse settles into the socket and a green light flickers on.',
+    'start_generator': 'The generator catches with a low rumble. Power returns to the observatory.',
+    'align_beacon': "Following the manual's instructions, you ease the beacon into alignment.",
+    'signal_rescue': 'The valley station receives your signal and rescue arrives after the storm.',
+    'shelter': 'You shelter in the powered observatory and leave when the storm clears.',
 }
 
 
@@ -163,23 +163,37 @@ def describe_world(state):
     if state.ending:
         return OUTCOMES['signal_rescue' if state.ending == 'rescued' else 'shelter']
     descriptions = {
-        'entrance_hall': 'A dusty desk stands beside the closed library door. A passage leads to the workshop.',
-        'library': 'Bookshelves line the room. An instruction manual rests on a reading stand. Stairs lead to the telescope chamber.',
-        'workshop': 'A closed toolbox rests on the workbench. A doorway leads to the generator room.',
-        'generator_room': 'The generator has a fuse socket and a start switch.',
-        'telescope_chamber': 'The telescope carries a beacon attachment. There is an alignment control, a signalling console and a shelter bench.',
+        'entrance_hall': 'Dust covers the desk beside the closed library door. A passage leads to the workshop.',
+        'library': 'Between the bookshelves, an open instruction manual rests on a reading stand. Stairs lead to the telescope chamber.',
+        'workshop': 'On the workbench sits a toolbox, its lid closed. A doorway leads to the generator room.',
+        'generator_room': 'Wall conduits run from the generator. A fuse socket and start switch sit on its casing.',
+        'telescope_chamber': 'Beneath the enclosed dome stands a telescope with a beacon attachment and alignment control. Nearby are a signalling console and a bench.',
     }
     text = f"You are in the {state.location.replace('_', ' ')}. " + descriptions[state.location]
     if state.location == 'entrance_hall':
-        text += ' The library door is ' + ('unlocked.' if 'library_unlocked' in f else 'locked.')
+        text += ' The library door is closed, but its lock has been released.' if 'library_unlocked' in f else ' The library door is held shut by its lock.'
         if 'desk_inspected' in f and 'library_key' not in state.inventory:
-            text += ' The discovered library key remains on the desk.'
+            text += ' A key lies on the desk.'
     if state.location == 'workshop' and 'toolbox_inspected' in f and 'spare_fuse' not in state.inventory and 'fuse_installed' not in f:
-        text += ' The discovered spare fuse remains inside the toolbox.'
+        text += ' There is a spare fuse inside the toolbox.'
     if state.location == 'generator_room':
-        text += ' The fuse is installed.' if 'fuse_installed' in f else ' The fuse socket is empty.'
-        text += ' The generator is running.' if 'power_on' in f else ' The generator is stopped.'
+        text += ' The replacement fuse sits snugly in its socket.' if 'fuse_installed' in f else ' The fuse socket sits empty in the casing.'
+        text += ' The generator rumbles steadily.' if 'power_on' in f else ' The generator stands silent.'
     if state.location == 'telescope_chamber':
-        text += ' The beacon is aligned.' if 'beacon_aligned' in f else ' The beacon is not aligned.'
-    text += ' Observatory power is on.' if 'power_on' in f else ' Diffuse daylight provides visibility; electrical power is off.'
+        text += ' The beacon holds the alignment described in the manual.' if 'beacon_aligned' in f else ' The beacon has yet to be aligned.'
+    daylight = {
+        'entrance_hall': 'Sunlight floods through the window, illuminating the room.',
+        'library': 'Light filters through the frosted glazing and falls across the open pages.',
+        'workshop': 'Daylight washes over the workbench and the toolbox lid.',
+        'generator_room': 'Pale light from the high glazing picks out the wall conduits.',
+        'telescope_chamber': 'Filtered daylight softens the outlines of the telescope beneath the dome.',
+    }
+    powered = {
+        'entrance_hall': 'Beyond the hall, the restored generator supplies power to the observatory.',
+        'library': 'The books lie in daylight, while the restored generator powers the observatory.',
+        'workshop': 'From the generator room comes the steady rumble of restored power.',
+        'generator_room': 'Power flows from the running machine to the rest of the observatory.',
+        'telescope_chamber': 'The restored generator supplies the beacon equipment with power.',
+    }
+    text += ' ' + (powered if 'power_on' in f else daylight)[state.location]
     return text

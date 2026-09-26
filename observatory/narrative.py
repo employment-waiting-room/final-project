@@ -10,6 +10,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .engine import GameState, allowed_actions, apply_action
 from .gameplay_io import post_chat, save_record
+from .world import OUTCOMES
 
 POLICY_VERSION = "hall-narrative-guards-v1.1"
 PROMPT_VERSION = "hall-narrative-v1"
@@ -22,11 +23,6 @@ about this action, but do not recap the room, weather, lighting or earlier actio
 Context is for consistency only. Do not invent events, items or people, open the
 door, move the player, suggest actions or perform another transition.
 """
-OUTCOMES = {
-    "inspect_desk": "You discover a library key on the dusty desk. It is not yet collected.",
-    "collect_key": "You pick up the library key.",
-    "unlock_library": "You unlock the library door. It remains closed.",
-}
 PROMPT = """Describe the verified entrance-hall state in second person, in 60-100 words.
 Return only JSON with a description string. Copy each required sentence exactly
 once as a complete sentence. Surround it with concise prose grounded only in the
@@ -58,7 +54,7 @@ def required_sentences(state):
     if "library_key" in state.inventory:
         sentences.append("You carry the library key.")
     elif state.desk_inspected:
-        sentences.append("The discovered library key remains on the desk, not yet collected.")
+        sentences.append("A key lies on the desk.")
         sentences.append("Your inventory is empty.")
     else:
         sentences.append("Your inventory is empty.")
@@ -72,7 +68,7 @@ def payload(state):
         raise ValueError("Inconsistent entrance-hall state")
     return {"required_sentences": required_sentences(state),
             "scene_facts": ["A dusty desk stands beside the library door.",
-                            "Diffuse daylight provides visibility independently of electrical power.",
+                            "Sunlight floods through the window, illuminating the room.",
                             "The storm makes the mountain path unsafe.",
                             "No electricity has been restored and no rescue signal has been sent."],
             "inventory": sorted(state.inventory)}

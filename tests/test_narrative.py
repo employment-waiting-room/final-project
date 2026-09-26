@@ -78,7 +78,7 @@ def test_errors_use_factual_fallback_without_retries(tmp_path, fault):
     with httpx.Client(transport=httpx.MockTransport(respond)) as client:
         scene = Narrator(client, tmp_path).render(state)
     assert len(calls) == 1 and scene.source == "fallback"
-    assert "not yet collected" in scene.description and "inventory is empty" in scene.description
+    assert "A key lies on the desk." in scene.description and "inventory is empty" in scene.description
     assert scene.suggestions == ("collect_key",)
     assert state == states()[1]
 

@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 
 from observatory.browser import Game, Input, create_app
 from observatory.world_intent import WorldIntent
-from observatory.world import TARGETS
+from observatory.world import TARGETS, OUTCOMES
 
 
 class Queue:
@@ -118,7 +118,7 @@ def test_text_published_before_media_and_speech_artifact(browser, tmp_path):
             return {'success': True, 'audio_path': str(audio)}
     game.speaker = Speech()
     post(client, 'choose', action='inspect_desk', target='desk')
-    assert 'discover' in game.text and game.busy
+    assert game.text == OUTCOMES['inspect_desk'] and game.busy
     queue.finish()
     assert client.get(game.audio).content == b'fake'
 
@@ -130,4 +130,4 @@ def test_media_error_does_not_undo_transition(browser):
     game.narrator = Narrator()
     post(client, 'choose', action='inspect_desk', target='desk')
     queue.finish()
-    assert game.state.revision == 1 and 'discover' in game.text and not game.busy
+    assert game.state.revision == 1 and game.text == OUTCOMES['inspect_desk'] and not game.busy
