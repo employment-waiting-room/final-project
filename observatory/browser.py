@@ -155,12 +155,9 @@ class Game:
     def request(self, operation, data):
         with self.lock:
             self.check(data)
-            if operation == 'restart':
-                self.reset()
-                self.started = True
-                self.schedule(describe_world(self.state), True)
-                return
-            if operation == 'start':
+            if operation in ('start', 'restart'):
+                if operation == 'restart':
+                    self.reset()
                 if not self.started:
                     self.started = True
                     self.schedule(describe_world(self.state), True)

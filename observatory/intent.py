@@ -3,15 +3,14 @@ import json
 import re
 import time
 from collections.abc import Callable
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
-from uuid import uuid4
 
 import httpx
 from pydantic import BaseModel, ConfigDict, model_validator
 
 from .engine import ACTION_LABELS, GameState, apply_action, describe, rejection_reason
+from .gameplay_io import post_chat, save_record
 
 TARGETS = {"inspect_desk": "desk", "collect_key": "library_key", "unlock_library": "library_door"}
 PROMPT = """Interpret one player action in a small adventure. Return only the required JSON.
@@ -56,12 +55,7 @@ class Interpreter:
         self.log_dir = Path(log_dir) if log_dir else Path(__file__).resolve().parents[1] / "generated/intent-logs"
 
     def save_record(self, record):
-        try:
-            self.log_dir.mkdir(parents=True, exist_ok=True)
-            name = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + f"-{uuid4().hex}.json"
-            (self.log_dir / name).write_text(json.dumps(record, indent=2), encoding="utf-8")
-        except OSError:
-            print("Warning: could not save the intent log.")
+        save_record(self.log_dir, record, 'Warning: could not save the intent log.')
 
     def interpret(self, text: str, state: GameState) -> Intent:
         if not text.strip() or len(text) > 500:
@@ -86,11 +80,7 @@ class Interpreter:
         record = {"prompt_version": "intent-v1", "request": request}
         start = time.perf_counter()
         try:
-            if self.client is None:
-                with httpx.Client(timeout=30, trust_env=False) as client:
-                    response = client.post("http://127.0.0.1:11434/api/chat", json=request)
-            else:
-                response = self.client.post("http://127.0.0.1:11434/api/chat", json=request)
+            response = post_chat(request, self.client)
             record["raw_response"] = response.text
             response.raise_for_status()
             body = response.json()

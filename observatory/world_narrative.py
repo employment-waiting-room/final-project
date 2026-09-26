@@ -2,12 +2,9 @@
 import json
 import re
 import time
-from datetime import datetime, timezone
 from pathlib import Path
-from uuid import uuid4
 
-import httpx
-
+from .gameplay_io import post_chat, save_record
 from .narrative import GeneratedText, Scene
 from .world import choices, describe_world, label
 
@@ -61,11 +58,7 @@ class WorldNarrator:
         text = fallback
         started = time.perf_counter()
         try:
-            if self.client is None:
-                with httpx.Client(timeout=30, trust_env=False) as client:
-                    response = client.post('http://127.0.0.1:11434/api/chat', json=request)
-            else:
-                response = self.client.post('http://127.0.0.1:11434/api/chat', json=request)
+            response = post_chat(request, self.client)
             record['raw_response'] = response.text
             response.raise_for_status()
             body = response.json()
@@ -80,10 +73,5 @@ class WorldNarrator:
             record['error'] = f'{type(exc).__name__}: {exc}'
             record['validation_reasons'] = ['generation_failure']
         record.update(accepted_text=text, seconds=time.perf_counter() - started)
-        try:
-            self.log_dir.mkdir(parents=True, exist_ok=True)
-            path = self.log_dir / (datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ') + '-' + uuid4().hex + '.json')
-            path.write_text(json.dumps(record, indent=2), encoding='utf-8')
-        except OSError:
-            print('Warning: could not save narration log.')
+        save_record(self.log_dir, record, 'Warning: could not save narration log.')
         return Scene(text, tuple(label(c) for c in choices(state)), state.location, record['source'], tuple(record['validation_reasons']))

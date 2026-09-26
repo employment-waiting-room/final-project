@@ -181,7 +181,6 @@
       sending = false,
       imageUrl = "",
       audioUrl = "",
-      poll,
       choiceKey = "",
       proposalId = null;
     const $ = (id) => document.getElementById(id);
@@ -305,7 +304,7 @@
     (async () => {
       await refresh();
       await act("start");
-      poll = setInterval(refresh, 700);
+      setInterval(refresh, 700);
     })();
   </script>
 </html>

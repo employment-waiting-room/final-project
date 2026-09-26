@@ -27,11 +27,14 @@ RULES = {
     'shelter': ('telescope_chamber', ('power_on',), (), None),
 }
 FLAGS = frozenset(rule[3] for rule in RULES.values() if rule[3])
-LABELS = dict(zip(TARGETS, (
-    'Look around', 'Inspect the desk', 'Collect the library key', 'Unlock the library door',
-    'Read the instruction manual', 'Inspect the toolbox', 'Collect the spare fuse',
-    'Install the spare fuse', 'Start the generator', 'Align the beacon',
-    'Send the rescue signal', 'Shelter until morning')))
+LABELS = {
+    'look_around': 'Look around', 'inspect_desk': 'Inspect the desk',
+    'collect_key': 'Collect the library key', 'unlock_library': 'Unlock the library door',
+    'read_manual': 'Read the instruction manual', 'inspect_toolbox': 'Inspect the toolbox',
+    'collect_fuse': 'Collect the spare fuse', 'install_fuse': 'Install the spare fuse',
+    'start_generator': 'Start the generator', 'align_beacon': 'Align the beacon',
+    'signal_rescue': 'Send the rescue signal', 'shelter': 'Shelter until morning',
+}
 OUTCOMES = {
     'inspect_desk': 'You discover a library key on the desk. It is not yet collected.',
     'collect_key': 'You pick up the library key.',

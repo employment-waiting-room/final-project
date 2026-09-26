@@ -30,22 +30,16 @@ def main(narrate=False, illustrate=False, speak=False):
             state = WorldState()
             presentation.present(state, describe_world(state), scene_mode=True)
             continue
+        previous = state
         if answer and not answer.isdecimal():
             interpreter = interpreter or WorldInterpreter()
             print('Interpreting action...')
-            previous = state
             result = handle_world_text(state, answer, interpreter, confirm)
-            state = result.state
-            if result.status in ('changed', 'observed'):
-                presentation.present(state, result.message, scene_mode=result.status == 'observed' or previous.location != state.location)
-            else:
-                print(result.message)
-            continue
-        if not answer or len(answer) > 6 or not 1 <= int(answer) <= len(commands):
+        elif not answer or len(answer) > 6 or not 1 <= int(answer) <= len(commands):
             print('Choose a displayed number or type an action.')
             continue
-        previous = state
-        result = perform(state, commands[int(answer) - 1], session_id=state.session_id, revision=state.revision)
+        else:
+            result = perform(state, commands[int(answer) - 1], session_id=state.session_id, revision=state.revision)
         state = result.state
         if result.status in ('changed', 'observed'):
             presentation.present(state, result.message, scene_mode=result.status == 'observed' or previous.location != state.location)

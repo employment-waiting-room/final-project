@@ -3,14 +3,13 @@ import json
 import re
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
-from uuid import uuid4
 
 import httpx
 from pydantic import BaseModel, ConfigDict, Field
 
 from .engine import GameState, allowed_actions, apply_action
+from .gameplay_io import post_chat, save_record
 
 POLICY_VERSION = "hall-narrative-guards-v1.1"
 PROMPT_VERSION = "hall-narrative-v1"
@@ -155,11 +154,7 @@ class Narrator:
         started = time.perf_counter()
         text = fallback
         try:
-            if self.client is None:
-                with httpx.Client(timeout=30, trust_env=False) as client:
-                    response = client.post("http://127.0.0.1:11434/api/chat", json=request)
-            else:
-                response = self.client.post("http://127.0.0.1:11434/api/chat", json=request)
+            response = post_chat(request, self.client)
             record["raw_response"] = response.text
             response.raise_for_status()
             body = response.json()
@@ -179,10 +174,5 @@ class Narrator:
         record.update(wall_seconds=time.perf_counter() - started, accepted_text=text)
         scene = Scene(text, allowed_actions(state), state.location, record["source"], tuple(record["validation_reasons"]))
         record.update(suggestions=list(scene.suggestions), visual_brief_id=scene.visual_brief_id)
-        try:
-            self.log_dir.mkdir(parents=True, exist_ok=True)
-            name = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "-" + uuid4().hex + ".json"
-            (self.log_dir / name).write_text(json.dumps(record, indent=2), encoding="utf-8")
-        except OSError:
-            print("Warning: could not save the narrative log.")
+        save_record(self.log_dir, record, 'Warning: could not save the narrative log.')
         return scene

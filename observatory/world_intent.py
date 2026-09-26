@@ -2,15 +2,14 @@
 import json
 import re
 import time
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
-from uuid import uuid4
 
 import httpx
 from pydantic import BaseModel, ConfigDict, model_validator
 
 from .evaluate_intent import PROMPTS
+from .gameplay_io import post_chat, save_record
 from .world import Command, Result, ROOMS, TARGETS, describe_world, label, perform
 
 GAMEPLAY_PROMPT_VERSION = 'world-gameplay-intent-v2'
@@ -58,12 +57,7 @@ class WorldInterpreter:
         self.log_dir = Path(log_dir) if log_dir else Path(__file__).resolve().parents[1] / 'generated/world-intent-logs'
 
     def save(self, record):
-        try:
-            self.log_dir.mkdir(parents=True, exist_ok=True)
-            path = self.log_dir / (datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ') + '-' + uuid4().hex + '.json')
-            path.write_text(json.dumps(record, indent=2), encoding='utf-8')
-        except OSError:
-            print('Warning: could not save typed-action log.')
+        save_record(self.log_dir, record, 'Warning: could not save typed-action log.')
 
     def interpret(self, text, state):
         # Gameplay revision based on V1-JSON; frozen evaluation stays unchanged.
@@ -90,11 +84,7 @@ class WorldInterpreter:
                                'scene': describe_world(state), 'inventory': sorted(state.inventory),
                                'known_flags': sorted(state.flags), 'player_request': text})}]}
                 record.update(source='model', request=request)
-                if self.client is None:
-                    with httpx.Client(timeout=30, trust_env=False) as client:
-                        response = client.post('http://127.0.0.1:11434/api/chat', json=request)
-                else:
-                    response = self.client.post('http://127.0.0.1:11434/api/chat', json=request)
+                response = post_chat(request, self.client)
                 record['raw_response'] = response.text
                 response.raise_for_status()
                 body = response.json()
