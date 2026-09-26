@@ -102,3 +102,64 @@ def test_full_world_terminal_typed_cancel_then_confirm(monkeypatch, capsys):
     assert 'Action cancelled; state unchanged.' in output
     assert 'You are in the workshop.' in output
     assert [record['resulting_revision'] for record in interpreter.logs] == [0, 1]
+
+
+@pytest.mark.parametrize('reply', ['yes', 'no'])
+@pytest.mark.parametrize('text,action,target,in_library', [
+    ('check the desk', 'inspect_desk', 'desk', False),
+    ('go to the telescope chamber', 'move', 'telescope_chamber', True),
+    ('go to telescope room', 'move', 'telescope_chamber', True),
+    ('go to the telescope chamber', 'move', 'telescope_chamber', False),
+    ('look around the room', 'look_around', 'current_room', False),
+])
+def test_reported_wording_response_handling(tmp_path, text, action, target, in_library, reply):
+    """Simulated predictions test plumbing and safety, not model accuracy."""
+    state = WorldState()
+    if in_library:
+        for command in (Command('inspect_desk', 'desk'), Command('collect_key', 'library_key'),
+                        Command('unlock_library', 'library_door'), Command('move', 'library')):
+            state = perform(state, command).state
+    original = state
+    proposals = []
+
+    def respond(request):
+        payload = json.loads(request.content)
+        assert json.loads(payload['messages'][1]['content'])['player_request'] == text
+        return httpx.Response(200, json={'done': True, 'message': {'content': json.dumps(
+            {'status': 'action', 'action': action, 'target': target})}})
+
+    def confirm(proposal):
+        proposals.append(proposal)
+        assert state is original
+        return reply
+
+    with httpx.Client(transport=httpx.MockTransport(respond)) as client:
+        result = handle_world_text(state, text, WorldInterpreter(client, tmp_path), confirm)
+    expected = perform(state, Command(action, target))
+    if expected.status == 'changed':
+        assert len(proposals) == 1 and target in proposals[0]
+        assert result.status == ('changed' if reply == 'yes' else 'cancelled')
+        assert result.state == (expected.state if reply == 'yes' else original)
+        assert result.state.revision == original.revision + (reply == 'yes')
+    else:
+        assert not proposals
+        assert result.status == expected.status
+        assert result.state is original
+    records = [json.loads(path.read_text()) for path in tmp_path.glob('*.json')]
+    assert any(r.get('source') == 'model' and r.get('input') == text for r in records)
+
+
+@pytest.mark.parametrize('action,target', [
+    ('look_around/current_room', 'entrance hall'),
+    ('move', 'telescope chamber'),
+    ('inspect_desk', 'library_door'),
+])
+def test_reported_malformed_predictions_never_reach_confirmation(tmp_path, action, target):
+    def respond(_):
+        return httpx.Response(200, json={'done': True, 'message': {'content': json.dumps(
+            {'status': 'action', 'action': action, 'target': target})}})
+    state = WorldState()
+    with httpx.Client(transport=httpx.MockTransport(respond)) as client:
+        result = handle_world_text(state, 'check the desk', WorldInterpreter(client, tmp_path),
+                                   lambda _: pytest.fail('Invalid prediction requested confirmation'))
+    assert result.status == 'error' and result.state is state
