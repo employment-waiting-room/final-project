@@ -38,7 +38,7 @@ LABELS = {
 OUTCOMES = {
     'inspect_desk': 'Among the dusty books on the desk, you spot a key.',
     'collect_key': 'You take the key and put it in your bag.',
-    'unlock_library': 'The lock clicks. A faint scent of old books drifts through the gap as the door opens slightly.',
+    'unlock_library': 'The lock clicks. A faint scent of old books drifts through the gap beneath the library door.',
     'read_manual': 'The manual shows a generator that needs a working fuse and a beacon that must be aligned to reach the valley station. You study the alignment procedure. With power restored, the observatory can also provide shelter until morning.',
     'inspect_toolbox': 'Inside the toolbox, you find a spare fuse.',
     'collect_fuse': 'You shift tools out of the way and grab the spare fuse.',
@@ -182,16 +182,16 @@ def describe_world(state):
     if state.location == 'telescope_chamber':
         text += ' The beacon holds the alignment described in the manual.' if 'beacon_aligned' in f else ' The beacon has yet to be aligned.'
     daylight = {
-        'entrance_hall': 'Sunlight floods through the window, illuminating the room.',
-        'library': 'Light filters through the frosted glazing and falls across the open pages.',
-        'workshop': 'Daylight washes over the workbench reflecting off the metal surfaces.',
+        'entrance_hall': 'Grey daylight filters through the window, illuminating the room.',
+        'library': 'Grey light filters through the frosted glazing and falls across the open pages.',
+        'workshop': 'Muted daylight washes over the workbench, reflecting off the metal surfaces.',
         'generator_room': 'Pale light from the high glazing picks out the wall conduits.',
         'telescope_chamber': 'Filtered daylight softens the outlines of the telescope beneath the dome.',
     }
     powered = {
         'entrance_hall': 'Beyond the hall, the restored generator supplies power to the observatory.',
-        'library': 'Light filters through the frosted glazing and falls across the open pages.',
-        'workshop': 'From the generator room comes the steady rumble as the generator sputters to life.',
+        'library': 'Grey light filters through the frosted glazing and falls across the open pages.',
+        'workshop': 'From the generator room comes the steady rumble as the generator churns.',
         'generator_room': 'Power flows from the running machine to the rest of the observatory.',
         'telescope_chamber': 'The restored generator supplies the beacon equipment with power.',
     }

@@ -68,7 +68,7 @@ def payload(state):
         raise ValueError("Inconsistent entrance-hall state")
     return {"required_sentences": required_sentences(state),
             "scene_facts": ["A dusty desk stands beside the library door.",
-                            "Sunlight floods through the window, illuminating the room.",
+                            "Grey daylight filters through the window, illuminating the room.",
                             "The storm makes the mountain path unsafe.",
                             "No electricity has been restored and no rescue signal has been sent."],
             "inventory": sorted(state.inventory)}
