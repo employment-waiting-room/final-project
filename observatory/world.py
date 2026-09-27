@@ -165,7 +165,7 @@ def describe_world(state):
     descriptions = {
         'entrance_hall': 'Dust covers the desk beside the closed library door. A passage leads to the workshop.',
         'library': 'Between the bookshelves, an open instruction manual rests on a reading stand. Stairs lead to the telescope chamber.',
-        'workshop': 'On the workbench sits a toolbox, its lid closed. A doorway leads to the generator room.',
+        'workshop': 'On the workbench sits a toolbox. A doorway leads to the generator room.',
         'generator_room': 'Wall conduits run from the generator. A fuse socket and start switch sit on its casing.',
         'telescope_chamber': 'Beneath the enclosed dome stands a telescope with a beacon attachment and alignment control. Nearby are a signalling console and a bench.',
     }
@@ -184,14 +184,14 @@ def describe_world(state):
     daylight = {
         'entrance_hall': 'Sunlight floods through the window, illuminating the room.',
         'library': 'Light filters through the frosted glazing and falls across the open pages.',
-        'workshop': 'Daylight washes over the workbench and the toolbox lid.',
+        'workshop': 'Daylight washes over the workbench reflecting off the metal surfaces.',
         'generator_room': 'Pale light from the high glazing picks out the wall conduits.',
         'telescope_chamber': 'Filtered daylight softens the outlines of the telescope beneath the dome.',
     }
     powered = {
         'entrance_hall': 'Beyond the hall, the restored generator supplies power to the observatory.',
-        'library': 'The books lie in daylight, while the restored generator powers the observatory.',
-        'workshop': 'From the generator room comes the steady rumble of restored power.',
+        'library': 'Light filters through the frosted glazing and falls across the open pages.',
+        'workshop': 'From the generator room comes the steady rumble as the generator sputters to life.',
         'generator_room': 'Power flows from the running machine to the rest of the observatory.',
         'telescope_chamber': 'The restored generator supplies the beacon equipment with power.',
     }
