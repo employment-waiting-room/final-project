@@ -1,4 +1,4 @@
-"""Development fixture contract, separate from the unfinished gameplay engine.
+"""Development fixture contract, separate from the gameplay engine.
 
 Run python -m observatory.fixtures to validate the saved dataset without inference.
 The reference transitions materialise reachable states; they are not a model judge

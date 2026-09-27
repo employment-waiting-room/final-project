@@ -121,7 +121,7 @@ class Game:
 
     def apply(self, command):
         before = self.state
-        result = perform(before, command, session_id=before.session_id, revision=before.revision)
+        result = perform(before, command)
         self.state = result.state
         self.message = result.message
         if result.status in ('changed', 'observed'):

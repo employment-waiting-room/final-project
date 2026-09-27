@@ -1,4 +1,4 @@
-"""Optional hall illustration presentation; no engine state or transitions."""
+"""Optional room illustration presentation; no engine state or transitions."""
 from datetime import datetime, timezone
 import os
 import subprocess
@@ -26,7 +26,7 @@ class Illustrator:
         self.path = None
 
     def show(self, location):
-        """Attempt once per hall session; reuse static art without reopening it."""
+        """Attempt once per adapter instance; reuse static art without reopening it."""
         if location != self.location:
             print('No illustration brief available; continuing with text.')
             return None

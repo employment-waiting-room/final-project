@@ -64,17 +64,26 @@ class WorldState:
         if any(type(v) is not frozenset for v in (self.inventory, self.flags, self.visited_rooms)):
             raise ValueError('State collections must be immutable frozensets')
         f, inv = self.flags, self.inventory
-        if self.location not in ROOMS or not self.visited_rooms <= set(ROOMS) or self.location not in self.visited_rooms:
+        invalid_room_history = (
+            self.location not in ROOMS
+            or not self.visited_rooms <= set(ROOMS)
+            or self.location not in self.visited_rooms
+        )
+        if invalid_room_history:
             raise ValueError('Invalid room history')
         if not f <= FLAGS or not inv <= {'library_key', 'spare_fuse'}:
             raise ValueError('Unknown flag or item')
-        if type(self.revision) is not int or self.revision < 0 or not isinstance(self.session_id, str) or not self.session_id:
+        invalid_revision = type(self.revision) is not int or self.revision < 0
+        invalid_session = not isinstance(self.session_id, str) or not self.session_id
+        if invalid_revision or invalid_session:
             raise ValueError('Invalid revision/session')
         requirements = {'library_unlocked': {'desk_inspected'}, 'fuse_installed': {'toolbox_inspected'},
                         'power_on': {'fuse_installed'}, 'beacon_aligned': {'power_on', 'manual_read'}}
         if any(flag in f and not required <= f for flag, required in requirements.items()):
             raise ValueError('Missing prerequisite flags')
-        if ('library_key' in inv and 'desk_inspected' not in f) or ('library_unlocked' in f and 'library_key' not in inv):
+        key_without_discovery = 'library_key' in inv and 'desk_inspected' not in f
+        unlocked_without_key = 'library_unlocked' in f and 'library_key' not in inv
+        if key_without_discovery or unlocked_without_key:
             raise ValueError('Invalid key state')
         if 'spare_fuse' in inv and ('toolbox_inspected' not in f or 'fuse_installed' in f):
             raise ValueError('Invalid fuse state')
@@ -103,10 +112,18 @@ def perform(state, command, *, session_id=None, revision=None):
     """Optional request identity prevents applying stale/replayed UI requests."""
     def unchanged(status, message):
         return Result(state, status, message)
-    if (session_id is not None and session_id != state.session_id) or (revision is not None and revision != state.revision):
+    wrong_session = session_id is not None and session_id != state.session_id
+    wrong_revision = revision is not None and revision != state.revision
+    if wrong_session or wrong_revision:
         return unchanged('rejected', 'This request is out of date. Choose an action again.')
     a, t = command.action, command.target
-    if not isinstance(a, str) or not isinstance(t, str) or (a == 'move' and t not in ROOMS) or (a != 'move' and (a not in TARGETS or TARGETS[a] != t)):
+    if not isinstance(a, str) or not isinstance(t, str):
+        return unchanged('rejected', 'That action and target are not supported.')
+    if a == 'move':
+        supported_pair = t in ROOMS
+    else:
+        supported_pair = a in TARGETS and TARGETS[a] == t
+    if not supported_pair:
         return unchanged('rejected', 'That action and target are not supported.')
     if state.ending:
         return unchanged('rejected', 'The adventure has ended. Restart to play again.')
@@ -116,16 +133,23 @@ def perform(state, command, *, session_id=None, revision=None):
         edge = frozenset((state.location, t))
         if edge not in EDGES or t == state.location:
             return unchanged('rejected', 'There is no passage to that room from here.')
-        if edge == frozenset(('entrance_hall', 'library')) and 'library_unlocked' not in state.flags:
+        library_passage = edge == frozenset(('entrance_hall', 'library'))
+        if library_passage and 'library_unlocked' not in state.flags:
             return unchanged('rejected', 'The library door is locked.')
         after = replace(state, location=t, visited_rooms=state.visited_rooms | {t}, revision=state.revision + 1)
         return Result(after, 'changed', describe_world(after))
     room, flags, items, effect = RULES[a]
     if state.location != room:
         return unchanged('rejected', 'You cannot do that from this location.')
-    if effect in state.flags or (a == 'collect_key' and 'library_key' in state.inventory) or (a == 'collect_fuse' and ('spare_fuse' in state.inventory or 'fuse_installed' in state.flags)):
+    key_collected = a == 'collect_key' and 'library_key' in state.inventory
+    fuse_collected = a == 'collect_fuse' and (
+        'spare_fuse' in state.inventory or 'fuse_installed' in state.flags
+    )
+    if effect in state.flags or key_collected or fuse_collected:
         return unchanged('unchanged', 'Already completed. ' + describe_world(state))
-    if not set(flags) <= state.flags or not set(items) <= state.inventory:
+    missing_flags = not set(flags) <= state.flags
+    missing_items = not set(items) <= state.inventory
+    if missing_flags or missing_items:
         return unchanged('rejected', {
             'collect_key': 'There is no discovered key to collect.',
             'unlock_library': 'You do not have the key needed to unlock this door.',
@@ -137,9 +161,12 @@ def perform(state, command, *, session_id=None, revision=None):
             'shelter': 'Safe shelter requires restored power.',
         }.get(a, 'The prerequisites are not met.'))
     inv = state.inventory
-    if a == 'collect_key': inv = inv | {'library_key'}
-    if a == 'collect_fuse': inv = inv | {'spare_fuse'}
-    if a == 'install_fuse': inv = inv - {'spare_fuse'}
+    if a == 'collect_key':
+        inv = inv | {'library_key'}
+    if a == 'collect_fuse':
+        inv = inv | {'spare_fuse'}
+    if a == 'install_fuse':
+        inv = inv - {'spare_fuse'}
     ending = {'signal_rescue': 'rescued', 'shelter': 'sheltered'}.get(a)
     after = replace(state, inventory=inv, flags=state.flags | ({effect} if effect else set()),
                     ending=ending, revision=state.revision + 1)
