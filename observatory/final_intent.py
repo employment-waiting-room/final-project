@@ -15,7 +15,7 @@ from .held_out import load_reserved, RESERVED, MANIFEST
 from .evaluate_intent import evaluate_case, summarise, PROMPTS
 
 DEFAULT_FREEZE = ROOT / 'evaluation/final_intent_freeze.json'
-PROTOCOL = ROOT / 'evaluation/final_intent_protocol.md'
+PROTOCOL = ROOT / 'evaluation/final_intent_protocol.txt'
 
 
 def digest(path):

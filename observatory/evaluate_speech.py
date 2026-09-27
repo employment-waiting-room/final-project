@@ -70,12 +70,12 @@ def run(candidates, output, limit=10, repetitions=2, timeout=300, runner=subproc
             for path in sorted((ROOT / directory).rglob('*')):
                 if path.is_file() and not path.name.endswith('.part'):
                     artifacts[str(path.relative_to(ROOT))] = digest(path)
-    for name, source in [('dataset.json', MEDIA_DATA), ('protocol.md', ROOT / 'evaluation/media_protocol.md'),
+    for name, source in [('dataset.json', MEDIA_DATA), ('protocol.md', ROOT / 'evaluation/media_protocol.txt'),
                          ('worker.py', ROOT / 'scripts/speech_worker.py')]:
         (folder / name).write_bytes(source.read_bytes())
     manifest = {'version': 'speech-development-v1', 'status': 'running', 'dataset_sha256': digest(MEDIA_DATA),
                 'artifacts_sha256': artifacts, 'worker_sha256': digest(ROOT / 'scripts/speech_worker.py'),
-                'protocol_sha256': digest(ROOT / 'evaluation/media_protocol.md'), 'schedule': [],
+                'protocol_sha256': digest(ROOT / 'evaluation/media_protocol.txt'), 'schedule': [],
                 'timeout': timeout, 'resources': None, 'timing_note': 'Fresh process per attempt. Load includes imports/G2P. Synthesis includes audio encoding; no warm latency claim.'}
     reviews = []
     for repetition in range(repetitions):

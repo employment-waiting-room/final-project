@@ -1,2 +1,5 @@
 # Preserve the exact bytes recorded in the held-out reservation SHA-256.
 /evaluation/held_out_intent.json -text
+# Protocols are hashed into experiment manifests; preserve their exact bytes.
+/evaluation/media_protocol.txt -text
+/evaluation/final_intent_protocol.txt -text

@@ -21,7 +21,7 @@ def workspace(tmp_path, monkeypatch):
         path = tmp_path / env / 'Scripts/python.exe'
         path.parent.mkdir(parents=True)
         path.write_bytes(b'fake')
-    for filename in ['evaluation/media_protocol.md', 'scripts/speech_worker.py']:
+    for filename in ['evaluation/media_protocol.txt', 'scripts/speech_worker.py']:
         path = tmp_path / filename
         path.parent.mkdir(exist_ok=True)
         path.write_text('test snapshot')

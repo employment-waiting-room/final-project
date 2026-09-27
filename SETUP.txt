@@ -1,0 +1,158 @@
+THE LAST OBSERVATORY — WINDOWS SETUP AND RUN GUIDE
+
+Run commands in PowerShell from the final-project directory, not its parent.
+Example for the developer machine:
+  cd C:\Users\PC\Desktop\Github\EmploymentWaitingRoom\final-project
+On another computer, substitute your checkout's final-project path.
+
+1. PYTHON ENVIRONMENT
+
+Install Python 3.11 with the Windows Python launcher available, then:
+  py -3.11 -m venv .venv
+  .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+  .\.venv\Scripts\python.exe -m pip check
+  .\.venv\Scripts\python.exe -m pytest -q
+
+Installation requires internet access. Tests use fake model responses and do
+not require model downloads, Ollama, image generation or speech synthesis.
+requirements.txt pins the main environment; requirements.in lists direct
+dependencies. Do not activate environments unless you prefer to: the explicit
+Python paths avoid PowerShell activation-policy problems.
+
+2. RUN WITHOUT GENERATED MEDIA
+
+  .\.venv\Scripts\python.exe -m observatory.browser --no-media
+
+Open http://127.0.0.1:8000. Reveal "Show suggested actions" to play using
+model-free buttons. Suggestions are hidden by default. Typed requests still
+need Ollama and Qwen, even with --no-media. This mode is a functional fallback,
+not the project's complete three-model demonstration.
+
+For a terminal alternative:
+  .\.venv\Scripts\python.exe -m observatory --world
+Numbered choices are model-free; typed requests use Ollama.
+The command without --world runs the older entrance-hall prototype only.
+
+3. SELECTED MODEL ASSETS — PREPARE BEFORE THE FULL DEMONSTRATION
+
+Do not install every comparison candidate just to run gameplay. The selected
+models are Qwen3:4b, SDXL Turbo and Kokoro-82M with voice af_heart.
+Model/runtime binaries are intentionally absent from Git. Obtain them from
+their publishers and retain their licences. The steps below are instructions
+for user-managed preparation, not downloads performed by the application.
+
+TEXT: Install Ollama for Windows and obtain qwen3:4b if not already installed:
+  ollama pull qwen3:4b
+  ollama list
+Keep the Ollama desktop service running. If it is not running, start it with:
+  ollama serve
+Do not start a second server if the desktop service already owns port 11434.
+Gameplay calls http://127.0.0.1:11434/api/chat. Qwen settings: thinking off,
+4096 context, seed 42; intent temperature 0, narration temperature 0.3.
+The historical evaluated Qwen digest began 359d7dd4bcda (Ollama 0.34.3).
+A tag download may resolve to a different artifact; record the installed
+identity and do not claim a new installation reproduces that exact evaluation.
+
+IMAGES: Prepare stable-diffusion.cpp Windows Vulkan x64 release
+master-849-d04e895, archive sd-master-d04e895-bin-win-vulkan-x64.zip.
+Publisher: https://github.com/leejet/stable-diffusion.cpp/releases
+Archive SHA256:
+  5a75237c5c6a7253b1079b03f6ec0fe1358393bf879f486887863ac31dea978e
+Extract the full archive, including its DLLs, so the executable is at:
+  tools\stable-diffusion\d04e895\sd-cli.exe
+The application uses this exact path. Keep an up-to-date Vulkan-capable GPU
+driver. The tested machine had a Radeon RX 7800 XT, Ryzen 7 9700X and about
+16 GB system RAM; this is a tested configuration, not a measured minimum.
+
+Place sd_xl_turbo_1.0_fp16.safetensors at:
+  models\sd_xl_turbo_1.0_fp16.safetensors
+Pinned publisher artifact:
+https://huggingface.co/stabilityai/sdxl-turbo/resolve/71153311d3dbb46851df1931d3ca6e939de83304/sd_xl_turbo_1.0_fp16.safetensors
+Size: 6,938,081,905 bytes. SHA256:
+  e869ac7d6942cb327d68d5ed83a40447aadf20e0c3358d98b2cc9e270db0da26
+Verify downloaded files with:
+  Get-FileHash -Algorithm SHA256 -LiteralPath models\sd_xl_turbo_1.0_fp16.safetensors
+Retain the licence for the pinned revision. Gameplay uses 512x512, four steps,
+CFG 1, Euler, sgm_uniform, seed 42. The old download_image_model.py was an
+experimental range downloader, not the verified acquisition route.
+
+SPEECH: Prepare the Kokoro environment separately from the main environment.
+Preview its commands first (no installation):
+  .\.venv\Scripts\python.exe -m scripts.setup_speech_runtimes --profile kokoro
+When ready to install its packages:
+  .\.venv\Scripts\python.exe -m scripts.setup_speech_runtimes --profile kokoro --install
+This creates .venv-speech-kokoro, checks imports and saves resolved package
+versions under generated/speech-runtime-setup. Direct pins include Kokoro
+0.9.4, misaki 0.9.4 and CPU torch/torchaudio 2.8.0. Some transitive versions
+are resolved at installation; preserve the generated freeze for exact replay.
+English processing requires the supplied spaCy language package and a working
+phonemiser fallback. The worker fails explicitly if either is unavailable.
+
+Required local Kokoro files:
+  models\speech\kokoro\config.json
+  models\speech\kokoro\kokoro-v1_0.pth
+  models\speech\kokoro\voices\af_heart.pt
+Source: hexgrad/Kokoro-82M revision f3ff3571791e39611d31c381e3a41a3af07b4987.
+evaluation/speech_downloads.json contains the exact URLs, destinations,
+sizes and verification identities. To acquire ONLY Kokoro files, run this
+explicit download command from the project root when authorised:
+
+@'
+import json
+from scripts.download_speech_models import MANIFEST, DESTINATION, download
+manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+for item in manifest["files"]:
+    if item["destination"].startswith("kokoro/"):
+        print(item["destination"], download(item, DESTINATION))
+'@ | .\.venv\Scripts\python.exe -
+
+Keep the closing '@ at the start of its PowerShell line when pasting.
+This uses curl.exe and downloads/verifies Kokoro assets and provenance only.
+The existing --download entry point downloads ALL five-candidate speech
+comparison assets, so it is unnecessary for gameplay-only setup.
+Kokoro runs on CPU with af_heart, American English, speed 1, 24 kHz PCM16.
+
+4. RUN THE COMPLETE APPLICATION
+
+With all assets installed and Ollama running:
+  .\.venv\Scripts\python.exe -m observatory.browser
+Open http://127.0.0.1:8000. Stop the server with Ctrl+C.
+Alternative port:
+  .\.venv\Scripts\python.exe -m observatory.browser --port 8001
+Full terminal media mode:
+  .\.venv\Scripts\python.exe -m observatory --world --narrate --illustrate --speak
+
+Typed state changes require explicit confirmation. Cancellation preserves
+state. Audio uses the browser's native controls and does not autoplay.
+Browser tabs share one single-player state. Restart the Python server after
+editing code; refreshing the page alone does not reload Python source.
+
+Missing Ollama produces a typed-interpretation error; suggestions still work.
+Narrative failures use factual text. Missing image/speech assets leave text
+gameplay usable. These fallbacks do not count as successful model generation.
+Media subprocesses have 120-second timeouts; gameplay text requests use 30
+seconds. Persistent speech reuse is keyed by exact text and configuration;
+room images are reused within the session. Do not delete caches to test this.
+
+5. REQUIRED SOURCE AND SUBMISSION FILES
+
+Keep observatory/ (including HTML and world_image_briefs.json), scripts/,
+requirements.in, requirements.txt, tests/ and evaluation/ data/manifests.
+Gameplay imports some evaluation utilities, so removing evaluation modules
+or their supporting source is unsafe. The tracked .txt protocol copies are
+required by evaluation runners and offline tests; they preserve the original
+protocol bytes. Generated run artifacts may still call their copy protocol.md.
+Do not rerun the reserved final intent release: its saved freeze is historical
+and intentionally differs from the current source.
+
+SETUP.txt is repository-visible. SETUP.md, project plans, reports, review CSVs,
+models, environments and generated evidence stay ignored as requested. Package
+selected evaluation evidence separately for assessors; do not assume it will
+arrive with a clone. No model binaries, credentials or personal reports belong
+in the source repository.
+
+VERIFICATION LIMITS
+Setup commands and paths were checked against local code and installed assets.
+Offline tests and a source-only copy check use the existing Python environment.
+No clean-machine dependency installation, model download, new inference run or
+independent hardware compatibility test was performed during this setup audit.

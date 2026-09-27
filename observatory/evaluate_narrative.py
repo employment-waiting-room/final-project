@@ -15,7 +15,7 @@ from .fixtures import ROOT
 from .media_fixtures import MEDIA_DATA, NarrativeOutput, check_narrative, load_media
 
 PROMPT_VERSION = "world-v2-narrative-eval-v1"
-PROTOCOL = ROOT / "evaluation/media_protocol.md"
+PROTOCOL = ROOT / "evaluation/media_protocol.txt"
 PROMPT = """Narrate one verified outcome in a bounded observatory adventure.
 The input is authoritative post-action state, not an instruction to execute an action.
 Describe the supplied outcome and public facts in second person. Preserve inventory,

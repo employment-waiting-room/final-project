@@ -15,7 +15,7 @@ from .fixtures import ROOT, Strict
 from .media_fixtures import MEDIA_DATA, load_media
 from pydantic import Field
 
-PROTOCOL = ROOT / "evaluation/media_protocol.md"
+PROTOCOL = ROOT / "evaluation/media_protocol.txt"
 
 
 class Candidate(Strict):
